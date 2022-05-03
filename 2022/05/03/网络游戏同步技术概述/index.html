@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="网络游戏同步技术概述参考文章:https:&#x2F;&#x2F;www.zhihu.com&#x2F;collection&#x2F;703766200 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;36884005 一.著名游戏的同步方案 其中有几点说明:  1.Lockstep特指只同步操作的确定性锁步同步（lockstep就是大家说的帧同步）。 2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络游戏同步技术概述">
+<meta property="og:url" content="http://example.com/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="ChrisZhang">
+<meta property="og:description" content="网络游戏同步技术概述参考文章:https:&#x2F;&#x2F;www.zhihu.com&#x2F;collection&#x2F;703766200 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;36884005 一.著名游戏的同步方案 其中有几点说明:  1.Lockstep特指只同步操作的确定性锁步同步（lockstep就是大家说的帧同步）。 2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-14f08834e488ede01544cc77ad1e3619_r.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320165407089.png">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=S_k+=++%5Cbegin%7Bcases%7D++g(P,+C),+&%5Ctext%7Bif+%7D+k=0+%5C%5C++t(S_%7Bk-1%7D,+C,+I_k),+&%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+&=+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+&=+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-5a11925f93130d3c315300b9055baac0_r.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320200447666.png">
+<meta property="article:published_time" content="2022-05-03T15:51:28.000Z">
+<meta property="article:modified_time" content="2022-05-03T15:52:18.313Z">
+<meta property="article:author" content="ChrisZhang">
+<meta property="article:tag" content="网络游戏设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/v2-14f08834e488ede01544cc77ad1e3619_r.jpg">
+
+<link rel="canonical" href="http://example.com/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>网络游戏同步技术概述 | ChrisZhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChrisZhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络游戏同步技术概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-03 23:51:28 / 修改时间：23:52:18" itemprop="dateCreated datePublished" datetime="2022-05-03T23:51:28+08:00">2022-05-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">游戏基础概念</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">网络游戏</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="网络游戏同步技术概述"><a href="#网络游戏同步技术概述" class="headerlink" title="网络游戏同步技术概述"></a>网络游戏同步技术概述</h3><p>参考文章:<a target="_blank" rel="noopener" href="https://www.zhihu.com/collection/703766200">https://www.zhihu.com/collection/703766200</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36884005">https://zhuanlan.zhihu.com/p/36884005</a></p>
+<h3 id="一-著名游戏的同步方案"><a href="#一-著名游戏的同步方案" class="headerlink" title="一.著名游戏的同步方案"></a>一.著名游戏的同步方案</h3><p><img src="https://pic2.zhimg.com/v2-14f08834e488ede01544cc77ad1e3619_r.jpg" alt="preview"></p>
+<p>其中有几点说明:</p>
+<blockquote>
+<p>1.Lockstep特指<strong>只同步操作的确定性锁步同步</strong>（lockstep就是大家说的帧同步）。</p>
+<p>2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State Synchronization）</p>
+</blockquote>
+<h3 id="二-网络传输协议"><a href="#二-网络传输协议" class="headerlink" title="二.网络传输协议"></a>二.网络传输协议</h3><blockquote>
+<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。<br>在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
+</blockquote>
+<p>复习一下互联网的体系结构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png" alt="image-20220320163835295"></p>
+<h4 id="（1）Socket是什么？"><a href="#（1）Socket是什么？" class="headerlink" title="（1）Socket是什么？"></a>（1）Socket是什么？</h4><blockquote>
+<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。<br>通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
+</blockquote>
+<h4 id="（2）UDP报文结构"><a href="#（2）UDP报文结构" class="headerlink" title="（2）UDP报文结构"></a>（2）UDP报文结构</h4><p>这一部分可以参考的文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/aa1928992772/article/details/85240358">(7条消息) UDP协议的详细解析_李大坝超欧的的博客-CSDN博客_udp</a></p>
+<ul>
+<li>UDP数据报分为<strong>首部</strong>和<strong>用户数据部分</strong>，整个UDP数据报作为IP数据报的数据部分封装在IP数据报中：</li>
+</ul>
+<p>对于UDP协议来说，其首部的结构如下：</p>
+<img src="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70" alt="img" style="zoom:80%;" />
+
+<p>其中，涉及到的字段的解释如下：</p>
+<ul>
+<li><strong>源端口</strong>： 源端口号，需要对方回信时选用，不需要时全部置0。</li>
+<li><strong>目的端口：</strong>目的端口号，在终点交付报文的时候需要用到。</li>
+<li><strong>长度</strong>：UDP的数据报的长度（包括首部和数据）其最小值为8（只有首部）</li>
+<li><strong>校验和</strong>：检测UDP数据报在传输中是否有错，有错则丢弃。<ul>
+<li>该字段是<strong>可选</strong>的，当源主机不想计算校验和，则直接令该字段全为0.</li>
+</ul>
+</li>
+</ul>
+<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。<br>如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
+<h5 id="UDP的特点"><a href="#UDP的特点" class="headerlink" title="UDP的特点"></a>UDP的特点</h5><blockquote>
+<p>从UDP的报文结构当中，我们可以得出其在网络游戏当中使用的特点：</p>
+<p>1.<strong>不可靠不保序传输（Unsequenced Unreliable Transmission）</strong>，即传输不保序，也不确保可达，某个具体数据包在传输的过程中，是可能丢失的；也可能数据包到达了，但数据出错从而校验失败，也被Socket丢弃掉。</p>
+<p>2.<strong>传输快</strong>，同样是由于不可靠，导致Socket不会浪费时间和带宽，对丢失的数据包进行重传。</p>
+<p>3.<strong>连接快</strong>，因为根本没有发生连接，所以收发双方每次通信都是无状态的，所以通信前不需建立连接。</p>
+<p>4.<strong>简单</strong>，上层应用能按需实现额外的传输特性（QoS），比如<strong>保序不可靠、可靠不保序、可靠保序、最新状态传输（Most Recent State）、快速冗余传输（Quickest Possible Delivery）等</strong>（也就是靠应用层来保证UDP的可靠）</p>
+<p>5.报头小，节省带宽。</p>
+</blockquote>
+<h4 id="（3）TCP报文结构"><a href="#（3）TCP报文结构" class="headerlink" title="（3）TCP报文结构"></a>（3）TCP报文结构</h4><p>可以参考的相关链接如下：</p>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/6441.html">TCP报文格式解析 (biancheng.net)</a></p>
+<p>相对来说，TCP的报文结构就比较复杂一些：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320165407089.png" alt="image-20220320165407089"></p>
+<p>这里具体每个字段的作用，可以查看上面的链接，在这里不再进行过多展开。</p>
+<h5 id="（a）TCP相对UDP额外提供了什么？"><a href="#（a）TCP相对UDP额外提供了什么？" class="headerlink" title="（a）TCP相对UDP额外提供了什么？"></a>（a）TCP相对UDP额外提供了什么？</h5><ul>
+<li><strong>保序可靠传输</strong>（Sequenced Reliable Transmission），通过报头Sequence number、Acknowledgement Number、Window Size等字段来实现；</li>
+<li><strong>流量控制（Flow Control）</strong>，通过报头的Window Size（窗口大小）实现，接受者把自己的期待流量提示给发送者，防止发送方以过快的速度发送数据给接收方；</li>
+<li><strong>拥塞控制（Congestion Control）</strong>，通过报头的Sequence number、Acknowledgement number等字段，以及通过Timer机制实现，据此收发双方可判断数据包丢包，而推断出当前网络是否拥塞，并采取一些措施来减缓数据发送。</li>
+</ul>
+<h5 id="（b）TCP在网络游戏中使用的特点"><a href="#（b）TCP在网络游戏中使用的特点" class="headerlink" title="（b）TCP在网络游戏中使用的特点"></a>（b）TCP在网络游戏中使用的特点</h5><blockquote>
+<p>由于TCP的可靠传输，流量控制和拥塞控制技术，其在网络游戏当中可以有如下特点：</p>
+<p>（1）本身提供保序可靠传输，不需游戏作额外工作，可以适用于回合制游戏、RPG等通信频率不高的游戏类型；</p>
+<p>（2）<strong>传输慢</strong>，正因TCP本身对所有发出的数据包，都考虑保序可靠、流量控制、拥塞控制（包含了慢开始（Slow-Start），而这些功能对于大部分游戏类型，特别是快节奏（Fast Paced）游戏是不适用的，因为这类游戏通信频率高，要求低通信时延，新发的数据包可能比已发送的数据包更重要（比如游戏状态数据包，游戏状态经常改变，与其重传旧状态数据包，倒不如将其抛弃，赶快传输新的状态数据包）。</p>
+<p>（3）连接慢，首次连接需要经过<strong>三次握手</strong>；</p>
+<p>（4）复杂且黑盒，难以进行额外的扩展；</p>
+<p>（5）报头比较大，不适用于数据包的量比较大的情况；</p>
+</blockquote>
+<p>综上所述，<strong>大多网络游戏采用UDP。</strong><br><strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong><br>注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
+<h3 id="三-网络同步模型"><a href="#三-网络同步模型" class="headerlink" title="三.网络同步模型"></a>三.网络同步模型</h3><h4 id="预知识：什么叫做同步？"><a href="#预知识：什么叫做同步？" class="headerlink" title="预知识：什么叫做同步？"></a>预知识：什么叫做同步？</h4><blockquote>
+<p>比如玩《原神》的时候，要保证组队的人们看到的画面是一样的，以及伤害的数值这些也要是相同的，这就是同步。对于大多数游戏，不仅客户端的表现要一致，而且需要客户端和服务端的数据是一致的。所以，<strong>同步是一个网络游戏概念</strong>，只有网络游戏才需要同步，而单机游戏是不需要同步的。</p>
+</blockquote>
+<p>最主要的网络模型是：<strong>帧同步（Lockstep）</strong>和<strong>状态同步（State Synchronization）</strong>。</p>
+<p>对于帧来说，有以下两种术语定义：</p>
+<ul>
+<li><p><strong>逻辑帧：</strong>在本文会被称为Tick，游戏在逻辑层面是离散的过程，即可以认为是一个逻辑帧一个逻辑帧地进行逻辑运算，逻辑帧号是指游戏逻辑层面当前处于第几帧；</p>
+</li>
+<li><p><strong>渲染帧</strong>：在本文会被称为Frame，游戏在画面呈现层面也是离散的过程，即可以认为是一幅画面一幅画面地呈现给玩家的，渲染帧号是指游戏当前呈现的是第几幅画面；</p>
+</li>
+</ul>
+<p>其中，<strong>游戏的逻辑帧率和渲染帧率是互相独立的</strong>，比如一个游戏可以是20帧每秒的逻辑帧率、60帧每秒的渲染帧率。</p>
+<h4 id="（1）游戏逻辑的进行"><a href="#（1）游戏逻辑的进行" class="headerlink" title="（1）游戏逻辑的进行"></a>（1）游戏逻辑的进行</h4><p>游戏逻辑是一个逻辑帧一个逻辑帧地持续离散进行的，可以抽象为：</p>
+<p><img src="https://www.zhihu.com/equation?tex=S_k+=++%5Cbegin%7Bcases%7D++g(P,+C),+&%5Ctext%7Bif+%7D+k=0+%5C%5C++t(S_%7Bk-1%7D,+C,+I_k),+&%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C" alt="[公式]"></p>
+<ul>
+<li><p>游戏在第0个逻辑帧时，根据玩家信息$P$和游戏配置$C$，进行初始化运算$g$，得出初始化状态集合$S_0$</p>
+</li>
+<li><p>游戏在第$k$个逻辑帧时，根据前一个状态集合$S_{k-1}$和游戏配置$C$，以及第$k$帧收到的外部变化原因集合$I_k$，进行逻辑$t$运算，得出第$k$个逻辑帧新的游戏状态集合$S_k$</p>
+</li>
+</ul>
+<p>其中，对于$I$和$S$的解释如下：</p>
+<ul>
+<li>$I$:游戏状态变化的根本原因的集合，往往是各个玩家操作；</li>
+<li>$S$:游戏状态的集合，由众多状态子集组成，其中有以下两个重要子集定义：<ul>
+<li>$O$:一些能被玩家所明显观察到的对象的状态集合;</li>
+<li>$M$:一些可用于推导最终状态的中间状态集.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+&=+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+&=+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C" alt="[公式]"></p>
+<h4 id="（2）状态同步和帧同步概括"><a href="#（2）状态同步和帧同步概括" class="headerlink" title="（2）状态同步和帧同步概括"></a>（2）状态同步和帧同步概括</h4><p>在网络同步时，称从客户端发出信息进行网络传输的过程为<strong>上行</strong>，称客户端经过网络传输收到信息的过程为<strong>下行</strong>，则，</p>
+<ul>
+<li><p><strong>一般帧同步的本质是</strong>，<strong>上下行</strong>都仅包含游戏外部变化原因集合$I_k$</p>
+</li>
+<li><p><strong>一般状态同步的本质是</strong>，<strong>下行</strong>仅包含游戏运算得出的结果状态集合$S_k$(确切地说是状态子集$O_k$,也就是能被玩家明显观察到的对象的状态集合)，<strong>上行</strong>则包含$I_k$和&#x2F;或状态子集$M_k$;</p>
+</li>
+</ul>
+<p>注：参考的文章当中的帧同步特指只同步操作的确定性锁步同步（Deterministic Lockstep）。不讨论快照同步（Snapshot Synchronization、Snapshot Interpolation），认为其等同于状态同步。</p>
+<h4 id="（3）帧同步"><a href="#（3）帧同步" class="headerlink" title="（3）帧同步"></a>（3）帧同步</h4><p>由于帧同步只同步游戏外部变化原因集合$I_k$，因此要求<strong>各个客户端的运算逻辑$g，t$是严格确定性的</strong>，这样所有客户端才能得出一致性的游戏状态结果$S_k$。</p>
+<ul>
+<li><p>如果在计算过程中包含了一丝不确定的因素，即会导致各个客户端运算$S_k$时出现一些误差，那么接下来的逻辑帧误差会越来越大，导致蝴蝶效应，从而最终各个客户端看到的结果状态完全不一样了（比如<strong>对浮点数的处理</strong>）。</p>
+</li>
+<li><p>著名帧同步游戏举例：<strong>《王者荣耀》</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>假设玩家本人的客户端和其他正确客户端已经发生不一致，其他玩家在正确客户端作出的合理操作，到达玩家本人的已经状态不一致的客户端做逻辑演算时，却变得不一样的状态结果，这个结果很可能是不合理的，包括数值混乱，操作混乱等。</p>
+</blockquote>
+<h5 id="保证游戏的严格确定性："><a href="#保证游戏的严格确定性：" class="headerlink" title="保证游戏的严格确定性："></a>保证游戏的严格确定性：</h5><p>根据上述介绍，如果想要保证游戏的严格确定性，可以做出如下的规定：</p>
+<ul>
+<li><p><strong>对浮点数的处理</strong>：不使用浮点数而使用定点数，或限定各客户端所运行的硬件及操作系统从而浮点数的运算是一致的。</p>
+</li>
+<li><p><strong>确定性的随机数机制</strong>；</p>
+<ul>
+<li>需要保证每次随机的数字都相同，所以需要自己实现一套随机数，不能用unity自带的那个随机数接口，而且需要服务端发送相同的随机种子；因为非常微小的误差就有可能产生蝴蝶效应，所以所有<code>float</code>型的参数必须变成<code>int</code>型，保证计算结果一致。</li>
+</ul>
+</li>
+<li><p><strong>确定性的容器及算法</strong>（增加、移除、排序等）；</p>
+</li>
+<li><p><strong>隔离和封装逻辑层</strong>，以防止其他不确定性的调用；</p>
+<ul>
+<li>如需，则也须做到确定性的物理机制、导航机制、动画骨骼机制等，</li>
+</ul>
+</li>
+<li><p>排查所有引起异常（exception）的逻辑。</p>
+</li>
+</ul>
+<h5 id="制定检测不同步的管线流程的重要性："><a href="#制定检测不同步的管线流程的重要性：" class="headerlink" title="制定检测不同步的管线流程的重要性："></a>制定检测不同步的管线流程的重要性：</h5><blockquote>
+<p>对锁步同步游戏来说，不同步造成的游戏体验是极差的，偶现的不同步问题是极为头痛的， 因此制定检测不同步的管线流程对锁步同步游戏来说是至关重要的，比如<strong>帧状态哈希对比、静态代码扫描分析、帧级别甚至函数级别的高性能日志、外网不同步率统计，等</strong>。</p>
+</blockquote>
+<h4 id="（4）状态同步"><a href="#（4）状态同步" class="headerlink" title="（4）状态同步"></a>（4）状态同步</h4><p>因为状态同步只同步游戏运算得出的结果状态$S_k$，所以需要有机器来进行<strong>权威（Authoritative）的状态计算</strong>，并传输给其他机器，其他机器都将采纳接收到的状态。<strong>这种机器就是服务器（或者被称为主机（Host）），而其他没有权威的的机器则被称为客户端</strong>。为了简化说明，暂时将服务器集群也抽象为服务器，方便后续的讨论。</p>
+<blockquote>
+<p>状态同步，口头交流中也常不太精确地被称为“CS同步（Client-Server）”。</p>
+</blockquote>
+<ul>
+<li>注：许多著名引擎（如Unreal，Unity）的状态同步的实现都参考了下面这篇文章：<a target="_blank" rel="noopener" href="https://www.gamedevs.org/uploads/tribes-networking-model.pdf">Title (gamedevs.org)</a></li>
+</ul>
+<p>状态同步开发过程中最基础也最重要的是，<strong>不管客户端网络对象当前处于什么状态，它都要做到能正确地完全退出旧状态，退出后不能残留旧状态的逻辑层效果，并正确地进入服务器告知的新权威状态，从而带来新状态的逻辑层效果。</strong>（状态同步的时候<strong>上行</strong>包含$I_k$和&#x2F;或状态子集$M_k$）</p>
+<blockquote>
+<p>要避免以非状态同步的方式同步<strong>权威状态</strong>,比如类似于帧同步，服务器只传输$I_k$给客户端（而不传输$S_k$），让客户端在本地计算出网络对象的新状态$S_k$，<strong>这可能会带来服务器客户端之间状态不一致。</strong></p>
+<p>比如说，某个网络对象在第$k$个逻辑帧发生了$I_k$而进入到了$S_k$，且之后$S$都不再发生改变，那么服务器只会在第$k$帧才会发送$I_k$；之后若客户端因<strong>断线重连或实时死亡重播</strong>等原因导致该网络对象状态在客户端被重置为$S_0$，但当前服务器逻辑帧已大于第$k$帧，服务器不会再传输$I_k$给客户端，那么该网络对象在客户端里就错误地一直停留在$S_0$了。</p>
+</blockquote>
+<p>注：之前在帧同步讨论到的确定性指的是<strong>“严格的”确定性。</strong>在讨论状态同步时，偶尔也会提及“不严格的”确定性（比如最开始作者链接的Q&#x2F;A阶段最后一个问题），<strong>此类确定性只要求客户端服务器之间满足“足够的”确定性</strong>，以便客户端能够比较准确地进行预表现即可，因为客户端最终会采纳服务器的状态，修正累计的误差。</p>
+<h4 id="（5）帧同步和状态同步的对比"><a href="#（5）帧同步和状态同步的对比" class="headerlink" title="（5）帧同步和状态同步的对比"></a>（5）帧同步和状态同步的对比</h4><p><img src="https://pic1.zhimg.com/v2-5a11925f93130d3c315300b9055baac0_r.jpg" alt="preview"></p>
+<h5 id="两者的区别"><a href="#两者的区别" class="headerlink" title="两者的区别"></a>两者的区别</h5><blockquote>
+<ul>
+<li><p>最大的区别就是<strong>战斗核心逻辑写在哪</strong>:</p>
+<ul>
+<li>状态同步的战斗逻辑在服务端;</li>
+<li>帧同步的战斗逻辑在客户端。</li>
+</ul>
+<p><strong>战斗逻辑</strong>是包括技能逻辑、普攻、属性、伤害、移动、AI、检测、碰撞等等的一系列内容，这常常也被视为游戏开发过程中最难的部分。由于<strong>核心逻辑必须知道一个场景中的所有实体情况</strong>，所以MMO游戏（例如魔兽世界）就必须把战斗逻辑写在服务端，<strong>所以MMO游戏必须是状态同步的</strong>，因为MMO游戏的客户端承载有限，并不能把整张地图的实体全部展现出来（例如100米以外的NPC和玩家就不显示了），所以客户端没有足够的信息计算全图的人的所有行为。</p>
+</li>
+<li><p>具体到客户端和服务端的通信上：</p>
+<ul>
+<li><p><strong>在状态同步下，客户端更像是一个服务端数据的表现层</strong>。举个例子，一个英雄的几乎所有属性（例如血量、攻击、防御、攻速、魔法值等等）都是服务端传给客户端的，而且在属性发生改变的时候，服务端需要实时告诉客户端哪些属性改变了，客户端并不能改变这些属性，而是服务端传来什么属性就显示多少属性（虽然可以改变客户端数值达到表现上的效果，例如无限血量，但是服务端那边的血量属性为0时，一样会死）。</p>
+<ul>
+<li>此时举一个具体的例子。一个英雄要释放一个非指向性技能（例如伊泽瑞尔的Q），具体过程如下：<ul>
+<li>客户端通知服务端“我要释放一个技能”——&gt; 服务端通知客户端“在某地以什么方向释放某技能”——&gt;客户端根据这些信息创建一个特效放在某地，然后以某个方向飞行——&gt;服务端根据碰撞检测逻辑判断到某个时刻，这个技能碰到了敌方英雄，通知客户端——&gt;客户端根据服务端信息，删除特效，被打的英雄减血同时播放受击特效。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>在帧同步下，通信就比较简单了，服务端只转发操作，不做任何逻辑处理</strong>:</p>
+<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320200447666.png" alt="image-20220320200447666"></li>
+<li>现在同一局里有4个玩家，也就是4个客户端，这时客户端A释放了一个技能x，此时将操作传递给服务端，服务端不做任何判断，直接把A的操作全部分发给ABCD，则ABCD同时让客户端A控制的英雄释放技能x。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h6 id="（a）流量对比"><a href="#（a）流量对比" class="headerlink" title="（a）流量对比"></a>（a）流量对比</h6><p><strong>状态同步比帧同步流量消耗大</strong>，例如一个复杂游戏的英雄属性可能有100多条，每次改变都要同步一次属性，这个消耗是巨大的，而帧同步不需要同步属性；例如释放一个技能，状态同步下，服务端需要通知客户端很多条消息（必须是分步的，不然功能做不了），而帧同步就只需要转发一次操作就行了。</p>
+<h6 id="（b）回放-amp-观战"><a href="#（b）回放-amp-观战" class="headerlink" title="（b）回放&amp;观战"></a>（b）回放&amp;观战</h6><p><strong>帧同步的回放&amp;观战比状态同步好做得多</strong>，因为只需要保存每局所有人的操作就好了，<strong>而状态同步的回放&amp;观战，需要有一个回放&amp;观战服务器</strong>，当一局战斗打响，战斗服务器在给客户端发送消息的同时，还需要把这些消息发给回放&amp;观战服务器，回放&amp;观战服务器做储存，如果有其他客户端请求回放或者观战，则回放&amp;观战服务器把储存起来的消息按时间发给客户端。</p>
+<h6 id="（c）安全性"><a href="#（c）安全性" class="headerlink" title="（c）安全性"></a>（c）安全性</h6><p><strong>状态同步的安全性比帧同步高很多，因为状态同步的所有逻辑和数值都是在服务端的</strong>，如果想作弊，就必须攻击服务器，而攻击服务器的难度比更改自己客户端数据的难度高得多，而且更容易被追踪，被追踪到了还会有极高的法律风险。而帧同步因为所有数据全部在客户端，所以解析客户端的数据之后，就可以轻松达到自己想要的效果，例如moba类游戏的全图挂，某些吃鸡游戏的透视挂，都是没办法防止的，不过<strong>更改数据达到胜利的作弊方式（例如更改自己的英雄攻击力）可以通过服务器比对同局其他人的战斗结果来预防。</strong></p>
+<h6 id="（d）服务器压力"><a href="#（d）服务器压力" class="headerlink" title="（d）服务器压力"></a>（d）服务器压力</h6><p>状态同步服务器压力比较大，因为要做更多运算。</p>
+<h6 id="（e）开发效率"><a href="#（e）开发效率" class="headerlink" title="（e）开发效率"></a>（e）开发效率</h6><p>首先要说，<strong>状态同步的游戏占主流，其次就是状态同步开发起来比较难。</strong></p>
+<ul>
+<li>帧同步服务器开发难度低，同一套方案可以给很多不同类型的游戏使用，反正都是转发操作；减少了服务端客户端沟通，老实说，没有扯皮的时间，开发效率最起码提高20%。</li>
+<li>状态同步的方案下，同一个功能至少需要一个客户端和服务端共同完成；PVP和PVE基本用的是同一套代码，做完PVP很容易就可以做单机的PVE。</li>
+</ul>
+<h6 id="（f）断线重连"><a href="#（f）断线重连" class="headerlink" title="（f）断线重连"></a>（f）断线重连</h6><ul>
+<li>状态同步的断线重连很好做，无非就是把整个场景和人物全部重新生成一遍，各种数值根据服务端提供加到人物身上而已。</li>
+<li>帧同步的断线重连就比较麻烦了，例如客户端在战场开始的第10秒短线了，第15秒连回来了，就需要服务端把第10秒到第15秒之间5秒内的所有消息一次性发给客户端，然后客户端加速整个游戏的核心逻辑运行速度（例如加速成10倍），直到追上现有进度。</li>
+</ul>
+<p>其他可以供参考的资料，有时间再继续看：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8cca5458c45b">游戏帧同步的流程与实现 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9b7fdf9c9272">帧同步和状态同步 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/it_wjw/article/details/76578165">(7条消息) 战斗同步策略之状态同步_书影_的博客-CSDN博客_状态同步</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4000a301c32a">多边形碰撞检测 – 分离轴算法 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tekkaman/p/9337912.html">状态同步 - Tekkaman - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433368860">网络游戏研发，该选帧同步还是状态同步？ - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/372526366_667928">帧同步（LockStep）该如何反外挂 及 优化_游戏 (sohu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151347866">什么是QoS技术 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hello_world6/article/details/53680298?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_default&spm=1001.2101.3001.4242.1&utm_relevant_index=3">(7条消息) 如何让UDP实现可靠传输_hello_world6的博客-CSDN博客_怎么让udp实现可靠连接</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nieliangcai/p/10362751.html">TCP和UDP的区别（Socket） - 小心走火 - 博客园 (cnblogs.com)</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ChrisZhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/" title="网络游戏同步技术概述">http://example.com/2022/05/03/网络游戏同步技术概述/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" rel="tag"># 网络游戏设计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/03/Learn-RayTracing-In-One-Weekend%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B01/" rel="prev" title="Learn RayTracing In One Weekend阅读笔记1">
+      <i class="fa fa-chevron-left"></i> Learn RayTracing In One Weekend阅读笔记1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">网络游戏同步技术概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E8%91%97%E5%90%8D%E6%B8%B8%E6%88%8F%E7%9A%84%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">一.著名游戏的同步方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">二.网络传输协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89Socket%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">（1）Socket是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89UDP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">（2）UDP报文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UDP%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">3.2.1.</span> <span class="nav-text">UDP的特点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89TCP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">（3）TCP报文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88a%EF%BC%89TCP%E7%9B%B8%E5%AF%B9UDP%E9%A2%9D%E5%A4%96%E6%8F%90%E4%BE%9B%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.3.1.</span> <span class="nav-text">（a）TCP相对UDP额外提供了什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%88b%EF%BC%89TCP%E5%9C%A8%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">3.3.2.</span> <span class="nav-text">（b）TCP在网络游戏中使用的特点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E7%BD%91%E7%BB%9C%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">三.网络同步模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E7%9F%A5%E8%AF%86%EF%BC%9A%E4%BB%80%E4%B9%88%E5%8F%AB%E5%81%9A%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">预知识：什么叫做同步？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%B8%B8%E6%88%8F%E9%80%BB%E8%BE%91%E7%9A%84%E8%BF%9B%E8%A1%8C"><span class="nav-number">4.2.</span> <span class="nav-text">（1）游戏逻辑的进行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5%E5%92%8C%E5%B8%A7%E5%90%8C%E6%AD%A5%E6%A6%82%E6%8B%AC"><span class="nav-number">4.3.</span> <span class="nav-text">（2）状态同步和帧同步概括</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%B8%A7%E5%90%8C%E6%AD%A5"><span class="nav-number">4.4.</span> <span class="nav-text">（3）帧同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E6%B8%B8%E6%88%8F%E7%9A%84%E4%B8%A5%E6%A0%BC%E7%A1%AE%E5%AE%9A%E6%80%A7%EF%BC%9A"><span class="nav-number">4.4.1.</span> <span class="nav-text">保证游戏的严格确定性：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%B6%E5%AE%9A%E6%A3%80%E6%B5%8B%E4%B8%8D%E5%90%8C%E6%AD%A5%E7%9A%84%E7%AE%A1%E7%BA%BF%E6%B5%81%E7%A8%8B%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%EF%BC%9A"><span class="nav-number">4.4.2.</span> <span class="nav-text">制定检测不同步的管线流程的重要性：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="nav-number">4.5.</span> <span class="nav-text">（4）状态同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%B8%A7%E5%90%8C%E6%AD%A5%E5%92%8C%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">4.6.</span> <span class="nav-text">（5）帧同步和状态同步的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.6.1.</span> <span class="nav-text">两者的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88a%EF%BC%89%E6%B5%81%E9%87%8F%E5%AF%B9%E6%AF%94"><span class="nav-number">4.6.1.1.</span> <span class="nav-text">（a）流量对比</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88b%EF%BC%89%E5%9B%9E%E6%94%BE-amp-%E8%A7%82%E6%88%98"><span class="nav-number">4.6.1.2.</span> <span class="nav-text">（b）回放&amp;观战</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88c%EF%BC%89%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">4.6.1.3.</span> <span class="nav-text">（c）安全性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88d%EF%BC%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8E%8B%E5%8A%9B"><span class="nav-number">4.6.1.4.</span> <span class="nav-text">（d）服务器压力</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88e%EF%BC%89%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87"><span class="nav-number">4.6.1.5.</span> <span class="nav-text">（e）开发效率</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EF%BC%88f%EF%BC%89%E6%96%AD%E7%BA%BF%E9%87%8D%E8%BF%9E"><span class="nav-number">4.6.1.6.</span> <span class="nav-text">（f）断线重连</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChrisZhang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ChrisZhang</p>
+  <div class="site-description" itemprop="description">我的技美学习之路</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhlovesyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhlovesyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1596944152@qq.com" title="E-Mail → mailto:1596944152@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liang-dao-men" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank"><i class="fa fa-quora fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/people/liang-dao-men" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank">个人知乎</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/24361666" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;24361666" rel="noopener" target="_blank">个人bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Apr 30 2022 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChrisZhang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
