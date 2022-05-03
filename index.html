@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-03 12:26:48 / 修改时间：16:01:56" itemprop="dateCreated datePublished" datetime="2022-05-03T12:26:48+08:00">2022-05-03</time>
+              <time title="创建时间：2022-05-03 12:26:48 / 修改时间：16:08:35" itemprop="dateCreated datePublished" datetime="2022-05-03T12:26:48+08:00">2022-05-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -419,8 +419,8 @@
 <li>二阶动量是与梯度平方相关的函数</li>
 </ul>
 <p><strong>不同的优化器其实是定义了不同的一阶动量和二阶动量公式</strong></p>
-<p>3.计算t时刻下降梯度:<br>$$<br>\eta_t&#x3D;lr<em>m_t&#x2F;\sqrt{V_t}<br>$$<br>4.计算t+1时刻参数:<br>$$<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr</em>m_t&#x2F;\sqrt{V_t}<br>$$</p>
-<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.<br>$$<br>\begin{cases}<br>m_t&#x3D;g_t \qquad V_t&#x3D;1 \\<br>\eta_t&#x3D;lr<em>m_t÷\sqrt{V_t}&#x3D;lr</em>g_t \\<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr<em>m_t÷\sqrt{V_t}&#x3D;w_t-lr</em>g_t<br>\end{cases}<br>$$<br>注意到这其实就是之前的梯度下降法公式了.</p>
+<p>3.计算t时刻下降梯度:<br>$$<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}<br>$$<br>4.计算t+1时刻参数:<br>$$<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}<br>$$</p>
+<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.<br>$$<br>\begin{cases}<br>m_t&#x3D;g_t \qquad V_t&#x3D;1 \\<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t<br>\end{cases}<br>$$<br>注意到这其实就是之前的梯度下降法公式了.</p>
 <p>在Python当中代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
 
@@ -925,7 +925,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-03 00:29:32" itemprop="dateModified" datetime="2022-05-03T00:29:32+08:00">2022-05-03</time>
+                <time title="修改时间：2022-05-03 16:08:31" itemprop="dateModified" datetime="2022-05-03T16:08:31+08:00">2022-05-03</time>
               </span>
 
           
@@ -1181,6 +1181,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502163630699.png" alt="image-20220502163630699"></p>
 <h4 id="16-使得博客渲染支持LaTeX语法"><a href="#16-使得博客渲染支持LaTeX语法" class="headerlink" title="16.使得博客渲染支持LaTeX语法"></a>16.使得博客渲染支持LaTeX语法</h4><p>参考文章:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43318626/article/details/89407031">(11条消息) 在HEXO博客中使用LaTeX公式的简单方法_Loy_Fan的博客-CSDN博客_hexo latex</a></p>
 <p>按照上述文章的步骤来完成即可,注意在Windows操作系统下删除操作并不需要sudo,所以对应指令部分只需要把sudo删掉即可,最后测试LaTeX渲染成功.</p>
+<p>由于渲染仍然存在一些问题,在书写LaTeX公式的时候,要注意以下内容:</p>
+<p>(1)如果换行的话,使用<code>\\\\</code>代替<code>\\</code></p>
+<p>(2)如果要打出下划线的话,使用<code>\underline&#123;&#125;</code>代替<code>\_</code></p>
+<p>(3)乘法可以用×代替<code>*</code>,除法可以用÷代替<code>/</code>(也可以用分数代替)</p>
+<p>(4)暂时可以不把很多复杂的公式堆在一起写.</p>
 <h4 id="17-Hexo-NexT设置代码块的复制功能"><a href="#17-Hexo-NexT设置代码块的复制功能" class="headerlink" title="17.Hexo NexT设置代码块的复制功能"></a>17.Hexo NexT设置代码块的复制功能</h4><p>很多时候,我们希望能让读者或是自己后续复习的时候可以复制博客中代码块,因此需要添加一个复制代码块的功能,方法如下:</p>
 <p>在next主题配置文件中启用<code>copy_button</code>即可</p>
 
