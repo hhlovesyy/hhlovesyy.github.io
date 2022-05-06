@@ -246,12 +246,14 @@
 <p>2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State Synchronization）</p>
 </blockquote>
 <h3 id="二-网络传输协议"><a href="#二-网络传输协议" class="headerlink" title="二.网络传输协议"></a>二.网络传输协议</h3><blockquote>
-<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。<br>在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
+<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。
+在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
 </blockquote>
 <p>复习一下互联网的体系结构：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png" alt="image-20220320163835295"></p>
 <h4 id="（1）Socket是什么？"><a href="#（1）Socket是什么？" class="headerlink" title="（1）Socket是什么？"></a>（1）Socket是什么？</h4><blockquote>
-<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。<br>通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
+<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。
+通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
 </blockquote>
 <h4 id="（2）UDP报文结构"><a href="#（2）UDP报文结构" class="headerlink" title="（2）UDP报文结构"></a>（2）UDP报文结构</h4><p>这一部分可以参考的文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/aa1928992772/article/details/85240358">(7条消息) UDP协议的详细解析_李大坝超欧的的博客-CSDN博客_udp</a></p>
 <ul>
@@ -270,7 +272,8 @@
 </ul>
 </li>
 </ul>
-<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。<br>如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
+<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。
+如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
 <h5 id="UDP的特点"><a href="#UDP的特点" class="headerlink" title="UDP的特点"></a>UDP的特点</h5><blockquote>
 <p>从UDP的报文结构当中，我们可以得出其在网络游戏当中使用的特点：</p>
 <p>1.<strong>不可靠不保序传输（Unsequenced Unreliable Transmission）</strong>，即传输不保序，也不确保可达，某个具体数据包在传输的过程中，是可能丢失的；也可能数据包到达了，但数据出错从而校验失败，也被Socket丢弃掉。</p>
@@ -297,7 +300,9 @@
 <p>（4）复杂且黑盒，难以进行额外的扩展；</p>
 <p>（5）报头比较大，不适用于数据包的量比较大的情况；</p>
 </blockquote>
-<p>综上所述，<strong>大多网络游戏采用UDP。</strong><br><strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong><br>注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
+<p>综上所述，<strong>大多网络游戏采用UDP。</strong>
+<strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong>
+注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
 <h3 id="三-网络同步模型"><a href="#三-网络同步模型" class="headerlink" title="三.网络同步模型"></a>三.网络同步模型</h3><h4 id="预知识：什么叫做同步？"><a href="#预知识：什么叫做同步？" class="headerlink" title="预知识：什么叫做同步？"></a>预知识：什么叫做同步？</h4><blockquote>
 <p>比如玩《原神》的时候，要保证组队的人们看到的画面是一样的，以及伤害的数值这些也要是相同的，这就是同步。对于大多数游戏，不仅客户端的表现要一致，而且需要客户端和服务端的数据是一致的。所以，<strong>同步是一个网络游戏概念</strong>，只有网络游戏才需要同步，而单机游戏是不需要同步的。</p>
 </blockquote>

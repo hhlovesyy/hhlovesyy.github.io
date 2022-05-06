@@ -313,18 +313,31 @@
 <ul>
 <li>实际应用中,可以先用较大的学习率,快速得到最优解,然后逐步减小学习率,使模型在训练后期更加稳定.</li>
 </ul>
-<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:<br>$$<br>初始学习率×学习率衰减率^{(当前轮数&#x2F;多少轮衰减一次)}<br>$$<br>比如下述的代码:</p>
+<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:
+$$
+初始学习率×学习率衰减率^{(当前轮数&#x2F;多少轮衰减一次)}
+$$
+比如下述的代码:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w = tf.Variable(tf.constant(<span class="number">5</span>, dtype=tf.float32))</span><br><span class="line"></span><br><span class="line">epoch = <span class="number">40</span></span><br><span class="line">LR_BASE = <span class="number">0.2</span>  <span class="comment"># 最初学习率</span></span><br><span class="line">LR_DECAY = <span class="number">0.99</span>  <span class="comment"># 学习率衰减率</span></span><br><span class="line">LR_STEP = <span class="number">1</span>  <span class="comment"># 喂入多少轮BATCH_SIZE后，更新一次学习率</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># for epoch 定义顶层循环，表示对数据集循环epoch次，此例数据集数据仅有1个w,初始化时候constant赋值为5，循环100次迭代。</span></span><br><span class="line">    lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># with结构到grads框起了梯度的计算过程。</span></span><br><span class="line">        loss = tf.square(w + <span class="number">1</span>)</span><br><span class="line">    grads = tape.gradient(loss, w)  <span class="comment"># .gradient函数告知谁对谁求导</span></span><br><span class="line"></span><br><span class="line">    w.assign_sub(lr * grads)  <span class="comment"># .assign_sub 对变量做自减 即：w -= lr*grads 即 w = w - lr*grads</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;After %s epoch,w is %f,loss is %f,lr is %f&quot;</span> % (epoch, w.numpy(), loss, lr))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>核心是<code>lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</code>一句,符合上述的公式.</p>
 <p>此时运行查看结果,可以看到学习率lr呈现指数衰减:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502195548124.png" alt="image-20220502195548124"></p>
-<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code><br>$$<br>f(x)&#x3D;\frac{1}{1+e^{-x}}<br>$$<br><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
+<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code>
+$$
+f(x)&#x3D;\frac{1}{1+e^{-x}}
+$$
+<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
 <p>近年来,使用sigmoid作为激活函数的神经网络已经不多了,<strong>原因是链式求导会导致部分导数越来越小(从右图可以看到导数范围0-0.25,可能会越乘越小),从而使梯度消失</strong></p>
 <h3 id="2-Tanh函数"><a href="#2-Tanh函数" class="headerlink" title="(2)Tanh函数"></a>(2)<code>Tanh</code>函数</h3><p><code>tf.math.tanh(x)</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212359530.png" alt="image-20220502212359530"></p>
 <h3 id="3-Relu函数"><a href="#3-Relu函数" class="headerlink" title="(3)Relu函数"></a>(3)<code>Relu</code>函数</h3><p><code>tf.nn.relu(x)</code></p>
-<p>这是一个分段函数,方程如下:<br>$$<br>f(x)&#x3D;max(x,0)&#x3D;\begin{cases}0&amp;x&lt;0 \\<br>x&amp;x&gt;&#x3D;0\end{cases}<br>$$<br><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
+<p>这是一个分段函数,方程如下:
+$$
+f(x)&#x3D;max(x,0)&#x3D;\begin{cases}0&amp;x&lt;0 \\
+x&amp;x&gt;&#x3D;0\end{cases}
+$$
+<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
 <p>补充:导致神经元死亡的根本原因是经过Relu函数的负特征过多,可以通过设置更小的学习率,减少参数分布的巨大变化,避免训练中产生过多负特征进入Relu.</p>
 <h3 id="4-Leaky-Relu函数"><a href="#4-Leaky-Relu函数" class="headerlink" title="(4)Leaky Relu函数"></a>(4)<code>Leaky Relu</code>函数</h3><p>为了解决Relu负参数所引发的神经元死亡问题.虽然比Relu更好,但实际使用中使用Relu作为激活函数的网络更多.</p>
 <p><code>tf.nn.leaky_relu(x)</code></p>
@@ -342,7 +355,9 @@
 <li>自定义</li>
 <li><strong>ce</strong>(Cross Entropy)</li>
 </ul>
-<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><p>$$<br>MES(y\underline{},y)&#x3D;\large\frac{\sum_{i&#x3D;1}^N(y-y\underline{})^2}{n}<br>$$</p>
+<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><p>$$
+MES(y\underline{},y)&#x3D;\large\frac{\sum_{i&#x3D;1}^N(y-y\underline{})^2}{n}
+$$</p>
 <p><code>loss_mse=tf.reduce_mean(tf.square(y_-y))</code></p>
 <p>引入一个例子:预测酸奶日销量(<strong>噪声设置是为了引入一定的随机值误差</strong>):</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502213813476.png" alt="image-20220502213813476"></p>
@@ -356,11 +371,18 @@
 
 
 <h3 id="2-自定义损失函数"><a href="#2-自定义损失函数" class="headerlink" title="(2)自定义损失函数"></a>(2)自定义损失函数</h3><p>上面的案例中,我们都使用均方误差来作为损失函数的参考依据,<strong>但这实际上是不准确的</strong>.因为当预测商品销量多了的话,损失的会是成本;而当预测商品销量少了的话,损失的会是利润,<strong>因此可以使用自定义的函数来处理</strong>(因为实际上成本和利润大概率是不相等的).</p>
-<p>比如如下的损失函数是可以的:<br>$$<br>loss(y\underline{},y)&#x3D;\sum_{n}f(y\underline{},y) \\<br>其中\sum_{n}f(y\underline{},y)&#x3D;\begin{cases}PROFIT*(y\underline{}-y)&amp; y&lt;y\underline{}(预测的y少了,损失利润) \\<br>COST*(y-y\underline{})&amp; y&gt;&#x3D;y\underline{}(预测的y多了,损失成本) \end{cases}<br>$$<br>此时损失函数可以这样写:</p>
+<p>比如如下的损失函数是可以的:
+$$
+loss(y\underline{},y)&#x3D;\sum_{n}f(y\underline{},y) \\
+其中\sum_{n}f(y\underline{},y)&#x3D;\begin{cases}PROFIT*(y\underline{}-y)&amp; y&lt;y\underline{}(预测的y少了,损失利润) \\
+COST*(y-y\underline{})&amp; y&gt;&#x3D;y\underline{}(预测的y多了,损失成本) \end{cases}
+$$
+此时损失函数可以这样写:</p>
 <p><code>loss_zdy=tf.reduce_sum(tf.where(tf.greater(y, y_), (y - y_) * COST, (y_ - y) * PROFIT))</code></p>
 <p>举一个极端情况:</p>
 <blockquote>
-<p>酸奶成本1元， 酸奶利润99元<br>成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
+<p>酸奶成本1元， 酸奶利润99元
+成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
 </blockquote>
 <p>将损失函数替换为上述代码,得到的结果如下:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">After 14500 training steps,w1 is </span><br><span class="line">[[1.1406062]</span><br><span class="line"> [1.0476325]] </span><br><span class="line"></span><br><span class="line">Final w1 is:  [[1.1420636]</span><br><span class="line"> [1.1016785]]</span><br></pre></td></tr></table></figure>
@@ -369,7 +391,11 @@
 <p>如果酸奶成本99元,利润1元,则会使得训练的参数结果&lt;1(尽可能保持成本)</p>
 <h3 id="3-交叉熵"><a href="#3-交叉熵" class="headerlink" title="(3)交叉熵"></a>(3)交叉熵</h3><p><code>tf.losses.categorical_crossentropy(y_,y)</code></p>
 <p>交叉熵损失函数CE:表征两个概率分布之间的距离</p>
-<p><strong>交叉熵越大,两个概率分布越远;</strong><br>$$<br>H(y\underline{},y)&#x3D;\sum y\underline{}*lny<br>$$<br>比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
+<p><strong>交叉熵越大,两个概率分布越远;</strong>
+$$
+H(y\underline{},y)&#x3D;\sum y\underline{}*lny
+$$
+比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502222420738.png" alt="image-20220502222420738"></p>
 <p>通过定量计算,发现第二种结果的交叉熵更小,因此两个概率分布更为接近一些,所以y2预测的更准.</p>
 <p>上述验证的代码如下:</p>
@@ -401,18 +427,26 @@
 <li>采用正则化</li>
 <li>增大正则化参数</li>
 </ul>
-<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong><br>$$<br>loss&#x3D;loss(y,y\underline{})+REGULARIZER*loss(w)<br>$$<br>其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
+<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong>
+$$
+loss&#x3D;loss(y,y\underline{})+REGULARIZER*loss(w)
+$$
+其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
 <p><strong>RRGULARIZER是超参数,给出参数w在总loss中的比例,即正则化的权重</strong></p>
 <p>w是需要正则化的参数</p>
 <p>一般正则化分为L1正则化和L2正则化:</p>
 <ul>
 <li>L1正则化</li>
 </ul>
-<p>$$<br>loss_{L1}(w)&#x3D;\sum_i |w_i|<br>$$</p>
+<p>$$
+loss_{L1}(w)&#x3D;\sum_i |w_i|
+$$</p>
 <ul>
 <li>L2正则化</li>
 </ul>
-<p>$$<br>loss_{L2}(w)&#x3D;\sum_i |w_i^2|<br>$$</p>
+<p>$$
+loss_{L2}(w)&#x3D;\sum_i |w_i^2|
+$$</p>
 <p>对比:</p>
 <p>L1正则化大概率会使很多参数变为0,<strong>因此该方法可通过稀疏参数</strong>,即减少参数的数量,来降低复杂度.</p>
 <p>L2正则化会使得参数很接近零但不为零,<strong>因此该方法可通过减少参数值的大小降低复杂度</strong>.</p>
@@ -437,14 +471,33 @@
 <p>可以看到,加入L2正则化后的曲线更为平缓,有效地缓解了过拟合的情况.</p>
 <h2 id="2-6-神经网络参数优化器"><a href="#2-6-神经网络参数优化器" class="headerlink" title="2.6 神经网络参数优化器"></a>2.6 神经网络参数优化器</h2><p>优化器是引导神经网络更新参数的工具.</p>
 <h3 id="1-明确一些定义"><a href="#1-明确一些定义" class="headerlink" title="(1)明确一些定义"></a>(1)明确一些定义</h3><p>待优化的参数为w,损失函数为loss,学习率为lr,每次迭代一个batch(每个batch通常包括$2^n$组数据),t表示当前batch迭代的总次数:</p>
-<p>1.计算t时刻损失函数关于当前参数的梯度:<br>$$<br>g_t&#x3D;\nabla loss&#x3D;\frac{\partial{loss}}{\partial(w_t)}<br>$$<br>2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
+<p>1.计算t时刻损失函数关于当前参数的梯度:
+$$
+g_t&#x3D;\nabla loss&#x3D;\frac{\partial{loss}}{\partial(w_t)}
+$$
+2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
 <ul>
 <li>一阶动量是与梯度相关的函数</li>
 <li>二阶动量是与梯度平方相关的函数</li>
 </ul>
 <p><strong>不同的优化器其实是定义了不同的一阶动量和二阶动量公式</strong></p>
-<p>3.计算t时刻下降梯度:<br>$$<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}<br>$$<br>4.计算t+1时刻参数:<br>$$<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}<br>$$</p>
-<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.<br>$$<br>\begin{cases}<br>m_t&#x3D;g_t \qquad V_t&#x3D;1 \\<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t<br>\end{cases}<br>$$<br>注意到这其实就是之前的梯度下降法公式了.</p>
+<p>3.计算t时刻下降梯度:
+$$
+\eta_t&#x3D;lr×m_t÷\sqrt{V_t}
+$$
+4.计算t+1时刻参数:
+$$
+w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}
+$$</p>
+<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.
+$$
+\begin{cases}
+m_t&#x3D;g_t \qquad V_t&#x3D;1 \\
+\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\
+w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t
+\end{cases}
+$$
+注意到这其实就是之前的梯度下降法公式了.</p>
 <p>在Python当中代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
 

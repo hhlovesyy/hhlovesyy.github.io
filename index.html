@@ -454,12 +454,14 @@
 <p>2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State Synchronization）</p>
 </blockquote>
 <h3 id="二-网络传输协议"><a href="#二-网络传输协议" class="headerlink" title="二.网络传输协议"></a>二.网络传输协议</h3><blockquote>
-<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。<br>在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
+<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。
+在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
 </blockquote>
 <p>复习一下互联网的体系结构：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png" alt="image-20220320163835295"></p>
 <h4 id="（1）Socket是什么？"><a href="#（1）Socket是什么？" class="headerlink" title="（1）Socket是什么？"></a>（1）Socket是什么？</h4><blockquote>
-<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。<br>通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
+<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。
+通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
 </blockquote>
 <h4 id="（2）UDP报文结构"><a href="#（2）UDP报文结构" class="headerlink" title="（2）UDP报文结构"></a>（2）UDP报文结构</h4><p>这一部分可以参考的文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/aa1928992772/article/details/85240358">(7条消息) UDP协议的详细解析_李大坝超欧的的博客-CSDN博客_udp</a></p>
 <ul>
@@ -478,7 +480,8 @@
 </ul>
 </li>
 </ul>
-<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。<br>如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
+<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。
+如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
 <h5 id="UDP的特点"><a href="#UDP的特点" class="headerlink" title="UDP的特点"></a>UDP的特点</h5><blockquote>
 <p>从UDP的报文结构当中，我们可以得出其在网络游戏当中使用的特点：</p>
 <p>1.<strong>不可靠不保序传输（Unsequenced Unreliable Transmission）</strong>，即传输不保序，也不确保可达，某个具体数据包在传输的过程中，是可能丢失的；也可能数据包到达了，但数据出错从而校验失败，也被Socket丢弃掉。</p>
@@ -505,7 +508,9 @@
 <p>（4）复杂且黑盒，难以进行额外的扩展；</p>
 <p>（5）报头比较大，不适用于数据包的量比较大的情况；</p>
 </blockquote>
-<p>综上所述，<strong>大多网络游戏采用UDP。</strong><br><strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong><br>注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
+<p>综上所述，<strong>大多网络游戏采用UDP。</strong>
+<strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong>
+注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
 <h3 id="三-网络同步模型"><a href="#三-网络同步模型" class="headerlink" title="三.网络同步模型"></a>三.网络同步模型</h3><h4 id="预知识：什么叫做同步？"><a href="#预知识：什么叫做同步？" class="headerlink" title="预知识：什么叫做同步？"></a>预知识：什么叫做同步？</h4><blockquote>
 <p>比如玩《原神》的时候，要保证组队的人们看到的画面是一样的，以及伤害的数值这些也要是相同的，这就是同步。对于大多数游戏，不仅客户端的表现要一致，而且需要客户端和服务端的数据是一致的。所以，<strong>同步是一个网络游戏概念</strong>，只有网络游戏才需要同步，而单机游戏是不需要同步的。</p>
 </blockquote>
@@ -968,9 +973,20 @@
 <ul>
 <li><p>1.使用<code>&lt;cstdlib&gt;</code>中的rand()函数</p>
 </li>
-<li><p>&#96;&#96;&#96;c++<br>&#x2F;&#x2F;rtweekend.h<br>#include <cstdlib><br>…</p>
-<p>inline float random_double()<br>{<br>&#x2F;&#x2F; Returns a random real in [0,1).<br>return rand() &#x2F; (RAND_MAX + 1.0);<br>}</p>
-<p>inline float random_double(float min, float max)<br>{<br>&#x2F;&#x2F; Returns a random real in [min,max).<br>return min + (max-min)*random_double();<br>}</p>
+<li><p>&#96;&#96;&#96;c++
+&#x2F;&#x2F;rtweekend.h
+#include <cstdlib>
+…</p>
+<p>inline float random_double() 
+{
+&#x2F;&#x2F; Returns a random real in [0,1).
+return rand() &#x2F; (RAND_MAX + 1.0);
+}</p>
+<p>inline float random_double(float min, float max) 
+{
+&#x2F;&#x2F; Returns a random real in [min,max).
+return min + (max-min)*random_double();
+}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 2.传统C++并没有随机数生成器, **但是新版C++中的`&lt;random&gt;`头实现了这个功能**(某些专家觉得这种方法不太完美)。如果你想使用这种方法, 你可以参照下面的代码:</span><br><span class="line"></span><br><span class="line">- ```c++</span><br><span class="line">  //rtweekend.h</span><br><span class="line">  #include &lt;functional&gt;</span><br><span class="line">  #include &lt;random&gt;</span><br><span class="line">  </span><br><span class="line">  inline float random_double() &#123;</span><br><span class="line">      static std::uniform_real_distribution&lt;double&gt; distribution(0.0, 1.0);</span><br><span class="line">      static std::mt19937 generator;</span><br><span class="line">      static std::function&lt;double()&gt; rand_generator =</span><br><span class="line">          std::bind(distribution, generator);</span><br><span class="line">      return rand_generator();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <p>在这里我们使用第一种方式，直接调用这个函数就可以生成随机数了。</p>
@@ -1005,7 +1021,12 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/CGimage-20220304235239610.png" alt="image-20220304235239610"></p>
 <p>接下来，我们会：</p>
-<p>[8. Diffuse Material 漫反射材质]<br>[9. Metal 金属材质]<br>[10. Dielectric 绝缘体材质]<br>[11. Positionable Camera 可自定义位置的摄像机]<br>[12. Defocus Blur 对焦模糊]<br>[13. Where Next? 接下来学什么?]</p>
+<p>[8. Diffuse Material 漫反射材质]
+[9. Metal 金属材质]
+[10. Dielectric 绝缘体材质]
+[11. Positionable Camera 可自定义位置的摄像机]
+[12. Defocus Blur 对焦模糊]
+[13. Where Next? 接下来学什么?]</p>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/128582904">Ray Tracing in One Weekend V3.0中文翻译（上） - 知乎 (zhihu.com)</a></p>
 <h4 id="Chapter-7-漫反射材质"><a href="#Chapter-7-漫反射材质" class="headerlink" title="Chapter 7:漫反射材质"></a>Chapter 7:漫反射材质</h4><p>在这里我们把材质和物体设计成两个类, 这样就可以将材质赋值给物体类的成员变量,而大多数的渲染器也是这样做的。（另一种是把物体和材质紧密结合）</p>
@@ -1064,7 +1085,8 @@
 
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/CGimage-20220305111250315.png" alt="image-20220305111250315"></p>
 <p>和之前的进行对比，会发现：</p>
-<p>1.阴影部分少了<br>2.大球和小球都变亮了</p>
+<p>1.阴影部分少了
+2.大球和小球都变亮了</p>
 <p>这些变化都是<strong>由散射光线的单位规整化引起的</strong>, 现在更少的光线会朝着法线方向散射。对于漫发射的物体来说, 他们会变得更亮。因为更多光线朝着摄像机反射。对于阴影部分来说, 更少的光线朝上反射, 所以小球下方的大球区域会变得更加明亮。</p>
 <h5 id="（5）另一种启发式漫反射模型"><a href="#（5）另一种启发式漫反射模型" class="headerlink" title="（5）另一种启发式漫反射模型"></a>（5）另一种启发式漫反射模型</h5><p>另一种具有启发性的方法是, <strong>直接从入射点开始选取一个随机的方向, 然后再判断是否在法向量所在的那个半球。</strong>在使用lambertian漫发射模型前, 早期的光线追踪论文中大部分使用的都是这个方法:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vec3 <span class="title">random_in_hemisphere</span><span class="params">(<span class="type">const</span> vec3&amp; normal)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vec3 in_unit_sphere = <span class="built_in">random_in_unit_sphere</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">dot</span>(in_unit_sphere, normal) &gt; <span class="number">0.0</span>) <span class="comment">// In the same hemisphere as the normal</span></span><br><span class="line">        <span class="keyword">return</span> in_unit_sphere;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> -in_unit_sphere;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1077,7 +1099,8 @@
 <p>就目前而言，我们暂时还是考虑Lambertian模型。（也就是在（4）中介绍的模型）</p>
 <p>这里鼓励使用不同的漫反射模型来进行尝试。</p>
 <h4 id="Chapter-8：金属材质"><a href="#Chapter-8：金属材质" class="headerlink" title="Chapter 8：金属材质"></a>Chapter 8：金属材质</h4><h5 id="（1）声明一个材质抽象类"><a href="#（1）声明一个材质抽象类" class="headerlink" title="（1）声明一个材质抽象类"></a>（1）声明一个材质抽象类</h5><p>该抽象类应该封装有两个功能：</p>
-<p>1.生成散射后的光线(或者说它吸收了入射光线)<br>2.如果发生散射, 决定光线会衰减多少(attenuate)</p>
+<p>1.生成散射后的光线(或者说它吸收了入射光线)
+2.如果发生散射, 决定光线会衰减多少(attenuate)</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;rtweekend.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hitable.h&quot;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">material</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">scatter</span><span class="params">(<span class="type">const</span> ray&amp; r_in, <span class="type">const</span> hit_record&amp; rec, vec3&amp; attenuation, ray&amp; scattered)</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// !MATERIAL_H</span></span></span><br></pre></td></tr></table></figure>
 
 <p>在函数中使用<code>hit_record</code>作为传入参数, 就可以不用传入一大堆变量了。</p>
@@ -1395,18 +1418,31 @@
 <ul>
 <li>实际应用中,可以先用较大的学习率,快速得到最优解,然后逐步减小学习率,使模型在训练后期更加稳定.</li>
 </ul>
-<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:<br>$$<br>初始学习率×学习率衰减率^{(当前轮数&#x2F;多少轮衰减一次)}<br>$$<br>比如下述的代码:</p>
+<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:
+$$
+初始学习率×学习率衰减率^{(当前轮数&#x2F;多少轮衰减一次)}
+$$
+比如下述的代码:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w = tf.Variable(tf.constant(<span class="number">5</span>, dtype=tf.float32))</span><br><span class="line"></span><br><span class="line">epoch = <span class="number">40</span></span><br><span class="line">LR_BASE = <span class="number">0.2</span>  <span class="comment"># 最初学习率</span></span><br><span class="line">LR_DECAY = <span class="number">0.99</span>  <span class="comment"># 学习率衰减率</span></span><br><span class="line">LR_STEP = <span class="number">1</span>  <span class="comment"># 喂入多少轮BATCH_SIZE后，更新一次学习率</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># for epoch 定义顶层循环，表示对数据集循环epoch次，此例数据集数据仅有1个w,初始化时候constant赋值为5，循环100次迭代。</span></span><br><span class="line">    lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># with结构到grads框起了梯度的计算过程。</span></span><br><span class="line">        loss = tf.square(w + <span class="number">1</span>)</span><br><span class="line">    grads = tape.gradient(loss, w)  <span class="comment"># .gradient函数告知谁对谁求导</span></span><br><span class="line"></span><br><span class="line">    w.assign_sub(lr * grads)  <span class="comment"># .assign_sub 对变量做自减 即：w -= lr*grads 即 w = w - lr*grads</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;After %s epoch,w is %f,loss is %f,lr is %f&quot;</span> % (epoch, w.numpy(), loss, lr))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>核心是<code>lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</code>一句,符合上述的公式.</p>
 <p>此时运行查看结果,可以看到学习率lr呈现指数衰减:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502195548124.png" alt="image-20220502195548124"></p>
-<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code><br>$$<br>f(x)&#x3D;\frac{1}{1+e^{-x}}<br>$$<br><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
+<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code>
+$$
+f(x)&#x3D;\frac{1}{1+e^{-x}}
+$$
+<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
 <p>近年来,使用sigmoid作为激活函数的神经网络已经不多了,<strong>原因是链式求导会导致部分导数越来越小(从右图可以看到导数范围0-0.25,可能会越乘越小),从而使梯度消失</strong></p>
 <h3 id="2-Tanh函数"><a href="#2-Tanh函数" class="headerlink" title="(2)Tanh函数"></a>(2)<code>Tanh</code>函数</h3><p><code>tf.math.tanh(x)</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212359530.png" alt="image-20220502212359530"></p>
 <h3 id="3-Relu函数"><a href="#3-Relu函数" class="headerlink" title="(3)Relu函数"></a>(3)<code>Relu</code>函数</h3><p><code>tf.nn.relu(x)</code></p>
-<p>这是一个分段函数,方程如下:<br>$$<br>f(x)&#x3D;max(x,0)&#x3D;\begin{cases}0&amp;x&lt;0 \\<br>x&amp;x&gt;&#x3D;0\end{cases}<br>$$<br><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
+<p>这是一个分段函数,方程如下:
+$$
+f(x)&#x3D;max(x,0)&#x3D;\begin{cases}0&amp;x&lt;0 \\
+x&amp;x&gt;&#x3D;0\end{cases}
+$$
+<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
 <p>补充:导致神经元死亡的根本原因是经过Relu函数的负特征过多,可以通过设置更小的学习率,减少参数分布的巨大变化,避免训练中产生过多负特征进入Relu.</p>
 <h3 id="4-Leaky-Relu函数"><a href="#4-Leaky-Relu函数" class="headerlink" title="(4)Leaky Relu函数"></a>(4)<code>Leaky Relu</code>函数</h3><p>为了解决Relu负参数所引发的神经元死亡问题.虽然比Relu更好,但实际使用中使用Relu作为激活函数的网络更多.</p>
 <p><code>tf.nn.leaky_relu(x)</code></p>
@@ -1424,7 +1460,9 @@
 <li>自定义</li>
 <li><strong>ce</strong>(Cross Entropy)</li>
 </ul>
-<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><p>$$<br>MES(y\underline{},y)&#x3D;\large\frac{\sum_{i&#x3D;1}^N(y-y\underline{})^2}{n}<br>$$</p>
+<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><p>$$
+MES(y\underline{},y)&#x3D;\large\frac{\sum_{i&#x3D;1}^N(y-y\underline{})^2}{n}
+$$</p>
 <p><code>loss_mse=tf.reduce_mean(tf.square(y_-y))</code></p>
 <p>引入一个例子:预测酸奶日销量(<strong>噪声设置是为了引入一定的随机值误差</strong>):</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502213813476.png" alt="image-20220502213813476"></p>
@@ -1438,11 +1476,18 @@
 
 
 <h3 id="2-自定义损失函数"><a href="#2-自定义损失函数" class="headerlink" title="(2)自定义损失函数"></a>(2)自定义损失函数</h3><p>上面的案例中,我们都使用均方误差来作为损失函数的参考依据,<strong>但这实际上是不准确的</strong>.因为当预测商品销量多了的话,损失的会是成本;而当预测商品销量少了的话,损失的会是利润,<strong>因此可以使用自定义的函数来处理</strong>(因为实际上成本和利润大概率是不相等的).</p>
-<p>比如如下的损失函数是可以的:<br>$$<br>loss(y\underline{},y)&#x3D;\sum_{n}f(y\underline{},y) \\<br>其中\sum_{n}f(y\underline{},y)&#x3D;\begin{cases}PROFIT*(y\underline{}-y)&amp; y&lt;y\underline{}(预测的y少了,损失利润) \\<br>COST*(y-y\underline{})&amp; y&gt;&#x3D;y\underline{}(预测的y多了,损失成本) \end{cases}<br>$$<br>此时损失函数可以这样写:</p>
+<p>比如如下的损失函数是可以的:
+$$
+loss(y\underline{},y)&#x3D;\sum_{n}f(y\underline{},y) \\
+其中\sum_{n}f(y\underline{},y)&#x3D;\begin{cases}PROFIT*(y\underline{}-y)&amp; y&lt;y\underline{}(预测的y少了,损失利润) \\
+COST*(y-y\underline{})&amp; y&gt;&#x3D;y\underline{}(预测的y多了,损失成本) \end{cases}
+$$
+此时损失函数可以这样写:</p>
 <p><code>loss_zdy=tf.reduce_sum(tf.where(tf.greater(y, y_), (y - y_) * COST, (y_ - y) * PROFIT))</code></p>
 <p>举一个极端情况:</p>
 <blockquote>
-<p>酸奶成本1元， 酸奶利润99元<br>成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
+<p>酸奶成本1元， 酸奶利润99元
+成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
 </blockquote>
 <p>将损失函数替换为上述代码,得到的结果如下:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">After 14500 training steps,w1 is </span><br><span class="line">[[1.1406062]</span><br><span class="line"> [1.0476325]] </span><br><span class="line"></span><br><span class="line">Final w1 is:  [[1.1420636]</span><br><span class="line"> [1.1016785]]</span><br></pre></td></tr></table></figure>
@@ -1451,7 +1496,11 @@
 <p>如果酸奶成本99元,利润1元,则会使得训练的参数结果&lt;1(尽可能保持成本)</p>
 <h3 id="3-交叉熵"><a href="#3-交叉熵" class="headerlink" title="(3)交叉熵"></a>(3)交叉熵</h3><p><code>tf.losses.categorical_crossentropy(y_,y)</code></p>
 <p>交叉熵损失函数CE:表征两个概率分布之间的距离</p>
-<p><strong>交叉熵越大,两个概率分布越远;</strong><br>$$<br>H(y\underline{},y)&#x3D;\sum y\underline{}*lny<br>$$<br>比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
+<p><strong>交叉熵越大,两个概率分布越远;</strong>
+$$
+H(y\underline{},y)&#x3D;\sum y\underline{}*lny
+$$
+比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502222420738.png" alt="image-20220502222420738"></p>
 <p>通过定量计算,发现第二种结果的交叉熵更小,因此两个概率分布更为接近一些,所以y2预测的更准.</p>
 <p>上述验证的代码如下:</p>
@@ -1483,18 +1532,26 @@
 <li>采用正则化</li>
 <li>增大正则化参数</li>
 </ul>
-<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong><br>$$<br>loss&#x3D;loss(y,y\underline{})+REGULARIZER*loss(w)<br>$$<br>其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
+<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong>
+$$
+loss&#x3D;loss(y,y\underline{})+REGULARIZER*loss(w)
+$$
+其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
 <p><strong>RRGULARIZER是超参数,给出参数w在总loss中的比例,即正则化的权重</strong></p>
 <p>w是需要正则化的参数</p>
 <p>一般正则化分为L1正则化和L2正则化:</p>
 <ul>
 <li>L1正则化</li>
 </ul>
-<p>$$<br>loss_{L1}(w)&#x3D;\sum_i |w_i|<br>$$</p>
+<p>$$
+loss_{L1}(w)&#x3D;\sum_i |w_i|
+$$</p>
 <ul>
 <li>L2正则化</li>
 </ul>
-<p>$$<br>loss_{L2}(w)&#x3D;\sum_i |w_i^2|<br>$$</p>
+<p>$$
+loss_{L2}(w)&#x3D;\sum_i |w_i^2|
+$$</p>
 <p>对比:</p>
 <p>L1正则化大概率会使很多参数变为0,<strong>因此该方法可通过稀疏参数</strong>,即减少参数的数量,来降低复杂度.</p>
 <p>L2正则化会使得参数很接近零但不为零,<strong>因此该方法可通过减少参数值的大小降低复杂度</strong>.</p>
@@ -1519,14 +1576,33 @@
 <p>可以看到,加入L2正则化后的曲线更为平缓,有效地缓解了过拟合的情况.</p>
 <h2 id="2-6-神经网络参数优化器"><a href="#2-6-神经网络参数优化器" class="headerlink" title="2.6 神经网络参数优化器"></a>2.6 神经网络参数优化器</h2><p>优化器是引导神经网络更新参数的工具.</p>
 <h3 id="1-明确一些定义"><a href="#1-明确一些定义" class="headerlink" title="(1)明确一些定义"></a>(1)明确一些定义</h3><p>待优化的参数为w,损失函数为loss,学习率为lr,每次迭代一个batch(每个batch通常包括$2^n$组数据),t表示当前batch迭代的总次数:</p>
-<p>1.计算t时刻损失函数关于当前参数的梯度:<br>$$<br>g_t&#x3D;\nabla loss&#x3D;\frac{\partial{loss}}{\partial(w_t)}<br>$$<br>2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
+<p>1.计算t时刻损失函数关于当前参数的梯度:
+$$
+g_t&#x3D;\nabla loss&#x3D;\frac{\partial{loss}}{\partial(w_t)}
+$$
+2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
 <ul>
 <li>一阶动量是与梯度相关的函数</li>
 <li>二阶动量是与梯度平方相关的函数</li>
 </ul>
 <p><strong>不同的优化器其实是定义了不同的一阶动量和二阶动量公式</strong></p>
-<p>3.计算t时刻下降梯度:<br>$$<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}<br>$$<br>4.计算t+1时刻参数:<br>$$<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}<br>$$</p>
-<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.<br>$$<br>\begin{cases}<br>m_t&#x3D;g_t \qquad V_t&#x3D;1 \\<br>\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\<br>w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t<br>\end{cases}<br>$$<br>注意到这其实就是之前的梯度下降法公式了.</p>
+<p>3.计算t时刻下降梯度:
+$$
+\eta_t&#x3D;lr×m_t÷\sqrt{V_t}
+$$
+4.计算t+1时刻参数:
+$$
+w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}
+$$</p>
+<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.
+$$
+\begin{cases}
+m_t&#x3D;g_t \qquad V_t&#x3D;1 \\
+\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\
+w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t
+\end{cases}
+$$
+注意到这其实就是之前的梯度下降法公式了.</p>
 <p>在Python当中代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
 
@@ -2031,7 +2107,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-03 16:08:31" itemprop="dateModified" datetime="2022-05-03T16:08:31+08:00">2022-05-03</time>
+                <time title="修改时间：2022-05-06 22:37:50" itemprop="dateModified" datetime="2022-05-06T22:37:50+08:00">2022-05-06</time>
               </span>
 
           
@@ -2294,6 +2370,7 @@
 <p>(4)暂时可以不把很多复杂的公式堆在一起写.</p>
 <h4 id="17-Hexo-NexT设置代码块的复制功能"><a href="#17-Hexo-NexT设置代码块的复制功能" class="headerlink" title="17.Hexo NexT设置代码块的复制功能"></a>17.Hexo NexT设置代码块的复制功能</h4><p>很多时候,我们希望能让读者或是自己后续复习的时候可以复制博客中代码块,因此需要添加一个复制代码块的功能,方法如下:</p>
 <p>在next主题配置文件中启用<code>copy_button</code>即可</p>
+<h4 id="18-博客中加入空行"><a href="#18-博客中加入空行" class="headerlink" title="18.博客中加入空行"></a>18.博客中加入空行</h4><p>写了几篇博客之后发现，自己写的博客都是连在一起的，每一段中间没有空行作为分割，因此寻找了一下解决方案如下：</p>
 
       
     </div>

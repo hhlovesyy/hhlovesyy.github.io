@@ -538,9 +538,20 @@
 <ul>
 <li><p>1.使用<code>&lt;cstdlib&gt;</code>中的rand()函数</p>
 </li>
-<li><p>&#96;&#96;&#96;c++<br>&#x2F;&#x2F;rtweekend.h<br>#include <cstdlib><br>…</p>
-<p>inline float random_double()<br>{<br>&#x2F;&#x2F; Returns a random real in [0,1).<br>return rand() &#x2F; (RAND_MAX + 1.0);<br>}</p>
-<p>inline float random_double(float min, float max)<br>{<br>&#x2F;&#x2F; Returns a random real in [min,max).<br>return min + (max-min)*random_double();<br>}</p>
+<li><p>&#96;&#96;&#96;c++
+&#x2F;&#x2F;rtweekend.h
+#include <cstdlib>
+…</p>
+<p>inline float random_double() 
+{
+&#x2F;&#x2F; Returns a random real in [0,1).
+return rand() &#x2F; (RAND_MAX + 1.0);
+}</p>
+<p>inline float random_double(float min, float max) 
+{
+&#x2F;&#x2F; Returns a random real in [min,max).
+return min + (max-min)*random_double();
+}</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 2.传统C++并没有随机数生成器, **但是新版C++中的`&lt;random&gt;`头实现了这个功能**(某些专家觉得这种方法不太完美)。如果你想使用这种方法, 你可以参照下面的代码:</span><br><span class="line"></span><br><span class="line">- ```c++</span><br><span class="line">  //rtweekend.h</span><br><span class="line">  #include &lt;functional&gt;</span><br><span class="line">  #include &lt;random&gt;</span><br><span class="line">  </span><br><span class="line">  inline float random_double() &#123;</span><br><span class="line">      static std::uniform_real_distribution&lt;double&gt; distribution(0.0, 1.0);</span><br><span class="line">      static std::mt19937 generator;</span><br><span class="line">      static std::function&lt;double()&gt; rand_generator =</span><br><span class="line">          std::bind(distribution, generator);</span><br><span class="line">      return rand_generator();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <p>在这里我们使用第一种方式，直接调用这个函数就可以生成随机数了。</p>
@@ -575,7 +586,12 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/CGimage-20220304235239610.png" alt="image-20220304235239610"></p>
 <p>接下来，我们会：</p>
-<p>[8. Diffuse Material 漫反射材质]<br>[9. Metal 金属材质]<br>[10. Dielectric 绝缘体材质]<br>[11. Positionable Camera 可自定义位置的摄像机]<br>[12. Defocus Blur 对焦模糊]<br>[13. Where Next? 接下来学什么?]</p>
+<p>[8. Diffuse Material 漫反射材质]
+[9. Metal 金属材质]
+[10. Dielectric 绝缘体材质]
+[11. Positionable Camera 可自定义位置的摄像机]
+[12. Defocus Blur 对焦模糊]
+[13. Where Next? 接下来学什么?]</p>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/128582904">Ray Tracing in One Weekend V3.0中文翻译（上） - 知乎 (zhihu.com)</a></p>
 <h4 id="Chapter-7-漫反射材质"><a href="#Chapter-7-漫反射材质" class="headerlink" title="Chapter 7:漫反射材质"></a>Chapter 7:漫反射材质</h4><p>在这里我们把材质和物体设计成两个类, 这样就可以将材质赋值给物体类的成员变量,而大多数的渲染器也是这样做的。（另一种是把物体和材质紧密结合）</p>
@@ -634,7 +650,8 @@
 
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/CGimage-20220305111250315.png" alt="image-20220305111250315"></p>
 <p>和之前的进行对比，会发现：</p>
-<p>1.阴影部分少了<br>2.大球和小球都变亮了</p>
+<p>1.阴影部分少了
+2.大球和小球都变亮了</p>
 <p>这些变化都是<strong>由散射光线的单位规整化引起的</strong>, 现在更少的光线会朝着法线方向散射。对于漫发射的物体来说, 他们会变得更亮。因为更多光线朝着摄像机反射。对于阴影部分来说, 更少的光线朝上反射, 所以小球下方的大球区域会变得更加明亮。</p>
 <h5 id="（5）另一种启发式漫反射模型"><a href="#（5）另一种启发式漫反射模型" class="headerlink" title="（5）另一种启发式漫反射模型"></a>（5）另一种启发式漫反射模型</h5><p>另一种具有启发性的方法是, <strong>直接从入射点开始选取一个随机的方向, 然后再判断是否在法向量所在的那个半球。</strong>在使用lambertian漫发射模型前, 早期的光线追踪论文中大部分使用的都是这个方法:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vec3 <span class="title">random_in_hemisphere</span><span class="params">(<span class="type">const</span> vec3&amp; normal)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vec3 in_unit_sphere = <span class="built_in">random_in_unit_sphere</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">dot</span>(in_unit_sphere, normal) &gt; <span class="number">0.0</span>) <span class="comment">// In the same hemisphere as the normal</span></span><br><span class="line">        <span class="keyword">return</span> in_unit_sphere;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> -in_unit_sphere;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -647,7 +664,8 @@
 <p>就目前而言，我们暂时还是考虑Lambertian模型。（也就是在（4）中介绍的模型）</p>
 <p>这里鼓励使用不同的漫反射模型来进行尝试。</p>
 <h4 id="Chapter-8：金属材质"><a href="#Chapter-8：金属材质" class="headerlink" title="Chapter 8：金属材质"></a>Chapter 8：金属材质</h4><h5 id="（1）声明一个材质抽象类"><a href="#（1）声明一个材质抽象类" class="headerlink" title="（1）声明一个材质抽象类"></a>（1）声明一个材质抽象类</h5><p>该抽象类应该封装有两个功能：</p>
-<p>1.生成散射后的光线(或者说它吸收了入射光线)<br>2.如果发生散射, 决定光线会衰减多少(attenuate)</p>
+<p>1.生成散射后的光线(或者说它吸收了入射光线)
+2.如果发生散射, 决定光线会衰减多少(attenuate)</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;rtweekend.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hitable.h&quot;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">material</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">scatter</span><span class="params">(<span class="type">const</span> ray&amp; r_in, <span class="type">const</span> hit_record&amp; rec, vec3&amp; attenuation, ray&amp; scattered)</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// !MATERIAL_H</span></span></span><br></pre></td></tr></table></figure>
 
 <p>在函数中使用<code>hit_record</code>作为传入参数, 就可以不用传入一大堆变量了。</p>
