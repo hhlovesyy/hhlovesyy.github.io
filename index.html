@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-06 22:01:49 / 修改时间：22:24:18" itemprop="dateCreated datePublished" datetime="2022-05-06T22:01:49+08:00">2022-05-06</time>
+              <time title="创建时间：2022-05-06 22:01:49 / 修改时间：22:28:24" itemprop="dateCreated datePublished" datetime="2022-05-06T22:01:49+08:00">2022-05-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,9 +223,7 @@
 <h2 id="一-K-means介绍"><a href="#一-K-means介绍" class="headerlink" title="一.K means介绍"></a>一.K means介绍</h2><p>参考资料:</p>
 <p>【1】<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78798251">【机器学习】K-means（非常详细） - 知乎 (zhihu.com)</a></p>
 <p>【2】<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20432322">K-Means聚类算法（一）：算法思路 - 知乎 (zhihu.com)</a></p>
-<p><br/></p>
 <h3 id="（1）原理"><a href="#（1）原理" class="headerlink" title="（1）原理"></a>（1）原理</h3><p>可以参考上面的链接，在这里不多叙述；</p>
-<p><br/></p>
 <h3 id="（2）算法实现"><a href="#（2）算法实现" class="headerlink" title="（2）算法实现"></a>（2）算法实现</h3><p>K-means 的算法步骤为：</p>
 <ol>
 <li><p>选择初始化的 k 个样本作为初始聚类中心 <img src="https://www.zhihu.com/equation?tex=a%3D%7Ba_1%2Ca_2%2C%E2%80%A6a_k%7D" alt="[公式]"> </p>
@@ -238,14 +236,12 @@
 <li><p>重复上面 2 3 两步操作，直到达到某个中止条件（迭代次数、最小误差变化等）。</p>
 </li>
 </ol>
-<p><br/></p>
 <h5 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h5><ul>
 <li>根据上述的算法，自然可以写出对应的伪代码：</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">获取数据 n 个 m 维的数据</span><br><span class="line">  随机生成 K 个 m 维的点</span><br><span class="line">  <span class="keyword">while</span>(t)</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i &lt; n;i++)</span><br><span class="line">          <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j &lt; k;j++)</span><br><span class="line">              计算点 i 到类 j 的距离  <span class="comment">//数据到K个聚类中心的点的距离</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i &lt; k;i++) <span class="comment">//遍历每一个聚类，开始计算属于该聚类的点和更新聚类中心的点的坐标</span></span><br><span class="line">          <span class="number">1.</span> 找出所有属于自己这一类的所有数据点</span><br><span class="line">          <span class="number">2.</span> 把自己的坐标修改为这些数据点的中心点坐标</span><br><span class="line">  end</span><br></pre></td></tr></table></figure>
 <p>时间复杂度： <img src="https://www.zhihu.com/equation?tex=O%28tknm%29" alt="[公式]"> 其中，t 为迭代次数，k 为簇的数目，n 为样本点数，m 为样本点维度。</p>
 <p>空间复杂度： <img src="https://www.zhihu.com/equation?tex=O%28m%28n%2Bk%29%29" alt="[公式]"> 其中，k 为簇的数目，m 为样本点维度，n 为样本点数。</p>
-<p><br/></p>
 <h3 id="（3）优缺点分析"><a href="#（3）优缺点分析" class="headerlink" title="（3）优缺点分析"></a>（3）优缺点分析</h3><ul>
 <li>优点：</li>
 </ul>
@@ -257,7 +253,6 @@
 <li>算法复杂度低,比较容易实现。</li>
 </ul>
 </blockquote>
-<p><br/></p>
 <ul>
 <li>缺点：</li>
 </ul>
