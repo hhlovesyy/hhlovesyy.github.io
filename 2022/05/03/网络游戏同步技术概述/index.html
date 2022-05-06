@@ -31,8 +31,8 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320165407089.png">
-<meta property="og:image" content="https://www.zhihu.com/equation?tex=S_k+%3D++%5Cbegin%7Bcases%7D++g%28P%2C+C%29%2C+%26%5Ctext%7Bif+%7D+k%3D0+%5C%5C++t%28S_%7Bk-1%7D%2C+C%2C+I_k%29%2C+%26%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C">
-<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+%26%3D+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+%26%3D+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=S_k+=++%5Cbegin%7Bcases%7D++g(P,+C),+&%5Ctext%7Bif+%7D+k=0+%5C%5C++t(S_%7Bk-1%7D,+C,+I_k),+&%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+&=+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+&=+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C">
 <meta property="og:image" content="https://pic1.zhimg.com/v2-5a11925f93130d3c315300b9055baac0_r.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320200447666.png">
 <meta property="article:published_time" content="2022-05-03T15:51:28.000Z">
@@ -246,7 +246,7 @@
 <p>2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State Synchronization）</p>
 </blockquote>
 <h3 id="二-网络传输协议"><a href="#二-网络传输协议" class="headerlink" title="二.网络传输协议"></a>二.网络传输协议</h3><blockquote>
-<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。<br>在TCP/IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
+<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。<br>在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
 </blockquote>
 <p>复习一下互联网的体系结构：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png" alt="image-20220320163835295"></p>
@@ -258,7 +258,8 @@
 <li>UDP数据报分为<strong>首部</strong>和<strong>用户数据部分</strong>，整个UDP数据报作为IP数据报的数据部分封装在IP数据报中：</li>
 </ul>
 <p>对于UDP协议来说，其首部的结构如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70" alt="img" style="zoom:80%;" /></p>
+<img src="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70" alt="img" style="zoom:80%;" />
+
 <p>其中，涉及到的字段的解释如下：</p>
 <ul>
 <li><strong>源端口</strong>： 源端口号，需要对方回信时选用，不需要时全部置0。</li>
@@ -310,7 +311,7 @@
 </ul>
 <p>其中，<strong>游戏的逻辑帧率和渲染帧率是互相独立的</strong>，比如一个游戏可以是20帧每秒的逻辑帧率、60帧每秒的渲染帧率。</p>
 <h4 id="（1）游戏逻辑的进行"><a href="#（1）游戏逻辑的进行" class="headerlink" title="（1）游戏逻辑的进行"></a>（1）游戏逻辑的进行</h4><p>游戏逻辑是一个逻辑帧一个逻辑帧地持续离散进行的，可以抽象为：</p>
-<p><img src="https://www.zhihu.com/equation?tex=S_k+%3D++%5Cbegin%7Bcases%7D++g%28P%2C+C%29%2C+%26%5Ctext%7Bif+%7D+k%3D0+%5C%5C++t%28S_%7Bk-1%7D%2C+C%2C+I_k%29%2C+%26%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C" alt="[公式]"></p>
+<p><img src="https://www.zhihu.com/equation?tex=S_k+=++%5Cbegin%7Bcases%7D++g(P,+C),+&%5Ctext%7Bif+%7D+k=0+%5C%5C++t(S_%7Bk-1%7D,+C,+I_k),+&%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C" alt="[公式]"></p>
 <ul>
 <li><p>游戏在第0个逻辑帧时，根据玩家信息$P$和游戏配置$C$，进行初始化运算$g$，得出初始化状态集合$S_0$</p>
 </li>
@@ -326,12 +327,12 @@
 </ul>
 </li>
 </ul>
-<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+%26%3D+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+%26%3D+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C" alt="[公式]"></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+&=+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+&=+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C" alt="[公式]"></p>
 <h4 id="（2）状态同步和帧同步概括"><a href="#（2）状态同步和帧同步概括" class="headerlink" title="（2）状态同步和帧同步概括"></a>（2）状态同步和帧同步概括</h4><p>在网络同步时，称从客户端发出信息进行网络传输的过程为<strong>上行</strong>，称客户端经过网络传输收到信息的过程为<strong>下行</strong>，则，</p>
 <ul>
 <li><p><strong>一般帧同步的本质是</strong>，<strong>上下行</strong>都仅包含游戏外部变化原因集合$I_k$</p>
 </li>
-<li><p><strong>一般状态同步的本质是</strong>，<strong>下行</strong>仅包含游戏运算得出的结果状态集合$S_k$(确切地说是状态子集$O_k$,也就是能被玩家明显观察到的对象的状态集合)，<strong>上行</strong>则包含$I_k$和/或状态子集$M_k$;</p>
+<li><p><strong>一般状态同步的本质是</strong>，<strong>下行</strong>仅包含游戏运算得出的结果状态集合$S_k$(确切地说是状态子集$O_k$,也就是能被玩家明显观察到的对象的状态集合)，<strong>上行</strong>则包含$I_k$和&#x2F;或状态子集$M_k$;</p>
 </li>
 </ul>
 <p>注：参考的文章当中的帧同步特指只同步操作的确定性锁步同步（Deterministic Lockstep）。不讨论快照同步（Snapshot Synchronization、Snapshot Interpolation），认为其等同于状态同步。</p>
@@ -347,7 +348,8 @@
 </blockquote>
 <h5 id="保证游戏的严格确定性："><a href="#保证游戏的严格确定性：" class="headerlink" title="保证游戏的严格确定性："></a>保证游戏的严格确定性：</h5><p>根据上述介绍，如果想要保证游戏的严格确定性，可以做出如下的规定：</p>
 <ul>
-<li><strong>对浮点数的处理</strong>：不使用浮点数而使用定点数，或限定各客户端所运行的硬件及操作系统从而浮点数的运算是一致的。</li>
+<li><p><strong>对浮点数的处理</strong>：不使用浮点数而使用定点数，或限定各客户端所运行的硬件及操作系统从而浮点数的运算是一致的。</p>
+</li>
 <li><p><strong>确定性的随机数机制</strong>；</p>
 <ul>
 <li>需要保证每次随机的数字都相同，所以需要自己实现一套随机数，不能用unity自带的那个随机数接口，而且需要服务端发送相同的随机种子；因为非常微小的误差就有可能产生蝴蝶效应，所以所有<code>float</code>型的参数必须变成<code>int</code>型，保证计算结果一致。</li>
@@ -355,11 +357,13 @@
 </li>
 <li><p><strong>确定性的容器及算法</strong>（增加、移除、排序等）；</p>
 </li>
-<li><strong>隔离和封装逻辑层</strong>，以防止其他不确定性的调用；<ul>
+<li><p><strong>隔离和封装逻辑层</strong>，以防止其他不确定性的调用；</p>
+<ul>
 <li>如需，则也须做到确定性的物理机制、导航机制、动画骨骼机制等，</li>
 </ul>
 </li>
-<li>排查所有引起异常（exception）的逻辑。</li>
+<li><p>排查所有引起异常（exception）的逻辑。</p>
+</li>
 </ul>
 <h5 id="制定检测不同步的管线流程的重要性："><a href="#制定检测不同步的管线流程的重要性：" class="headerlink" title="制定检测不同步的管线流程的重要性："></a>制定检测不同步的管线流程的重要性：</h5><blockquote>
 <p>对锁步同步游戏来说，不同步造成的游戏体验是极差的，偶现的不同步问题是极为头痛的， 因此制定检测不同步的管线流程对锁步同步游戏来说是至关重要的，比如<strong>帧状态哈希对比、静态代码扫描分析、帧级别甚至函数级别的高性能日志、外网不同步率统计，等</strong>。</p>
@@ -371,12 +375,12 @@
 <ul>
 <li>注：许多著名引擎（如Unreal，Unity）的状态同步的实现都参考了下面这篇文章：<a target="_blank" rel="noopener" href="https://www.gamedevs.org/uploads/tribes-networking-model.pdf">Title (gamedevs.org)</a></li>
 </ul>
-<p>状态同步开发过程中最基础也最重要的是，<strong>不管客户端网络对象当前处于什么状态，它都要做到能正确地完全退出旧状态，退出后不能残留旧状态的逻辑层效果，并正确地进入服务器告知的新权威状态，从而带来新状态的逻辑层效果。</strong>（状态同步的时候<strong>上行</strong>包含$I_k$和/或状态子集$M_k$）</p>
+<p>状态同步开发过程中最基础也最重要的是，<strong>不管客户端网络对象当前处于什么状态，它都要做到能正确地完全退出旧状态，退出后不能残留旧状态的逻辑层效果，并正确地进入服务器告知的新权威状态，从而带来新状态的逻辑层效果。</strong>（状态同步的时候<strong>上行</strong>包含$I_k$和&#x2F;或状态子集$M_k$）</p>
 <blockquote>
 <p>要避免以非状态同步的方式同步<strong>权威状态</strong>,比如类似于帧同步，服务器只传输$I_k$给客户端（而不传输$S_k$），让客户端在本地计算出网络对象的新状态$S_k$，<strong>这可能会带来服务器客户端之间状态不一致。</strong></p>
 <p>比如说，某个网络对象在第$k$个逻辑帧发生了$I_k$而进入到了$S_k$，且之后$S$都不再发生改变，那么服务器只会在第$k$帧才会发送$I_k$；之后若客户端因<strong>断线重连或实时死亡重播</strong>等原因导致该网络对象状态在客户端被重置为$S_0$，但当前服务器逻辑帧已大于第$k$帧，服务器不会再传输$I_k$给客户端，那么该网络对象在客户端里就错误地一直停留在$S_0$了。</p>
 </blockquote>
-<p>注：之前在帧同步讨论到的确定性指的是<strong>“严格的”确定性。</strong>在讨论状态同步时，偶尔也会提及“不严格的”确定性（比如最开始作者链接的Q/A阶段最后一个问题），<strong>此类确定性只要求客户端服务器之间满足“足够的”确定性</strong>，以便客户端能够比较准确地进行预表现即可，因为客户端最终会采纳服务器的状态，修正累计的误差。</p>
+<p>注：之前在帧同步讨论到的确定性指的是<strong>“严格的”确定性。</strong>在讨论状态同步时，偶尔也会提及“不严格的”确定性（比如最开始作者链接的Q&#x2F;A阶段最后一个问题），<strong>此类确定性只要求客户端服务器之间满足“足够的”确定性</strong>，以便客户端能够比较准确地进行预表现即可，因为客户端最终会采纳服务器的状态，修正累计的误差。</p>
 <h4 id="（5）帧同步和状态同步的对比"><a href="#（5）帧同步和状态同步的对比" class="headerlink" title="（5）帧同步和状态同步的对比"></a>（5）帧同步和状态同步的对比</h4><p><img src="https://pic1.zhimg.com/v2-5a11925f93130d3c315300b9055baac0_r.jpg" alt="preview"></p>
 <h5 id="两者的区别"><a href="#两者的区别" class="headerlink" title="两者的区别"></a>两者的区别</h5><blockquote>
 <ul>
@@ -387,8 +391,6 @@
 </ul>
 <p><strong>战斗逻辑</strong>是包括技能逻辑、普攻、属性、伤害、移动、AI、检测、碰撞等等的一系列内容，这常常也被视为游戏开发过程中最难的部分。由于<strong>核心逻辑必须知道一个场景中的所有实体情况</strong>，所以MMO游戏（例如魔兽世界）就必须把战斗逻辑写在服务端，<strong>所以MMO游戏必须是状态同步的</strong>，因为MMO游戏的客户端承载有限，并不能把整张地图的实体全部展现出来（例如100米以外的NPC和玩家就不显示了），所以客户端没有足够的信息计算全图的人的所有行为。</p>
 </li>
-</ul>
-<ul>
 <li><p>具体到客户端和服务端的通信上：</p>
 <ul>
 <li><p><strong>在状态同步下，客户端更像是一个服务端数据的表现层</strong>。举个例子，一个英雄的几乎所有属性（例如血量、攻击、防御、攻速、魔法值等等）都是服务端传给客户端的，而且在属性发生改变的时候，服务端需要实时告诉客户端哪些属性改变了，客户端并不能改变这些属性，而是服务端传来什么属性就显示多少属性（虽然可以改变客户端数值达到表现上的效果，例如无限血量，但是服务端那边的血量属性为0时，一样会死）。</p>
@@ -426,12 +428,12 @@
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8cca5458c45b">游戏帧同步的流程与实现 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9b7fdf9c9272">帧同步和状态同步 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/it_wjw/article/details/76578165">(7条消息) 战斗同步策略之状态同步_书影_的博客-CSDN博客_状态同步</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4000a301c32a">多边形碰撞检测 — 分离轴算法 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4000a301c32a">多边形碰撞检测 – 分离轴算法 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tekkaman/p/9337912.html">状态同步 - Tekkaman - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433368860">网络游戏研发，该选帧同步还是状态同步？ - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/372526366_667928">帧同步（LockStep）该如何反外挂 及 优化_游戏 (sohu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151347866">什么是QoS技术 - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hello_world6/article/details/53680298?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_default&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=3">(7条消息) 如何让UDP实现可靠传输_hello_world6的博客-CSDN博客_怎么让udp实现可靠连接</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hello_world6/article/details/53680298?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_default&spm=1001.2101.3001.4242.1&utm_relevant_index=3">(7条消息) 如何让UDP实现可靠传输_hello_world6的博客-CSDN博客_怎么让udp实现可靠连接</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nieliangcai/p/10362751.html">TCP和UDP的区别（Socket） - 小心走火 - 博客园 (cnblogs.com)</a></p>
 
     </div>
