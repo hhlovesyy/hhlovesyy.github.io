@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Linux上部署网络游戏环境Csharp版本所使用的Linux操作系统:CentOS 7.6版本.采用的云服务器是阿里云的服务器试用版.理论上使用其他的云服务器操作步骤也是类似的. 一些额外的对Linux学习有帮助的教程(有时间可以再阅读一下,比如权限管理相关的): https:&#x2F;&#x2F;www.cyberithub.com&#x2F;add-user-to-sudoers&#x2F; https:&#x2F;&#x2F;linuxize.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux部署C#和MySQL环境">
+<meta property="og:url" content="http://example.com/2022/05/10/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="ChrisZhang">
+<meta property="og:description" content="Linux上部署网络游戏环境Csharp版本所使用的Linux操作系统:CentOS 7.6版本.采用的云服务器是阿里云的服务器试用版.理论上使用其他的云服务器操作步骤也是类似的. 一些额外的对Linux学习有帮助的教程(有时间可以再阅读一下,比如权限管理相关的): https:&#x2F;&#x2F;www.cyberithub.com&#x2F;add-user-to-sudoers&#x2F; https:&#x2F;&#x2F;linuxize.c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507204105601.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210012731.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210145301.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210737960.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507211032523.png">
+<meta property="og:image" content="d:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211353271.png">
+<meta property="og:image" content="d:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211609371.png">
+<meta property="og:image" content="d:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507212346315.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507212501350.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508125914478.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508123640363.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508130154061.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508143542196.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508141147940.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508142447775.png">
+<meta property="article:published_time" content="2022-05-10T07:14:45.000Z">
+<meta property="article:modified_time" content="2022-05-10T07:27:54.475Z">
+<meta property="article:author" content="ChrisZhang">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507204105601.png">
+
+<link rel="canonical" href="http://example.com/2022/05/10/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux部署C#和MySQL环境 | ChrisZhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChrisZhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux部署C#和MySQL环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-10 15:14:45 / 修改时间：15:27:54" itemprop="dateCreated datePublished" datetime="2022-05-10T15:14:45+08:00">2022-05-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">各种环境搭建</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Linux上部署网络游戏环境Csharp版本"><a href="#Linux上部署网络游戏环境Csharp版本" class="headerlink" title="Linux上部署网络游戏环境Csharp版本"></a>Linux上部署网络游戏环境Csharp版本</h1><p>所使用的Linux操作系统:CentOS 7.6版本.采用的云服务器是阿里云的服务器试用版.理论上使用其他的云服务器操作步骤也是类似的.</p>
+<p>一些额外的对Linux学习有帮助的教程(有时间可以再阅读一下,比如权限管理相关的):</p>
+<p><a target="_blank" rel="noopener" href="https://www.cyberithub.com/add-user-to-sudoers/">https://www.cyberithub.com/add-user-to-sudoers/</a></p>
+<p><a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-add-user-to-sudoers-in-centos/">https://linuxize.com/post/how-to-add-user-to-sudoers-in-centos/</a></p>
+<h2 id="一-阿里云服务器配置"><a href="#一-阿里云服务器配置" class="headerlink" title="一.阿里云服务器配置"></a>一.阿里云服务器配置</h2><h3 id="1-云服务器挑选"><a href="#1-云服务器挑选" class="headerlink" title="1.云服务器挑选"></a>1.云服务器挑选</h3><p>首选,登录阿里云服务器官网:</p>
+<p><a target="_blank" rel="noopener" href="https://www.aliyun.com/">阿里云-上云就上阿里云 (aliyun.com)</a></p>
+<p>进入下方的云服务器选择:</p>
+<p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507204105601.png" alt="image-20220507204105601"></p>
+<p>在这里根据自己的需要选择合适的阿里云服务器版本,如果想要体验一下的话可以使用免费试用版,这里我使用的是如下的一款:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210012731.png" alt="image-20220507210012731"></p>
+<p><strong>在这里由于我已经使用完了,所以这里以付费版本为例(正常应该是可以免费试用的)</strong>,接下来点击”立即购买”,即可进入环境配置界面.</p>
+<h3 id="2-环境配置"><a href="#2-环境配置" class="headerlink" title="2.环境配置"></a>2.环境配置</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210145301.png" alt="image-20220507210145301"></p>
+<p>接下来,只需要选择立即购买即拥有一台属于自己的云服务器了.(<strong>对于学生来讲,也可以使用学生试用,不过似乎要完成一些任务</strong>)</p>
+<br/>
+
+<p>此时就可以跳转至控制台看到我们刚购买的云服务器了,控制台点击云服务详情可以查看服务器的详细情况:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210737960.png" alt="image-20220507210737960"></p>
+<br/>
+
+<h3 id="3-启动服务器"><a href="#3-启动服务器" class="headerlink" title="3.启动服务器"></a>3.启动服务器</h3><p>这里推荐使用XShell来远程登录服务器,不过在一开始的时候我们要为服务器设置账号和密码,这里方便起见以root为例.</p>
+<h4 id="1-设置账号密码"><a href="#1-设置账号密码" class="headerlink" title="(1)设置账号密码"></a>(1)设置账号密码</h4><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507211032523.png" alt="image-20220507211032523"></p>
+<p>在这里修改为自己的密码即可.(<strong>账号为了方便保持root不变</strong>)</p>
+<p>设置完密码之后,只需要重启ECS云服务器即可.</p>
+<br/>
+
+<h4 id="2-XShell远程登录云服务器"><a href="#2-XShell远程登录云服务器" class="headerlink" title="(2)XShell远程登录云服务器"></a>(2)XShell远程登录云服务器</h4><p>通过上图我们可以看到云服务器的公网和私网IP,如果想要远程登录云服务器则需要通过公网IP来登录:</p>
+<p>打开XShell,新建连接,输入正确的IP地址,端口号采用默认即可:</p>
+<p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211353271.png" alt="image-20220507211353271"></p>
+<p>接下来出来一个登录弹窗,选择一次性接受即可,输入root账号和密码;</p>
+<p>如果登录成功应该会出现如下信息:</p>
+<p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211609371.png" alt="image-20220507211609371"></p>
+<p>这样以后我们每次就可以使用这种方式来登录阿里云服务器了.</p>
+<br/>
+
+<h2 id="二-部署C-编译运行环境"><a href="#二-部署C-编译运行环境" class="headerlink" title="二.部署C#编译运行环境"></a>二.部署C#编译运行环境</h2><p>这里假设我们已经写好了服务端的程序(C#版本),并且该服务端程序还会涉及到MySQL数据库的连接,那么我们就需要配置C#的编译运行环境,以及MySQL的生产环境.</p>
+<h3 id="1-将C-程序-cs文件导入Linux"><a href="#1-将C-程序-cs文件导入Linux" class="headerlink" title="1.将C#程序.cs文件导入Linux"></a>1.将C#程序.cs文件导入Linux</h3><p>这里使用XFTP程序将Windows操作系统的.cs文件导入Linux操作系统即可.同样这里的主机名采用远端服务器的公网IP地址.将服务器的C#程序利用XFTP上传到Linux操作系统,具体如下:</p>
+<p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507212346315.png" alt="image-20220507212346315"></p>
+<p>这里我上传到了远端Linux服务器下的&#x2F;opt文件夹当中.</p>
+<p>可以利用XShell进行验证查看:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507212501350.png" alt="image-20220507212501350"></p>
+<p>可以看到,我们的Game文件夹以及上传到Linux服务器上了.</p>
+<br/>
+
+<h3 id="2-Linux操作系统下载Mono"><a href="#2-Linux操作系统下载Mono" class="headerlink" title="2.Linux操作系统下载Mono"></a>2.Linux操作系统下载Mono</h3><p>执行下面的四条指令以完成安装:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rpm --import <span class="string">&quot;https://keyserver.ubuntu.com/pks/lookup?op=get&amp;search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta"># create a yum repository file for mono</span></span><br><span class="line">su -c <span class="string">&#x27;curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta"># install mono</span></span><br><span class="line">yum install mono-devel</span><br><span class="line"> </span><br><span class="line"><span class="meta"># check mono version</span></span><br><span class="line">mono --version</span><br></pre></td></tr></table></figure>
+
+<p>测试成功之后的提示信息应该如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508125914478.png" alt="image-20220508125914478"></p>
+<p>如果下载过程当中出现了一些问题(比如下载速度太慢了之类的),可以尝试使用镜像.如果还是不能解决问题试试下面的解决方案:(建议直接使用VPN下载,<strong>经过尝试,也可以直接使用阿里云的控制台登录服务器进行指令书写,竟然会比XShell下载更快一些</strong>):</p>
+<p>如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508123640363.png" alt="image-20220508123640363"></p>
+<p>(上图是各种镜像一直超时的情况,目前没有很好地解决方案,只能耐心等待了.)</p>
+<h4 id="1-下载超时的解决方案"><a href="#1-下载超时的解决方案" class="headerlink" title="(1)下载超时的解决方案"></a>(1)下载超时的解决方案</h4><p>对于我个人而言,目前没有很好地方式,只能一直等待各种镜像安装,目前经历了几个小时的安装之后终于可以了.</p>
+<p><strong>其他或许会有所帮助的参考文章:</strong></p>
+<p>参考:</p>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/378642">https://developer.aliyun.com/article/378642</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.likecs.com/show-305373901.html">CentOS 7下安装Mono - 爱码网 (likecs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mono-project.com/download/stable/#download-lin-centos">Download - Stable | Mono (mono-project.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.eldernode.com/setup-and-run-monodevelop-on-centos/">https://blog.eldernode.com/setup-and-run-monodevelop-on-centos/</a></p>
+<h3 id="3-运行C-程序-测试"><a href="#3-运行C-程序-测试" class="headerlink" title="3.运行C#程序-测试"></a>3.运行C#程序-测试</h3><h4 id="1-普通的C-程序"><a href="#1-普通的C-程序" class="headerlink" title="(1)普通的C#程序"></a>(1)普通的C#程序</h4><p>如果这个C#程序只有一个.cs文件,则按照下面的方式进行编译运行即可.这里我们以C#的<code>Helloworld.cs</code>为例:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">   &#123;</span><br><span class="line">       Console.WriteLine(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将这个文件上传到Linux服务器上(采用与上文相同的方式)</p>
+<br/>
+
+<ul>
+<li>编译C#程序</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcs hello.cs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运行C#程序(编译后的.exe程序)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mono hello.exe</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>停止运行某程序:直接输入Ctrl+C即可(<strong>比如说想要关闭服务器</strong>)</li>
+</ul>
+<p>最终效果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508130154061.png" alt="image-20220508130154061"></p>
+<br/>
+
+
+
+<h4 id="2-复杂一些的C-程序"><a href="#2-复杂一些的C-程序" class="headerlink" title="(2)复杂一些的C#程序"></a>(2)复杂一些的C#程序</h4><p>比如我们想要运行的游戏服务端,是一个庞大的工程,此时我们需要关注的就是其中的.csproj文件,这就是我们想要编译的文件.指令如下:</p>
+<br/>
+
+<h2 id="三-一些注意事项"><a href="#三-一些注意事项" class="headerlink" title="三.一些注意事项"></a>三.一些注意事项</h2><h3 id="1-关于服务端和客户端的Socket连接的IP"><a href="#1-关于服务端和客户端的Socket连接的IP" class="headerlink" title="1.关于服务端和客户端的Socket连接的IP"></a>1.关于服务端和客户端的Socket连接的IP</h3><p>首先,我们要明确的是,客户端连接服务端的Socket当中要写明其公网IP,所以客户端的程序结构示例如下:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接服务器</span></span><br><span class="line">NetManager.Connect(<span class="string">&quot;47.111.176.71&quot;</span>, <span class="number">8888</span>); <span class="comment">// 这里是服务器的公网IP</span></span><br></pre></td></tr></table></figure>
+
+<p>而对于服务端来说,其Socket绑定的需要是自己的私网IP,这也可以在阿里云的实例界面中进行查看.所以服务端的程序结构如下:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> listenPort=<span class="number">8888</span>; <span class="comment">//设置监听端口号</span></span><br><span class="line">IPAddress ipAdr = IPAddress.Parse(<span class="string">&quot;172.20.25.4&quot;</span>); <span class="comment">// 绑定服务器的私有地址</span></span><br><span class="line">IPEndPoint ipEp = <span class="keyword">new</span> IPEndPoint(ipAdr, listenPort);</span><br><span class="line">listenfd.Bind(ipEp);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在做完以上配置之后,如果客户端无法连接上服务端,则可能是由于服务端网络端口没有打开.</p>
+<br/>
+
+<h3 id="2-Linux打开网络某个端口"><a href="#2-Linux打开网络某个端口" class="headerlink" title="2.Linux打开网络某个端口"></a>2.Linux打开网络某个端口</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lirhbky/p/15182657.html">linux服务器开放端口号（6379） - 正经boy - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.xinshouzhanzhang.com/aliyunipfangwen.html">阿里云服务器公网IP无法访问的解决方法 - 新手站长网 (xinshouzhanzhang.com)</a></p>
+<p>请注意,需要把阿里云的公网IP打开,具体看上面的教程.同时服务器需要开放相关的端口.</p>
+<br/>
+
+<h2 id="四-部署MySQL-mariadb-生产环境"><a href="#四-部署MySQL-mariadb-生产环境" class="headerlink" title="四.部署MySQL(mariadb)生产环境"></a>四.部署MySQL(mariadb)生产环境</h2><p>参考教程:</p>
+<h3 id="1-清除旧的MySQL环境"><a href="#1-清除旧的MySQL环境" class="headerlink" title="1.清除旧的MySQL环境"></a>1.清除旧的MySQL环境</h3><p>首先查看云服务器上是否已经部署了MySQL:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+
+<p>如果没有出现任何信息,则说明没有部署MySQL,否则可以把原来的删掉.</p>
+<p>比如出现了下述情况,则可以将原来的MySQL删掉:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508143542196.png" alt="image-20220508143542196"></p>
+<p>指令为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove xxx(以mysql开头的包)</span><br></pre></td></tr></table></figure>
+
+<p>删完之后可以重新查看一下是否已经删除成功了(使用rpm -qa | grep mysql).</p>
+<br/>
+
+<p>接下来,还需要删除对应MySQL的相关目录,否则可能无法产生新的密码:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysql</span><br><span class="line"><span class="comment"># 接下来会显示相关的路径,将其删掉</span></span><br><span class="line">rm -rf /usr/share/mysql</span><br><span class="line">rm -rf /etc/my.cnf</span><br><span class="line">rm -rf /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-安装MySQL-如果是CenOS7版本以上忽略这部分"><a href="#2-安装MySQL-如果是CenOS7版本以上忽略这部分" class="headerlink" title="2.安装MySQL(如果是CenOS7版本以上忽略这部分)"></a>2.安装MySQL(如果是CenOS7版本以上忽略这部分)</h3><p>低版本的话可以参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/404076008">Linux 安装Mysql（图文教程） - 知乎 (zhihu.com)</a></p>
+<p>接下来,下载官方的MySQL包:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-<span class="number">10</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>先安装MySQL包:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> mysql57-community-release-el7-<span class="number">10</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>然后再安装MySQL:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql-community-server</span><br></pre></td></tr></table></figure>
+
+<p>同样,出现问题可以参考上述博客解决.</p>
+<br/>
+
+<p>接下来,启动MySQL服务:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service</span><br></pre></td></tr></table></figure>
+
+<p>这时可能会提示:Unit Not found</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508141147940.png" alt="image-20220508141147940"></p>
+<p>则可以参考下述文章的解决方案:</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miaodichiyou/article/details/99289160">(11条消息) Failed to start mysqld.service: Unit not found_赵健乔的博客-CSDN博客</a></p>
+<br/>
+
+<h3 id="3-启用MySQL服务"><a href="#3-启用MySQL服务" class="headerlink" title="3.启用MySQL服务"></a>3.启用MySQL服务</h3><p>参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricklz/p/12269102.html">centos7安装MariaDB以及Failed to start mariadb.service: Unit not found的错误解决 - ZhanLi - 博客园 (cnblogs.com)</a></p>
+<p>(1)首先安装mariadb和mariadb-server</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mariadb mariadb-server</span><br></pre></td></tr></table></figure>
+
+<p>如果出现了以下的问题:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508142447775.png" alt="image-20220508142447775"></p>
+<p>则表示GPG key的验证出现了错误,此时一个不严谨的做法是直接绕过GPG key的验证,重新输入(<strong>经过实际测试造成这种现象的原因可能是原来的MySQL没有删除干净,可以重新验证一下</strong>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mariadb mariadb-server --nogpgcheck</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>(2)启动MariaDB</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mariadb</span><br></pre></td></tr></table></figure>
+
+<p>关于MariaDB的一些指令如下:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> mariadb mariadb-server</span><br><span class="line">systemctl start mariadb   <span class="comment">#启动mariadb</span></span><br><span class="line">systemctl enable mariadb  <span class="comment">#设置开机自启动</span></span><br><span class="line">systemctl stop mariadb    <span class="comment">#停止MariaDB</span></span><br><span class="line">systemctl restart mariadb <span class="comment">#重启MariaDB</span></span><br><span class="line">mysql_secure_installation <span class="comment">#设置root密码等相关</span></span><br><span class="line">mysql -uroot -p           <span class="comment">#测试登录 </span></span><br></pre></td></tr></table></figure>
+
+<p>因此我们需要首先设置一下开机自启动,然后设置root密码等相关:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mariadb  <span class="comment">#设置开机自启动</span></span><br><span class="line">update mysql.user <span class="keyword">set</span> password=PASSWORD(&#x27;xxxxx&#x27;) where user=&#x27;root&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>接下来,需要初始化数据库的密码等信息,可以参考如下博客:</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000039132059">LInux中如何安装MySql和MariaDB以及配置 - SegmentFault 思否</a></p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/connector-net/en/connector-net-installation-unix.html">MySQL :: MySQL Connector&#x2F;NET Developer Guide :: 3.2 Installing Connector&#x2F;NET on Unix with Mono</a></p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/net/">MySQL :: Download Connector&#x2F;NET</a></p>
+<p>如果没有unzip和zip,尝试以下解决方案:
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/yuxiaoshuangshuang/article/details/80625276">(11条消息) linux环境-bash: unzip: command not found_双鱼座girl的博客-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ChrisZhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/05/10/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83/" title="Linux部署C#和MySQL环境">http://example.com/2022/05/10/Linux部署C-和MySQL环境/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/10/Unity%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E6%88%BF%E9%97%B4%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" rel="prev" title="Unity网络游戏房间系统设计">
+      <i class="fa fa-chevron-left"></i> Unity网络游戏房间系统设计
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8A%E9%83%A8%E7%BD%B2%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E7%8E%AF%E5%A2%83Csharp%E7%89%88%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">Linux上部署网络游戏环境Csharp版本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">一.阿里云服务器配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%91%E9%80%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.云服务器挑选</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.启动服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AE%BE%E7%BD%AE%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">(1)设置账号密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-XShell%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">(2)XShell远程登录云服务器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E9%83%A8%E7%BD%B2C-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">二.部署C#编译运行环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B0%86C-%E7%A8%8B%E5%BA%8F-cs%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Linux"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.将C#程序.cs文件导入Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%BD%BDMono"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.Linux操作系统下载Mono</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BD%E8%B6%85%E6%97%B6%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">(1)下载超时的解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BF%90%E8%A1%8CC-%E7%A8%8B%E5%BA%8F-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.运行C#程序-测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%99%AE%E9%80%9A%E7%9A%84C-%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">(1)普通的C#程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%A4%8D%E6%9D%82%E4%B8%80%E4%BA%9B%E7%9A%84C-%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">(2)复杂一些的C#程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.3.</span> <span class="nav-text">三.一些注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84Socket%E8%BF%9E%E6%8E%A5%E7%9A%84IP"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.关于服务端和客户端的Socket连接的IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Linux%E6%89%93%E5%BC%80%E7%BD%91%E7%BB%9C%E6%9F%90%E4%B8%AA%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.Linux打开网络某个端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E9%83%A8%E7%BD%B2MySQL-mariadb-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83"><span class="nav-number">1.4.</span> <span class="nav-text">四.部署MySQL(mariadb)生产环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B8%85%E9%99%A4%E6%97%A7%E7%9A%84MySQL%E7%8E%AF%E5%A2%83"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.清除旧的MySQL环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85MySQL-%E5%A6%82%E6%9E%9C%E6%98%AFCenOS7%E7%89%88%E6%9C%AC%E4%BB%A5%E4%B8%8A%E5%BF%BD%E7%95%A5%E8%BF%99%E9%83%A8%E5%88%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.安装MySQL(如果是CenOS7版本以上忽略这部分)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%90%AF%E7%94%A8MySQL%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.启用MySQL服务</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChrisZhang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ChrisZhang</p>
+  <div class="site-description" itemprop="description">我的技美学习之路</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhlovesyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhlovesyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1596944152@qq.com" title="E-Mail → mailto:1596944152@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liang-dao-men" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank"><i class="fa fa-quora fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/people/liang-dao-men" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank">个人知乎</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/24361666" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;24361666" rel="noopener" target="_blank">个人bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Apr 30 2022 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChrisZhang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

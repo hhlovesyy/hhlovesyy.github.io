@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="汇编语言入门参考文章: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;thoupin&#x2F;p&#x2F;4018455.html?utm_source&#x3D;qq&amp;utm_medium&#x3D;social&amp;utm_oi&#x3D;742830664570654720 一.理论篇1.MIPS(1)数据类型 所有的MIPS指令都是32位长 所以半字长&#x3D;2字节,1字长&#x3D;4字节,1字节&#x3D;8位   一个字符空间&#x3D;1字节 一个">
+  <meta name="description" content="汇编语言入门参考文章: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;thoupin&#x2F;p&#x2F;4018455.html?utm_source&#x3D;qq&amp;utm_medium&#x3D;social&amp;utm_oi&#x3D;742830664570654720 一.理论篇1.MIPS(1)数据类型 所有的MIPS指令都是32位长 所以半字长&#x3D;2字节,1字长&#x3D;4字节,1字节&#x3D;8位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编语言入门">
 <meta property="og:url" content="http://example.com/2022/05/07/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="ChrisZhang">
-<meta property="og:description" content="汇编语言入门参考文章: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;thoupin&#x2F;p&#x2F;4018455.html?utm_source&#x3D;qq&amp;utm_medium&#x3D;social&amp;utm_oi&#x3D;742830664570654720 一.理论篇1.MIPS(1)数据类型 所有的MIPS指令都是32位长 所以半字长&#x3D;2字节,1字长&#x3D;4字节,1字节&#x3D;8位   一个字符空间&#x3D;1字节 一个">
+<meta property="og:description" content="汇编语言入门参考文章: https:&#x2F;&#x2F;www.cnblogs.com&#x2F;thoupin&#x2F;p&#x2F;4018455.html?utm_source&#x3D;qq&amp;utm_medium&#x3D;social&amp;utm_oi&#x3D;742830664570654720 一.理论篇1.MIPS(1)数据类型 所有的MIPS指令都是32位长 所以半字长&#x3D;2字节,1字长&#x3D;4字节,1字节&#x3D;8位">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-07T06:15:22.000Z">
 <meta property="article:modified_time" content="2022-05-07T08:28:32.607Z">
@@ -227,16 +227,18 @@
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/thoupin/p/4018455.html?utm_source=qq&amp;utm_medium=social&amp;utm_oi=742830664570654720">https://www.cnblogs.com/thoupin/p/4018455.html?utm_source=qq&amp;utm_medium=social&amp;utm_oi=742830664570654720</a></p>
 <h1 id="一-理论篇"><a href="#一-理论篇" class="headerlink" title="一.理论篇"></a>一.理论篇</h1><h2 id="1-MIPS"><a href="#1-MIPS" class="headerlink" title="1.MIPS"></a>1.MIPS</h2><h3 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="(1)数据类型"></a>(1)数据类型</h3><ul>
 <li>所有的MIPS指令都是32位长<ul>
-<li>所以半字长=2字节,1字长=4字节,1字节=8位</li>
+<li>所以半字长&#x3D;2字节,1字长&#x3D;4字节,1字节&#x3D;8位</li>
 </ul>
 </li>
-<li>一个字符空间=1字节</li>
-<li>一个整型=1字长=4字节</li>
+<li>一个字符空间&#x3D;1字节</li>
+<li>一个整型&#x3D;1字长&#x3D;4字节</li>
 <li>单个字符用单引号表示,字符串用双引号表示.</li>
 </ul>
-<p><br/></p>
+<br/>
+
 <h3 id="2-寄存器"><a href="#2-寄存器" class="headerlink" title="(2)寄存器"></a>(2)寄存器</h3><ul>
-<li>MIPS下共有32个寄存器,标志由<code>$</code>开头.</li>
+<li><p>MIPS下共有32个寄存器,标志由<code>$</code>开头.</p>
+</li>
 <li><p>寄存器表示由两种方式:</p>
 <ul>
 <li>第一种:直接使用该寄存器对应的编号,比如<code>$0-$31</code></li>
@@ -254,9 +256,9 @@
 </li>
 </ul>
 <p><strong>注意:栈的走向是从高地址到低地址,而堆的走向是低地址到高地址</strong></p>
-<p><br/></p>
-<h4 id="a-MIPS下各个寄存器编号以及描述"><a href="#a-MIPS下各个寄存器编号以及描述" class="headerlink" title="(a)MIPS下各个寄存器编号以及描述"></a>(a)MIPS下各个寄存器编号以及描述</h4><div class="table-container">
-<table>
+<br/>
+
+<h4 id="a-MIPS下各个寄存器编号以及描述"><a href="#a-MIPS下各个寄存器编号以及描述" class="headerlink" title="(a)MIPS下各个寄存器编号以及描述"></a>(a)MIPS下各个寄存器编号以及描述</h4><table>
 <thead>
 <tr>
 <th>Register Number寄存器编号</th>
@@ -264,8 +266,7 @@
 <th>Description寄存器用途</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>0</td>
 <td>zero</td>
 <td>永远返回0</td>
@@ -318,17 +319,16 @@
 <tr>
 <td>30</td>
 <td><code>$s8/$fp</code></td>
-<td>(<strong>S</strong>aved/<strong>F</strong>rame <strong>P</strong>ointer简写)帧指针</td>
+<td>(<strong>S</strong>aved&#x2F;<strong>F</strong>rame <strong>P</strong>ointer简写)帧指针</td>
 </tr>
 <tr>
 <td>31</td>
 <td><code>$ra</code></td>
 <td>用作返回地址</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br/></p>
+</tbody></table>
+<br/>
+
 <h3 id="3-程序结构"><a href="#3-程序结构" class="headerlink" title="(3)程序结构"></a>(3)程序结构</h3><ul>
 <li>本质其实就只是数据声明+普通文本+程序编码（文件后缀为.s，或者.asm也行）</li>
 </ul>
@@ -338,9 +338,13 @@
 </ul>
 <p>具体说明如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name:	                storage_type	value(s)</span><br><span class="line"><span class="comment"># create storage for variable of specified type with given name and specified value</span></span><br></pre></td></tr></table></figure>
+
 <p>注:<strong>通常给变量赋一个初始值；对于.space,需要指明需要多少大小空间（bytes)</strong></p>
 <p>示例:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example</span></span><br><span class="line">	</span><br><span class="line">var1:		.word	<span class="number">3</span>	<span class="comment"># 声明一个 word 类型的变量 var1, 同时给其赋值为 3</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　 </span><br><span class="line">array1:		.byte	&#x27;a&#x27;,&#x27;b&#x27;	<span class="comment"># 声明一个存储2个字符的数组 array1，并赋值 &#x27;a&#x27;, &#x27;b&#x27;</span></span><br><span class="line">				　　　　　　　　　　　　　</span><br><span class="line">array2:		.space	<span class="number">40</span>	  <span class="comment"># 为变量 array2 分配 40字节（bytes)未使用的连续空间，当然，对于这个变量到底要存放什么类型的值， 最好事先声明注释下！</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h4 id="b-代码"><a href="#b-代码" class="headerlink" title="(b)代码"></a>(b)代码</h4><ul>
 <li>代码段以<code>.text</code>为开始标志</li>
 <li>代码段涉及各项指令操作.</li>
@@ -348,11 +352,15 @@
 <li>程序结束标志见下文.</li>
 </ul>
 <h4 id="c-注释"><a href="#c-注释" class="headerlink" title="(c)注释"></a>(c)注释</h4><p>MIPS程序的注释采用<code>#</code>来表示(这一点与python的注释方式是一样的)</p>
-<p><br/></p>
+<br/>
+
 <h4 id="d-MIPS程序的基本模板如下"><a href="#d-MIPS程序的基本模板如下" class="headerlink" title="(d)MIPS程序的基本模板如下:"></a>(d)MIPS程序的基本模板如下:</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Comment giving name of program and description of function</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Template.s</span></span><br><span class="line"><span class="comment">#Bare-bones outline of MIPS assembly language program</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">           .data       <span class="comment"># variable declarations follow this line</span></span><br><span class="line">　　　　                <span class="comment"># 数据变量声明</span></span><br><span class="line">                       <span class="comment"># ...</span></span><br><span class="line">														</span><br><span class="line">           .text       <span class="comment"># instructions follow this line	</span></span><br><span class="line">		       			<span class="comment"># 代码段部分															</span></span><br><span class="line"><span class="section">main:                  # indicates start of code (first instruction to execute)</span></span><br><span class="line">                       <span class="comment"># 主程序</span></span><br><span class="line">                       <span class="comment"># ...</span></span><br><span class="line">									</span><br><span class="line"><span class="comment"># End of program, leave a blank line afterwards to make SPIM happy</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <h3 id="4-一些其他的语法结构"><a href="#4-一些其他的语法结构" class="headerlink" title="(4)一些其他的语法结构"></a>(4)一些其他的语法结构</h3><h4 id="a-Load-amp-Store"><a href="#a-Load-amp-Store" class="headerlink" title="(a)Load&amp;Store"></a>(a)Load&amp;Store</h4><p>结构如下:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">load&amp;store_order register_destination RAM_source</span><br><span class="line"><span class="comment"># 如果是load,则从RAM_source到register_destination</span></span><br><span class="line"><span class="comment"># 如果是store,则从register_destination写入到RAM_source中</span></span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>如果要访问内存，只能用 <strong>load</strong> 或者 <strong>store</strong> 指令<ul>
 <li>其他的只能都一律是寄存器操作</li>
@@ -361,68 +369,92 @@
 </ul>
 <p><strong>比如当load的时候,是从RAM加载到寄存器当中:</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.lw</span></span><br><span class="line">lw	register_destination, RAM_source</span><br><span class="line"><span class="comment"># lw的意思是load word,表示从内存中复制RAM_source当中的内容到对应的寄存器当中,w表示word,说明该数据的大小为4个字节.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.lb</span></span><br><span class="line">lb register_destination, RAM_source</span><br><span class="line"><span class="comment"># 大致意思同上,lb的意思是load byte,比较官方的解释是将源RAM位置的字节复制到目标寄存器的低阶字节</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.li</span></span><br><span class="line">li register_destination, value</span><br><span class="line"><span class="comment"># load immediate,load immediate value into destination register</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p><br/><strong>当store的时候,是从寄存器写入RAM当中</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.sw</span></span><br><span class="line">sw	register_source, RAM_destination</span><br><span class="line"><span class="comment"># sw的意思是store word,将指定寄存器中的数据写入到指定的内存中(store word in source register into RAM destination)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.sb</span></span><br><span class="line">sb register_source, RAM_destination</span><br><span class="line"><span class="comment"># 大致意思同上,sb的意思是store byte.</span></span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <p>举个例子:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example:</span></span><br><span class="line">	.data</span><br><span class="line">var1:	.word	<span class="number">23</span>		<span class="comment"># 先声明一个 word 型的变量 var1 = 3;</span></span><br><span class="line"></span><br><span class="line">	.text</span><br><span class="line">__start:</span><br><span class="line">	lw	$t0, var1	<span class="comment"># load contents of RAM location into register $t0:  $t0 = var1</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　 <span class="comment"># 令寄存器 $t0 = var1 = 3;</span></span><br><span class="line">	li	$t1, <span class="number">5</span>		<span class="comment"># $t1 = 5   (&quot;load immediate&quot;)</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　 <span class="comment"># 令寄存器 $t1 = 5;</span></span><br><span class="line">	sw	$t1, var1	<span class="comment"># store contents of register $t1 into RAM:  var1 = $t1</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　 <span class="comment"># 将var1的值修改为$t1中的值： var1 = $t1 = 5;</span></span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <h4 id="b-立即与间接寻址"><a href="#b-立即与间接寻址" class="headerlink" title="(b)立即与间接寻址"></a>(b)立即与间接寻址</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.la:load address</span></span><br><span class="line">la $t0,var1</span><br><span class="line"><span class="comment"># 直接给地址,copy RAM address of var1 (presumably a label defined in the program) into register $t0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># indirect addressing</span></span><br><span class="line"><span class="comment"># 地址是寄存器的内容(可以理解为指针)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.load word</span></span><br><span class="line">lw $t2,($t0)</span><br><span class="line"><span class="comment"># load word at RAM address contained in $t0 into $t2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.store word</span></span><br><span class="line">sw $t2,<span class="number">4</span>($t0)</span><br><span class="line"><span class="comment"># store word in register $t2 into RAM at address contained in $t0</span></span><br></pre></td></tr></table></figure>
+
 <p><br/><strong>引入了偏移量之后(要用到偏移量的寻址,基本上使用比较多的场景就是数组和栈):</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lw $t2,<span class="number">4</span>($t0)</span><br><span class="line"><span class="comment"># load word at RAM address ($t0+4) into register $t2</span></span><br><span class="line"><span class="comment"># &quot;4&quot; gives offset from address in register $t0</span></span><br><span class="line"></span><br><span class="line">sw $t2,-<span class="number">12</span>($t0)</span><br><span class="line"><span class="comment"># store word in register $t2 into RAM at address ($t0 - 12)</span></span><br><span class="line"><span class="comment"># negative offsets are fine</span></span><br></pre></td></tr></table></figure>
+
 <p>具体说明一下偏移量的使用场景:</p>
 <ul>
 <li>对于数组:从基地址开始,通过偏移量进行寻址;</li>
-<li>对于栈:可以通过栈顶指针或帧指针(stack pointer/frame pointer)来进行间接寻址.</li>
+<li>对于栈:可以通过栈顶指针或帧指针(stack pointer&#x2F;frame pointer)来进行间接寻址.</li>
 </ul>
-<p><br/></p>
+<br/>
+
 <p>举个例子:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example：</span></span><br><span class="line"></span><br><span class="line">		.data</span><br><span class="line">array1:		.space	<span class="number">12</span>		<span class="comment">#  定义一个 12字节 长度的数组 array1, 容纳 3个整型</span></span><br><span class="line"> </span><br><span class="line">		.text</span><br><span class="line">__start:	la	$t0, array1	<span class="comment">#  让 $t0 = 数组首地址</span></span><br><span class="line"></span><br><span class="line">		li	$t1, <span class="number">5</span>		<span class="comment">#  $t1 = 5   (&quot;load immediate&quot;)</span></span><br><span class="line">		sw $t1, ($t0)		<span class="comment">#  first array element set to 5; indirect addressing</span></span><br><span class="line">　　　　　　　　　　　　　　　　　<span class="comment"># 对于 数组第一个元素赋值 array[0] = $t1 = 5</span></span><br><span class="line">		</span><br><span class="line">		li $t1, <span class="number">13</span>		<span class="comment">#   $t1 = 13</span></span><br><span class="line">		sw $t1, <span class="number">4</span>($t0)		<span class="comment">#  second array element set to 13</span></span><br><span class="line">　　　　　　　　　　　　　　　　　<span class="comment"># 对于 数组第二个元素赋值 array[1] = $1 = 13 </span></span><br><span class="line">　　　　　　　　　　　　　　　　　<span class="comment"># (该数组中每个元素地址相距长度就是自身数据类型长度，即4字节， 所以对于array+4就是array[1])</span></span><br><span class="line">		</span><br><span class="line">		li $t1, -<span class="number">7</span>		<span class="comment">#   $t1 = -7</span></span><br><span class="line">		sw $t1, <span class="number">8</span>($t0)		<span class="comment">#  third array element set to -7</span></span><br><span class="line">　　　　　　　　　　　　　　　　　<span class="comment"># 同上， array[2]=-7</span></span><br><span class="line">		done</span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <h4 id="c-算数指令集"><a href="#c-算数指令集" class="headerlink" title="(c)算数指令集"></a>(c)算数指令集</h4><ul>
 <li>最多只能有三个操作数</li>
 <li>注意,这里操作数只能是寄存器,是不能够出现地址的</li>
-<li>所有指令都是统一32位=4*8bit=32bit=1word</li>
+<li>所有指令都是统一32位&#x3D;4*8bit&#x3D;32bit&#x3D;1word</li>
 </ul>
 <p>以下举出一些例子来方便理解:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add $t0,$t1,$t2			<span class="comment"># $t0 = $t1 + $t2; add as signed (2&#x27;s complement) integers</span></span><br><span class="line">sub	$t2,$t3,$t4			<span class="comment">#  $t2 = $t3 - $t4</span></span><br><span class="line">addi $t2,$t3, <span class="number">5</span>			<span class="comment">#  $t2 = $t3 + 5;   &quot;add immediate&quot; (no sub immediate)</span></span><br><span class="line">addu $t1,$t6,$t7		<span class="comment">#  $t1 = $t6 + $t7;   add as unsigned integers</span></span><br><span class="line">subu $t1,$t6,$t7		<span class="comment">#  $t1 = $t6 - $t7;   subtract as unsigned integers</span></span><br><span class="line"></span><br><span class="line">move	$t2,$t3			<span class="comment">#  $t2 = $t3(注意其实这个是伪指令，是一种方便操作的方式，真实的代码应该是 add $t2,$t3,$zero)</span></span><br></pre></td></tr></table></figure>
+
 <p>总的MIPS指令,可以参考如下的博客:</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ac2c9e7b1d8f">MIPS指令集与简要分析 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37036915/article/details/97566263">(11条消息) mips指令集（整理）_努力的浩浩的博客-CSDN博客_mips核心指令集</a></p>
-<p><br/></p>
+<br/>
+
 <h4 id="d-控制流"><a href="#d-控制流" class="headerlink" title="(d)控制流"></a>(d)控制流</h4><ul>
 <li>分支(if-else系列)</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b	<span class="keyword">target</span>		    <span class="comment">#  unconditional branch to program label target</span></span><br><span class="line">beq	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 = $t1</span></span><br><span class="line">blt	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 &lt; $t1</span></span><br><span class="line">ble	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 &lt;= $t1</span></span><br><span class="line">bgt	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 &gt; $t1</span></span><br><span class="line">bge	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 &gt;= $t1</span></span><br><span class="line">bne	$t0,$t1,<span class="keyword">target</span>	<span class="comment">#  branch to target if  $t0 &lt;&gt; $t1</span></span><br></pre></td></tr></table></figure>
+
 <p>(记忆方法:首先,最前面的b表示<code>branch</code>,分支结构;l表示<code>lower</code>,g表示<code>greater</code>,e表示<code>equal</code></p>
 <p>所以blt就是<code>branch lower than</code>,bge就是<code>branch greater/equal</code>)</p>
-<p><br/></p>
+<br/>
+
 <ul>
 <li>Jumps(跳转):while,for,goto系列</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j	<span class="keyword">target</span>	<span class="comment"># unconditional jump to program label target</span></span><br><span class="line">　　　　　　　<span class="comment"># 看到就跳， 不用考虑任何条件</span></span><br><span class="line">jr	$t3		<span class="comment"># jump to address contained in $t3 (&quot;jump register&quot;)</span></span><br><span class="line">　　　　　　　<span class="comment"># 类似相对寻址，跳到该寄存器给出的地址处</span></span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <ul>
 <li>子程序调用</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.jal</span></span><br><span class="line">jal	sub_label	</span><br><span class="line"><span class="comment"># copy program counter (return address) to register $ra (return address register)</span></span><br><span class="line"><span class="comment"># 将当前的程序计数器保存到 $ra 中</span></span><br><span class="line"><span class="comment"># jump to program statement at sub_label</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.jr</span></span><br><span class="line">jr	$ra			</span><br><span class="line"><span class="comment"># jump to return address in $ra (stored by jal instruction)</span></span><br><span class="line"><span class="comment"># 通过上面保存在 $ra 中的计数器返回调用前</span></span><br></pre></td></tr></table></figure>
+
 <p><strong>请注意:如果说调用的子程序中有调用了其他子程序，如此往复， 则返回地址的标记就用 栈（stack） 来存储, 毕竟 $ra 只有一个</strong></p>
-<p><br/></p>
-<h3 id="5-系统调用-与-输入-输出-Mars软件通用）"><a href="#5-系统调用-与-输入-输出-Mars软件通用）" class="headerlink" title="(5)系统调用 与 输入/输出(Mars软件通用）"></a>(5)系统调用 与 输入/输出(Mars软件通用）</h3><ul>
+<br/>
+
+
+
+<h3 id="5-系统调用-与-输入-x2F-输出-Mars软件通用）"><a href="#5-系统调用-与-输入-x2F-输出-Mars软件通用）" class="headerlink" title="(5)系统调用 与 输入&#x2F;输出(Mars软件通用）"></a>(5)系统调用 与 输入&#x2F;输出(Mars软件通用）</h3><ul>
 <li>通过系统调用实现终端的输入输出，以及声明程序结束</li>
 <li>学会使用 syscall</li>
 <li>参数所使用的寄存器：<code>$v0， $a0,  $a1</code></li>
-<li>返回值使用：<code>$v0</code></li>
+<li>返回值使用：<code> $v0</code></li>
 </ul>
-<p><br/></p>
+<br/>
+
 <p>下表给出了系统调用中对应功能，代码，参数机返回值:</p>
 <p>(使用方法:看下表的第一行,<strong>如果我们想要实现打印一个整数的功能,就需要把1加载入v0寄存器当中,同时把要打印的值放入a0寄存器当中</strong>,因此实际使用的代码如下:)</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#e.g. Print out integer value contained in register $t2</span></span><br><span class="line"></span><br><span class="line">		li	$v0, <span class="number">1</span>			<span class="comment"># 声明需要调用的操作代码为 1 （print_int) 并赋值给 $v0</span></span><br><span class="line">　　　　　　　　　</span><br><span class="line">							<span class="comment"># code for printing integer is 1</span></span><br><span class="line">		move	$a0, $t2	<span class="comment"># move integer to be printed into $a0:  $a0 = $t2</span></span><br><span class="line">　　　　　　　　　　　　　　　　　<span class="comment"># 将要打印的整型赋值给 $a0</span></span><br><span class="line">		syscall				<span class="comment"># call operating system to perform operation</span></span><br></pre></td></tr></table></figure>
+
 <p>补充:打印浮点数可以参考如下的博客:</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61491107/article/details/120377299">(11条消息) MIPS汇编语言学习笔记06：打印单精度浮点数_m0_61491107的博客-CSDN博客_mips浮点数指令</a></p>
-<p><br/></p>
+<br/>
+
 <p><strong>完整的表格如下:</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -432,8 +464,7 @@
 <th>Results返回值</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>print_int</td>
 <td><code>$v0=1</code></td>
 <td><code>$a0=integer to be printed</code></td>
@@ -478,23 +509,22 @@
 <tr>
 <td>read_string</td>
 <td><code>$v0=8</code></td>
-<td><code>$a0</code> = memory address of string input buffer; <code>$a1</code> = length of string buffer (n)</td>
+<td><code>$a0</code> &#x3D; memory address of string input buffer; <code>$a1</code> &#x3D; length of string buffer (n)</td>
 <td></td>
 </tr>
 <tr>
 <td>sbrk:动态分配内存</td>
 <td><code>$v0=9</code></td>
-<td>$a0 = amount</td>
+<td>$a0 &#x3D; amount</td>
 <td>address in $v0</td>
 </tr>
 <tr>
 <td>exit</td>
 <td><code>$v0=10</code></td>
 <td></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p><strong>一些关于参数的说明事项如下:</strong></p>
 <ul>
 <li>要打印的字符串应该有一个终止符，类似C中的’\0’, 在这里我们只要声明字符串为 <strong>.asciiz</strong> 类型即可<ul>
@@ -503,11 +533,16 @@
 </li>
 <li>对于读取int，float，double的数据操作， 系统会读取一整行，（也就是说以换行符为标志 ‘\n’）</li>
 </ul>
-<p><br/></p>
+<br/>
+
 <p>举个例子:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.e.g.   Read integer value, store in RAM location with label int_value (presumably declared in data section)</span></span><br><span class="line"></span><br><span class="line">		li	$v0, <span class="number">5</span>			<span class="comment"># 声明需要调用的操作代码为 5 （read_int) 并赋值给 $v0　</span></span><br><span class="line">					</span><br><span class="line">		syscall				<span class="comment"># call operating system to perform operation、</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</span><br><span class="line">		sw	$v0, int_value	<span class="comment"># value read from keyboard returned in register $v0,比如输入了一个数,会存储在$v0当中;</span></span><br><span class="line">								</span><br><span class="line">		xxx <span class="comment"># store this in desired location,　通过写入（store_word)指令 将 $v0的值（5）存入 内存中　　　　　　　　　</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　　　　　　　　　　　</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.e.g.   Print out string (useful for prompts)</span></span><br><span class="line">		.data</span><br><span class="line">string1		.asciiz	<span class="string">&quot;Print this.\n&quot;</span>		<span class="comment"># declaration for string variable, </span></span><br><span class="line">						<span class="comment"># .asciiz directive makes string null terminated</span></span><br><span class="line"></span><br><span class="line">		.text</span><br><span class="line">main:	li	$v0, <span class="number">4</span>		<span class="comment"># load appropriate system call code into register $v0;</span></span><br><span class="line">							<span class="comment"># 打印字符串， 赋值对应的操作代码 $v0 = 4</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　　　　　　　　　　　  </span><br><span class="line">		la	$a0, string1	<span class="comment"># 将要打印的字符串地址赋值  $a0 = address(string1)</span></span><br><span class="line">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</span><br><span class="line">		syscall				<span class="comment"># call operating system to perform print operation</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.e.g. To indicate end of program, use exit system call; thus last lines of program should be:</span></span><br><span class="line">		li	$v0, <span class="number">10</span>		　　　<span class="comment"># system call code for exit = 10</span></span><br><span class="line">		syscall				<span class="comment"># call operating sys</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="二-实例篇"><a href="#二-实例篇" class="headerlink" title="二.实例篇:"></a>二.实例篇:</h1><h2 id="1-MIPS-斐波那契数列"><a href="#1-MIPS-斐波那契数列" class="headerlink" title="(1)MIPS 斐波那契数列"></a>(1)MIPS 斐波那契数列</h2><p>Mars可执行的代码如下:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">.text</span><br><span class="line">main:</span><br><span class="line"><span class="comment"># Prompt user to input non-negative number</span></span><br><span class="line">la $a0,prompt   </span><br><span class="line">li $v0,<span class="number">4</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">li $v0,<span class="number">5</span>    <span class="comment">#Read the number(n)</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">move $t2,$v0    <span class="comment"># n to $t2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Call function to get fibonnacci #n</span></span><br><span class="line">move $a0,$t2</span><br><span class="line">move $v0,$t2</span><br><span class="line">jal fib     <span class="comment">#call fib (n)</span></span><br><span class="line">move $t3,$v0    <span class="comment">#result is in $t3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Output message and n</span></span><br><span class="line">la $a0,result   <span class="comment">#Print F_</span></span><br><span class="line">li $v0,<span class="number">4</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">move $a0,$t2    <span class="comment">#Print n</span></span><br><span class="line">li $v0,<span class="number">1</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">la $a0,result2  <span class="comment">#Print =</span></span><br><span class="line">li $v0,<span class="number">4</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">move $a0,$t3    <span class="comment">#Print the answer</span></span><br><span class="line">li $v0,<span class="number">1</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">la $a0,endl <span class="comment">#Print &#x27;\n&#x27;</span></span><br><span class="line">li $v0,<span class="number">4</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line"><span class="comment"># End program</span></span><br><span class="line">li $v0,<span class="number">10</span></span><br><span class="line">syscall</span><br><span class="line"></span><br><span class="line">fib:</span><br><span class="line"><span class="comment"># Compute and return fibonacci number</span></span><br><span class="line">beqz $a0,zero   <span class="comment">#if n=0 return 0</span></span><br><span class="line">beq $a0,<span class="number">1</span>,one   <span class="comment">#if n=1 return 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Calling fib(n-1)</span></span><br><span class="line">sub $sp,$sp,<span class="number">4</span>   <span class="comment">#storing return address on stack</span></span><br><span class="line">sw $ra,<span class="number">0</span>($sp)</span><br><span class="line"></span><br><span class="line">sub $a0,$a0,<span class="number">1</span>   <span class="comment">#n-1</span></span><br><span class="line">jal fib     <span class="comment">#fib(n-1)</span></span><br><span class="line">add $a0,$a0,<span class="number">1</span></span><br><span class="line"></span><br><span class="line">lw $ra,<span class="number">0</span>($sp)   <span class="comment">#restoring return address from stack</span></span><br><span class="line">add $sp,$sp,<span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sub $sp,$sp,<span class="number">4</span>   <span class="comment">#Push return value to stack</span></span><br><span class="line">sw $v0,<span class="number">0</span>($sp)</span><br><span class="line"><span class="comment">#Calling fib(n-2)</span></span><br><span class="line">sub $sp,$sp,<span class="number">4</span>   <span class="comment">#storing return address on stack</span></span><br><span class="line">sw $ra,<span class="number">0</span>($sp)</span><br><span class="line"></span><br><span class="line">sub $a0,$a0,<span class="number">2</span>   <span class="comment">#n-2</span></span><br><span class="line">jal fib     <span class="comment">#fib(n-2)</span></span><br><span class="line">add $a0,$a0,<span class="number">2</span></span><br><span class="line"></span><br><span class="line">lw $ra,<span class="number">0</span>($sp)   <span class="comment">#restoring return address from stack</span></span><br><span class="line">add $sp,$sp,<span class="number">4</span></span><br><span class="line"><span class="comment">#---------------</span></span><br><span class="line">lw $s7,<span class="number">0</span>($sp)   <span class="comment">#Pop return value from stack</span></span><br><span class="line">add $sp,$sp,<span class="number">4</span></span><br><span class="line"></span><br><span class="line">add $v0,$v0,$s7 <span class="comment"># f(n - 2)+fib(n-1)</span></span><br><span class="line">jr $ra <span class="comment"># decrement/next in stack</span></span><br><span class="line"></span><br><span class="line">zero:</span><br><span class="line">li $v0,<span class="number">0</span></span><br><span class="line">jr $ra</span><br><span class="line">one:</span><br><span class="line">li $v0,<span class="number">1</span></span><br><span class="line">jr $ra</span><br><span class="line"></span><br><span class="line">.data</span><br><span class="line">prompt: .asciiz <span class="string">&quot;This program calculates Fibonacci sequence with recursive functions.\nEnter a non-negative number: &quot;</span></span><br><span class="line">result: .asciiz <span class="string">&quot;F_&quot;</span></span><br><span class="line">result2: .asciiz <span class="string">&quot; = &quot;</span></span><br><span class="line">endl: .asciiz <span class="string">&quot;\n&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -547,7 +582,10 @@
     <a href="/2022/05/06/Kmeans%E7%AE%97%E6%B3%95-Matlab/" rel="prev" title="Kmeans算法-Matlab">
       <i class="fa fa-chevron-left"></i> Kmeans算法-Matlab
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/10/Unity%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E6%88%BF%E9%97%B4%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" rel="next" title="Unity网络游戏房间系统设计">
+      Unity网络游戏房间系统设计 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -606,7 +644,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">汇编语言入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E7%90%86%E8%AE%BA%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">一.理论篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MIPS"><span class="nav-number">2.1.</span> <span class="nav-text">1.MIPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">(1)数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">(2)寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-MIPS%E4%B8%8B%E5%90%84%E4%B8%AA%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E5%8F%B7%E4%BB%A5%E5%8F%8A%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">(a)MIPS下各个寄存器编号以及描述</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.3.</span> <span class="nav-text">(3)程序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E6%95%B0%E6%8D%AE%E5%A3%B0%E6%98%8E"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">(a)数据声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">(b)代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E6%B3%A8%E9%87%8A"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">(c)注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-MIPS%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E6%9D%BF%E5%A6%82%E4%B8%8B"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">(d)MIPS程序的基本模板如下:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.4.</span> <span class="nav-text">(4)一些其他的语法结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-Load-amp-Store"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">(a)Load&amp;Store</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E7%AB%8B%E5%8D%B3%E4%B8%8E%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">(b)立即与间接寻址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E7%AE%97%E6%95%B0%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">(c)算数指令集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="nav-number">2.1.4.4.</span> <span class="nav-text">(d)控制流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E4%B8%8E-%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA-Mars%E8%BD%AF%E4%BB%B6%E9%80%9A%E7%94%A8%EF%BC%89"><span class="nav-number">2.1.5.</span> <span class="nav-text">(5)系统调用 与 输入&#x2F;输出(Mars软件通用）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%AE%9E%E4%BE%8B%E7%AF%87"><span class="nav-number">3.</span> <span class="nav-text">二.实例篇:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MIPS-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="nav-number">3.1.</span> <span class="nav-text">(1)MIPS 斐波那契数列</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">汇编语言入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E7%90%86%E8%AE%BA%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">一.理论篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MIPS"><span class="nav-number">2.1.</span> <span class="nav-text">1.MIPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">(1)数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">(2)寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-MIPS%E4%B8%8B%E5%90%84%E4%B8%AA%E5%AF%84%E5%AD%98%E5%99%A8%E7%BC%96%E5%8F%B7%E4%BB%A5%E5%8F%8A%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">(a)MIPS下各个寄存器编号以及描述</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.3.</span> <span class="nav-text">(3)程序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E6%95%B0%E6%8D%AE%E5%A3%B0%E6%98%8E"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">(a)数据声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">(b)代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E6%B3%A8%E9%87%8A"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">(c)注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-MIPS%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E6%9D%BF%E5%A6%82%E4%B8%8B"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">(d)MIPS程序的基本模板如下:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.4.</span> <span class="nav-text">(4)一些其他的语法结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-Load-amp-Store"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">(a)Load&amp;Store</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E7%AB%8B%E5%8D%B3%E4%B8%8E%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">(b)立即与间接寻址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E7%AE%97%E6%95%B0%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">(c)算数指令集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="nav-number">2.1.4.4.</span> <span class="nav-text">(d)控制流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E4%B8%8E-%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA-Mars%E8%BD%AF%E4%BB%B6%E9%80%9A%E7%94%A8%EF%BC%89"><span class="nav-number">2.1.5.</span> <span class="nav-text">(5)系统调用 与 输入&#x2F;输出(Mars软件通用）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%AE%9E%E4%BE%8B%E7%AF%87"><span class="nav-number">3.</span> <span class="nav-text">二.实例篇:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MIPS-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="nav-number">3.1.</span> <span class="nav-text">(1)MIPS 斐波那契数列</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -622,18 +660,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
