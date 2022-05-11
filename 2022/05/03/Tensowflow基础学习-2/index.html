@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121844959.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121948416.png">
 <meta property="article:published_time" content="2022-05-03T04:26:48.000Z">
-<meta property="article:modified_time" content="2022-05-03T08:08:35.929Z">
+<meta property="article:modified_time" content="2022-05-11T03:03:36.049Z">
 <meta property="article:author" content="ChrisZhang">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="tensorflow">
@@ -214,10 +214,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-03 12:26:48 / 修改时间：16:08:35" itemprop="dateCreated datePublished" datetime="2022-05-03T12:26:48+08:00">2022-05-03</time>
+              <time title="创建时间：2022-05-03 12:26:48" itemprop="dateCreated datePublished" datetime="2022-05-03T12:26:48+08:00">2022-05-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-11 11:03:36" itemprop="dateModified" datetime="2022-05-11T11:03:36+08:00">2022-05-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -257,24 +263,15 @@
 <h2 id="2-1-预备知识"><a href="#2-1-预备知识" class="headerlink" title="2.1 预备知识"></a>2.1 预备知识</h2><h3 id="1-tf-where函数"><a href="#1-tf-where函数" class="headerlink" title="(1)tf.where函数"></a>(1)tf.where函数</h3><p><code>tf.where(条件语句,真返回A,假返回B)</code></p>
 <p>比如:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line">b = tf.constant([<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">c = tf.where(tf.greater(a, b), a, b)  <span class="comment"># 如果a&gt;b,则返回a对应的元素,否则返回b(对应元素位置比较)</span></span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果:</span></span><br><span class="line">tf.Tensor([<span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span>], shape=(<span class="number">5</span>,), dtype=int32)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-np-random-RandomState-rand"><a href="#2-np-random-RandomState-rand" class="headerlink" title="(2)np.random.RandomState.rand()"></a>(2)np.random.RandomState.rand()</h3><p>返回一个**[0,1)(注意是左闭右开区间)**之间的随机数.</p>
+<h3 id="2-np-random-RandomState-rand"><a href="#2-np-random-RandomState-rand" class="headerlink" title="(2)np.random.RandomState.rand()"></a>(2)np.random.RandomState.rand()</h3><p>返回一个<strong>[0,1)(注意是左闭右开区间)</strong>之间的随机数.</p>
 <p><code>np.random.RandomState.rand(维度)</code></p>
 <p>如果维度为空,则返回标量.</p>
 <p>比如:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">rdm = np.random.RandomState(seed=<span class="number">1</span>)  <span class="comment"># seed=1,种子一样,不同的机器跑出的随机数应该一致</span></span><br><span class="line">a = rdm.rand()  <span class="comment"># 返回一个随机标量</span></span><br><span class="line">b = rdm.rand(<span class="number">2</span>, <span class="number">3</span>)  <span class="comment"># 返回维度2行3列的随机数矩阵</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;a:&quot;</span>, a)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;b:&quot;</span>, b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">a: <span class="number">0.417022004702574</span></span><br><span class="line">b: [[<span class="number">7.20324493e-01</span> <span class="number">1.14374817e-04</span> <span class="number">3.02332573e-01</span>]</span><br><span class="line"> [<span class="number">1.46755891e-01</span> <span class="number">9.23385948e-02</span> <span class="number">1.86260211e-01</span>]]</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="3-np-vstack"><a href="#3-np-vstack" class="headerlink" title="(3)np.vstack()"></a>(3)np.vstack()</h3><p>可以将两个数组按垂直方向叠加</p>
 <p><code>np.vstack(数组1,数组2)</code></p>
 <p>比如:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">b = np.array([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line">c = np.vstack((a, b))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c:\n&quot;</span>, c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果:</span></span><br><span class="line">c:</span><br><span class="line">[[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line">[<span class="number">4</span> <span class="number">5</span> <span class="number">6</span>]]</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="4-np-mgrid-ravel-和np-c"><a href="#4-np-mgrid-ravel-和np-c" class="headerlink" title="(4)np.mgrid[],.ravel()和np.c_[]"></a>(4)<code>np.mgrid[],.ravel()和np.c_[]</code></h3><p>经常一起使用,<strong>用来生成网格坐标点</strong>.</p>
 <p>(a)<code>np.mgrid[起始值:结束值:步长,起始值:结束值:步长,...]</code></p>
 <p>这里的起始值和结束值是左闭右开区间(<strong>[起始值,结束值)</strong>)</p>
@@ -284,18 +281,17 @@
 <p>使得返回的间隔数值点配对,比如<code>np.c_[数组1,数组2,...]</code></p>
 <p>比如说:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成等间隔数值点</span></span><br><span class="line">x, y = np.mgrid[<span class="number">1</span>:<span class="number">3</span>:<span class="number">1</span>, <span class="number">2</span>:<span class="number">4</span>:<span class="number">0.5</span>]</span><br><span class="line"><span class="comment"># 将x, y拉直，并合并配对为二维张量，生成二维坐标点</span></span><br><span class="line">grid = np.c_[x.ravel(), y.ravel()]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x:\n&quot;</span>, x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y:\n&quot;</span>, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x.ravel():\n&quot;</span>, x.ravel())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y.ravel():\n&quot;</span>, y.ravel())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;grid:\n&#x27;</span>, grid)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502194342359.png" alt="image-20220502194342359"></p>
 <h2 id="2-2-复杂度与学习率"><a href="#2-2-复杂度与学习率" class="headerlink" title="2.2 复杂度与学习率"></a>2.2 复杂度与学习率</h2><h3 id="1-复杂度"><a href="#1-复杂度" class="headerlink" title="(1)复杂度"></a>(1)复杂度</h3><p>以下图为例:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502194551898.png" alt="image-20220502194551898"></p>
 <p>空间复杂度:</p>
 <ul>
-<li><p>包含层数&#x3D;隐藏层的层数+1个输出层(<strong>因为输入层不具备运算能力,因此不算空间复杂度</strong>)</p>
+<li><p>包含层数=隐藏层的层数+1个输出层(<strong>因为输入层不具备运算能力,因此不算空间复杂度</strong>)</p>
 </li>
-<li><p>总参数&#x3D;总w+总b</p>
+<li><p>总参数=总w+总b</p>
 <ul>
-<li>对应上图,总参数&#x3D;3×4+4(第一层)+4×2+2(第二层)&#x3D;26</li>
+<li>对应上图,总参数=3×4+4(第一层)+4×2+2(第二层)=26</li>
 <li>每个神经元有一个偏置值b</li>
 </ul>
 </li>
@@ -303,7 +299,7 @@
 <p>时间复杂度:</p>
 <ul>
 <li>乘加运算次数<ul>
-<li>对应上图:3×4+4×2&#x3D;20</li>
+<li>对应上图:3×4+4×2=20</li>
 <li><strong>直观理解,有几条神经线就有几次乘加运算</strong></li>
 </ul>
 </li>
@@ -313,31 +309,24 @@
 <ul>
 <li>实际应用中,可以先用较大的学习率,快速得到最优解,然后逐步减小学习率,使模型在训练后期更加稳定.</li>
 </ul>
-<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:
-$$
-初始学习率×学习率衰减率^{(当前轮数&#x2F;多少轮衰减一次)}
-$$
-比如下述的代码:</p>
+<h4 id="指数衰减学习率"><a href="#指数衰减学习率" class="headerlink" title="指数衰减学习率"></a>指数衰减学习率</h4><p>指数衰减学习率可以表示为:</p>
+<script type="math/tex; mode=display">
+初始学习率×学习率衰减率^{(当前轮数/多少轮衰减一次)}</script><p>比如下述的代码:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w = tf.Variable(tf.constant(<span class="number">5</span>, dtype=tf.float32))</span><br><span class="line"></span><br><span class="line">epoch = <span class="number">40</span></span><br><span class="line">LR_BASE = <span class="number">0.2</span>  <span class="comment"># 最初学习率</span></span><br><span class="line">LR_DECAY = <span class="number">0.99</span>  <span class="comment"># 学习率衰减率</span></span><br><span class="line">LR_STEP = <span class="number">1</span>  <span class="comment"># 喂入多少轮BATCH_SIZE后，更新一次学习率</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># for epoch 定义顶层循环，表示对数据集循环epoch次，此例数据集数据仅有1个w,初始化时候constant赋值为5，循环100次迭代。</span></span><br><span class="line">    lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># with结构到grads框起了梯度的计算过程。</span></span><br><span class="line">        loss = tf.square(w + <span class="number">1</span>)</span><br><span class="line">    grads = tape.gradient(loss, w)  <span class="comment"># .gradient函数告知谁对谁求导</span></span><br><span class="line"></span><br><span class="line">    w.assign_sub(lr * grads)  <span class="comment"># .assign_sub 对变量做自减 即：w -= lr*grads 即 w = w - lr*grads</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;After %s epoch,w is %f,loss is %f,lr is %f&quot;</span> % (epoch, w.numpy(), loss, lr))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>核心是<code>lr = LR_BASE * LR_DECAY ** (epoch / LR_STEP)</code>一句,符合上述的公式.</p>
 <p>此时运行查看结果,可以看到学习率lr呈现指数衰减:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502195548124.png" alt="image-20220502195548124"></p>
-<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code>
-$$
-f(x)&#x3D;\frac{1}{1+e^{-x}}
-$$
-<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
+<h2 id="2-3-激活函数"><a href="#2-3-激活函数" class="headerlink" title="2.3 激活函数"></a>2.3 激活函数</h2><h3 id="1-sigmoid函数"><a href="#1-sigmoid函数" class="headerlink" title="(1)sigmoid函数"></a>(1)<code>sigmoid</code>函数</h3><p><code>tf.nn.sigmoid(x)</code></p>
+<script type="math/tex; mode=display">
+f(x)=\frac{1}{1+e^{-x}}</script><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212022490.png" alt="image-20220502212022490"></p>
 <p>近年来,使用sigmoid作为激活函数的神经网络已经不多了,<strong>原因是链式求导会导致部分导数越来越小(从右图可以看到导数范围0-0.25,可能会越乘越小),从而使梯度消失</strong></p>
 <h3 id="2-Tanh函数"><a href="#2-Tanh函数" class="headerlink" title="(2)Tanh函数"></a>(2)<code>Tanh</code>函数</h3><p><code>tf.math.tanh(x)</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212359530.png" alt="image-20220502212359530"></p>
 <h3 id="3-Relu函数"><a href="#3-Relu函数" class="headerlink" title="(3)Relu函数"></a>(3)<code>Relu</code>函数</h3><p><code>tf.nn.relu(x)</code></p>
-<p>这是一个分段函数,方程如下:
-$$
-f(x)&#x3D;max(x,0)&#x3D;\begin{cases}0&amp;x&lt;0 \\
-x&amp;x&gt;&#x3D;0\end{cases}
-$$
-<img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
+<p>这是一个分段函数,方程如下:</p>
+<script type="math/tex; mode=display">
+f(x)=max(x,0)=\begin{cases}0&x<0 \\\\
+x&x>=0\end{cases}</script><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502212618766.png" alt="image-20220502212618766"></p>
 <p>补充:导致神经元死亡的根本原因是经过Relu函数的负特征过多,可以通过设置更小的学习率,减少参数分布的巨大变化,避免训练中产生过多负特征进入Relu.</p>
 <h3 id="4-Leaky-Relu函数"><a href="#4-Leaky-Relu函数" class="headerlink" title="(4)Leaky Relu函数"></a>(4)<code>Leaky Relu</code>函数</h3><p>为了解决Relu负参数所引发的神经元死亡问题.虽然比Relu更好,但实际使用中使用Relu作为激活函数的网络更多.</p>
 <p><code>tf.nn.leaky_relu(x)</code></p>
@@ -355,54 +344,39 @@ $$
 <li>自定义</li>
 <li><strong>ce</strong>(Cross Entropy)</li>
 </ul>
-<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><p>$$
-MES(y\underline{},y)&#x3D;\large\frac{\sum_{i&#x3D;1}^N(y-y\underline{})^2}{n}
-$$</p>
-<p><code>loss_mse=tf.reduce_mean(tf.square(y_-y))</code></p>
+<h3 id="1-均方误差"><a href="#1-均方误差" class="headerlink" title="(1)均方误差"></a>(1)均方误差</h3><script type="math/tex; mode=display">
+MES(y\underline{},y)=\large\frac{\sum_{i=1}^N(y-y\underline{})^2}{n}</script><p><code>loss_mse=tf.reduce_mean(tf.square(y_-y))</code></p>
 <p>引入一个例子:预测酸奶日销量(<strong>噪声设置是为了引入一定的随机值误差</strong>):</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502213813476.png" alt="image-20220502213813476"></p>
 <p>相关代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">SEED = <span class="number">23455</span></span><br><span class="line"></span><br><span class="line">rdm = np.random.RandomState(seed=SEED)  <span class="comment"># 生成[0,1)之间的随机数</span></span><br><span class="line">x = rdm.rand(<span class="number">32</span>, <span class="number">2</span>)  <span class="comment"># 生成的输入特征</span></span><br><span class="line">y_ = [[x1 + x2 + (rdm.rand() / <span class="number">10.0</span> - <span class="number">0.05</span>)] <span class="keyword">for</span> (x1, x2) <span class="keyword">in</span> x]  <span class="comment"># 生成噪声[0,1)/10=[0,0.1);构建标准答案 [0,0.1)-0.05=[-0.05,0.05)</span></span><br><span class="line">x = tf.cast(x, dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">w1 = tf.Variable(tf.random.normal([<span class="number">2</span>, <span class="number">1</span>], stddev=<span class="number">1</span>, seed=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">epoch = <span class="number">15000</span></span><br><span class="line">lr = <span class="number">0.002</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">        y = tf.matmul(x, w1)</span><br><span class="line">        loss_mse = tf.reduce_mean(tf.square(y_ - y))</span><br><span class="line"></span><br><span class="line">    grads = tape.gradient(loss_mse, w1)</span><br><span class="line">    w1.assign_sub(lr * grads)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">500</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;After %d training steps,w1 is &quot;</span> % (epoch))</span><br><span class="line">        <span class="built_in">print</span>(w1.numpy(), <span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Final w1 is: &quot;</span>, w1.numpy())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>最后发现,神经网络拟合出的结果与前面设置的保持一致,说明网络确实可以起到训练的效果.</p>
 <p>输出结果的最后部分如下:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">After 14500 training steps,w1 is </span><br><span class="line">[[1.0002553 ]</span><br><span class="line"> [0.99838644]] </span><br><span class="line"></span><br><span class="line">Final w1 is:  [[1.0009792]</span><br><span class="line"> [0.9977485]]</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="2-自定义损失函数"><a href="#2-自定义损失函数" class="headerlink" title="(2)自定义损失函数"></a>(2)自定义损失函数</h3><p>上面的案例中,我们都使用均方误差来作为损失函数的参考依据,<strong>但这实际上是不准确的</strong>.因为当预测商品销量多了的话,损失的会是成本;而当预测商品销量少了的话,损失的会是利润,<strong>因此可以使用自定义的函数来处理</strong>(因为实际上成本和利润大概率是不相等的).</p>
-<p>比如如下的损失函数是可以的:
-$$
-loss(y\underline{},y)&#x3D;\sum_{n}f(y\underline{},y) \\
-其中\sum_{n}f(y\underline{},y)&#x3D;\begin{cases}PROFIT*(y\underline{}-y)&amp; y&lt;y\underline{}(预测的y少了,损失利润) \\
-COST*(y-y\underline{})&amp; y&gt;&#x3D;y\underline{}(预测的y多了,损失成本) \end{cases}
-$$
-此时损失函数可以这样写:</p>
+<p>比如如下的损失函数是可以的:</p>
+<script type="math/tex; mode=display">
+loss(y\underline{},y)=\sum_{n}f(y\underline{},y) \\\\
+其中\sum_{n}f(y\underline{},y)=\begin{cases}PROFIT*(y\underline{}-y)& y<y\underline{}(预测的y少了,损失利润) \\\\
+COST*(y-y\underline{})& y>=y\underline{}(预测的y多了,损失成本) \end{cases}</script><p>此时损失函数可以这样写:</p>
 <p><code>loss_zdy=tf.reduce_sum(tf.where(tf.greater(y, y_), (y - y_) * COST, (y_ - y) * PROFIT))</code></p>
 <p>举一个极端情况:</p>
 <blockquote>
-<p>酸奶成本1元， 酸奶利润99元
-成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
+<p>酸奶成本1元， 酸奶利润99元<br>成本很低，利润很高，显然预测少了带来的损失更为严重,而人们希望多预测些，生成模型系数大于1，往多了进行预测.</p>
 </blockquote>
 <p>将损失函数替换为上述代码,得到的结果如下:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">After 14500 training steps,w1 is </span><br><span class="line">[[1.1406062]</span><br><span class="line"> [1.0476325]] </span><br><span class="line"></span><br><span class="line">Final w1 is:  [[1.1420636]</span><br><span class="line"> [1.1016785]]</span><br></pre></td></tr></table></figure>
-
 <p>可以看到,训练结果会尽可能让值大于初始的设定值,来保障利润.</p>
 <p>如果酸奶成本99元,利润1元,则会使得训练的参数结果&lt;1(尽可能保持成本)</p>
 <h3 id="3-交叉熵"><a href="#3-交叉熵" class="headerlink" title="(3)交叉熵"></a>(3)交叉熵</h3><p><code>tf.losses.categorical_crossentropy(y_,y)</code></p>
 <p>交叉熵损失函数CE:表征两个概率分布之间的距离</p>
-<p><strong>交叉熵越大,两个概率分布越远;</strong>
-$$
-H(y\underline{},y)&#x3D;\sum y\underline{}*lny
-$$
-比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
+<p><strong>交叉熵越大,两个概率分布越远;</strong></p>
+<script type="math/tex; mode=display">
+H(y\underline{},y)=\sum y\underline{}*lny</script><p>比如二分类问题,可以很好地验证哪个分类结果更加接近标准答案:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502222420738.png" alt="image-20220502222420738"></p>
 <p>通过定量计算,发现第二种结果的交叉熵更小,因此两个概率分布更为接近一些,所以y2预测的更准.</p>
 <p>上述验证的代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">loss_ce1 = tf.losses.categorical_crossentropy([<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0.6</span>, <span class="number">0.4</span>])</span><br><span class="line">loss_ce2 = tf.losses.categorical_crossentropy([<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0.8</span>, <span class="number">0.2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;loss_ce1:&quot;</span>, loss_ce1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;loss_ce2:&quot;</span>, loss_ce2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交叉熵损失函数</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="4-softmax与交叉熵结合"><a href="#4-softmax与交叉熵结合" class="headerlink" title="(4)softmax与交叉熵结合"></a>(4)softmax与交叉熵结合</h3><ul>
 <li>输出先过softmax函数,再计算y与y_的交叉熵损失函数.<ul>
 <li>回顾softmax函数:使输出的值符合概率的分布(用于将网络输出值进行处理,使其符合概率的分布)</li>
@@ -411,9 +385,6 @@ $$
 </ul>
 <p><code>tf.nn.softmax_cross_entropy_with_logits(y_,y)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># softmax与交叉熵损失函数的结合</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">y_ = np.array([[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line">y = np.array([[<span class="number">12</span>, <span class="number">3</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">10</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>], [<span class="number">4</span>, <span class="number">6.5</span>, <span class="number">1.2</span>], [<span class="number">3</span>, <span class="number">6</span>, <span class="number">1</span>]])</span><br><span class="line">y_pro = tf.nn.softmax(y)</span><br><span class="line">loss_ce1 = tf.losses.categorical_crossentropy(y_,y_pro)</span><br><span class="line"><span class="comment"># 以上两句可以等同于下面的这一句(softmax与交叉熵结合)</span></span><br><span class="line">loss_ce2 = tf.nn.softmax_cross_entropy_with_logits(y_, y)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;分步计算的结果:\n&#x27;</span>, loss_ce1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;结合计算的结果:\n&#x27;</span>, loss_ce2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出的结果相同</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="2-5-缓解过拟合与欠拟合"><a href="#2-5-缓解过拟合与欠拟合" class="headerlink" title="2.5 缓解过拟合与欠拟合"></a>2.5 缓解过拟合与欠拟合</h2><p>欠拟合的解决方法:</p>
 <ul>
 <li>增加输入特征项</li>
@@ -427,100 +398,76 @@ $$
 <li>采用正则化</li>
 <li>增大正则化参数</li>
 </ul>
-<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong>
-$$
-loss&#x3D;loss(y,y\underline{})+REGULARIZER*loss(w)
-$$
-其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
+<h3 id="1-正则化缓解过拟合"><a href="#1-正则化缓解过拟合" class="headerlink" title="(1)正则化缓解过拟合"></a>(1)正则化缓解过拟合</h3><p><strong>正则化在损失函数中引入模型复杂度指标,利用给W加权值,弱化了训练数据的噪声(一般不正则化b)</strong></p>
+<script type="math/tex; mode=display">
+loss=loss(y,y\underline{})+REGULARIZER*loss(w)</script><p>其中,前一项是模型中所有参数的损失函数,比如交叉熵,均方误差等.</p>
 <p><strong>RRGULARIZER是超参数,给出参数w在总loss中的比例,即正则化的权重</strong></p>
 <p>w是需要正则化的参数</p>
 <p>一般正则化分为L1正则化和L2正则化:</p>
 <ul>
 <li>L1正则化</li>
 </ul>
-<p>$$
-loss_{L1}(w)&#x3D;\sum_i |w_i|
-$$</p>
-<ul>
+<script type="math/tex; mode=display">
+loss_{L1}(w)=\sum_i |w_i|</script><ul>
 <li>L2正则化</li>
 </ul>
-<p>$$
-loss_{L2}(w)&#x3D;\sum_i |w_i^2|
-$$</p>
-<p>对比:</p>
+<script type="math/tex; mode=display">
+loss_{L2}(w)=\sum_i |w_i^2|</script><p>对比:</p>
 <p>L1正则化大概率会使很多参数变为0,<strong>因此该方法可通过稀疏参数</strong>,即减少参数的数量,来降低复杂度.</p>
 <p>L2正则化会使得参数很接近零但不为零,<strong>因此该方法可通过减少参数值的大小降低复杂度</strong>.</p>
 <p>以下以L2正则化为例,其核心代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span></span><br><span class="line">loss_mse = tf.reduce_mean(tf.square(y_train - y))</span><br><span class="line"><span class="comment"># 添加l2正则化</span></span><br><span class="line">loss_regularization = []</span><br><span class="line"><span class="comment"># tf.nn.l2_loss(w)=sum(w ** 2) / 2</span></span><br><span class="line">loss_regularization.append(tf.nn.l2_loss(w1))</span><br><span class="line">oss_regularization.append(tf.nn.l2_loss(w2))</span><br></pre></td></tr></table></figure>
-
-
-
 <p>举例:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503110955117.png" alt="image-20220503110955117"></p>
-<p>通过模拟网格,将数据放置在网格上,<strong>将网格坐标点作为输入值送入神经网络当中</strong>,神经网络会为每个坐标输出0&#x2F;1,可以将输出值为0.5的点连线,作为两个分类的分割线.(上图中红色为标签1,蓝色为标签0)</p>
+<p>通过模拟网格,将数据放置在网格上,<strong>将网格坐标点作为输入值送入神经网络当中</strong>,神经网络会为每个坐标输出0/1,可以将输出值为0.5的点连线,作为两个分类的分割线.(上图中红色为标签1,蓝色为标签0)</p>
 <p>实现代码如下(<strong>注意,要引入课件当中的csv文件作为读取数据</strong>):</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入所需模块</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读入数据/标签 生成x_train y_train</span></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;dot.csv&#x27;</span>)</span><br><span class="line">x_data = np.array(df[[<span class="string">&#x27;x1&#x27;</span>, <span class="string">&#x27;x2&#x27;</span>]])</span><br><span class="line">y_data = np.array(df[<span class="string">&#x27;y_c&#x27;</span>])</span><br><span class="line"></span><br><span class="line">x_train = np.vstack(x_data).reshape(-<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">y_train = np.vstack(y_data).reshape(-<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">Y_c = [[<span class="string">&#x27;red&#x27;</span> <span class="keyword">if</span> y <span class="keyword">else</span> <span class="string">&#x27;blue&#x27;</span>] <span class="keyword">for</span> y <span class="keyword">in</span> y_train]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型问题报错</span></span><br><span class="line">x_train = tf.cast(x_train, tf.float32)</span><br><span class="line">y_train = tf.cast(y_train, tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># from_tensor_slices函数切分传入的张量的第一个维度，生成相应的数据集，使输入特征和标签值一一对应</span></span><br><span class="line">train_db = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成神经网络的参数，输入层为2个神经元，隐藏层为11个神经元(这个数是随便选的,可以根据情况进行修改)，1层隐藏层，输出层为1个神经元</span></span><br><span class="line"><span class="comment"># 用tf.Variable()保证参数可训练</span></span><br><span class="line">w1 = tf.Variable(tf.random.normal([<span class="number">2</span>, <span class="number">11</span>]), dtype=tf.float32)</span><br><span class="line">b1 = tf.Variable(tf.constant(<span class="number">0.01</span>, shape=[<span class="number">11</span>]))</span><br><span class="line"></span><br><span class="line">w2 = tf.Variable(tf.random.normal([<span class="number">11</span>, <span class="number">1</span>]), dtype=tf.float32)</span><br><span class="line">b2 = tf.Variable(tf.constant(<span class="number">0.01</span>, shape=[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">lr = <span class="number">0.01</span>  <span class="comment"># 学习率</span></span><br><span class="line">epoch = <span class="number">400</span>  <span class="comment"># 循环轮数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练部分</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    <span class="keyword">for</span> step, (x_train, y_train) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_db):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># 记录梯度信息</span></span><br><span class="line"></span><br><span class="line">            h1 = tf.matmul(x_train, w1) + b1  <span class="comment"># 记录神经网络乘加运算</span></span><br><span class="line">            h1 = tf.nn.relu(h1)</span><br><span class="line">            y = tf.matmul(h1, w2) + b2</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span></span><br><span class="line">            loss = tf.reduce_mean(tf.square(y_train - y))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算loss对各个参数的梯度</span></span><br><span class="line">        variables = [w1, b1, w2, b2]</span><br><span class="line">        grads = tape.gradient(loss, variables)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 实现梯度更新</span></span><br><span class="line">        <span class="comment"># w1 = w1 - lr * w1_grad tape.gradient是自动求导结果与[w1, b1, w2, b2] 索引为0，1，2，3 </span></span><br><span class="line">        w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">        b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br><span class="line">        w2.assign_sub(lr * grads[<span class="number">2</span>])</span><br><span class="line">        b2.assign_sub(lr * grads[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每20个epoch，打印loss信息</span></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">20</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;epoch:&#x27;</span>, epoch, <span class="string">&#x27;loss:&#x27;</span>, <span class="built_in">float</span>(loss))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测部分</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;*******predict*******&quot;</span>)</span><br><span class="line"><span class="comment"># xx在-3到3之间以步长为0.01，yy在-3到3之间以步长0.01,生成间隔数值点</span></span><br><span class="line">xx, yy = np.mgrid[-<span class="number">3</span>:<span class="number">3</span>:<span class="number">.1</span>, -<span class="number">3</span>:<span class="number">3</span>:<span class="number">.1</span>]</span><br><span class="line"><span class="comment"># 将xx , yy拉直，并合并配对为二维张量，生成二维坐标点</span></span><br><span class="line">grid = np.c_[xx.ravel(), yy.ravel()]</span><br><span class="line">grid = tf.cast(grid, tf.float32)</span><br><span class="line"><span class="comment"># 将网格坐标点喂入神经网络，进行预测，probs为输出</span></span><br><span class="line">probs = []</span><br><span class="line"><span class="keyword">for</span> x_test <span class="keyword">in</span> grid:</span><br><span class="line">    <span class="comment"># 使用训练好的参数进行预测</span></span><br><span class="line">    h1 = tf.matmul([x_test], w1) + b1</span><br><span class="line">    h1 = tf.nn.relu(h1)</span><br><span class="line">    y = tf.matmul(h1, w2) + b2  <span class="comment"># y为预测结果</span></span><br><span class="line">    probs.append(y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取第0列给x1，取第1列给x2</span></span><br><span class="line">x1 = x_data[:, <span class="number">0</span>]</span><br><span class="line">x2 = x_data[:, <span class="number">1</span>]</span><br><span class="line"><span class="comment"># probs的shape调整成xx的样子</span></span><br><span class="line">probs = np.array(probs).reshape(xx.shape)</span><br><span class="line">plt.scatter(x1, x2, color=np.squeeze(Y_c)) <span class="comment">#squeeze去掉纬度是1的纬度,相当于去掉[[&#x27;red&#x27;],[&#x27;&#x27;blue]],内层括号变为[&#x27;red&#x27;,&#x27;blue&#x27;]</span></span><br><span class="line"><span class="comment"># 把坐标xx yy和对应的值probs放入contour&lt;[‘kɑntʊr]&gt;函数，给probs值为0.5的所有点上色  plt点show后 显示的是红蓝点的分界线</span></span><br><span class="line">plt.contour(xx, yy, probs, levels=[<span class="number">.5</span>])</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读入红蓝点，画出分割线，不包含正则化</span></span><br><span class="line"><span class="comment"># 不清楚的数据，建议print出来查看 </span></span><br></pre></td></tr></table></figure>
-
 <p>最终实现效果如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503111954425.png" alt="image-20220503111954425"></p>
 <p>可以看到,分割线轮廓不够平滑,存在过拟合现象.</p>
 <p><strong>如果在With结构当中加入L2正则化,将其修改如下:</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练部分</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    <span class="keyword">for</span> step, (x_train, y_train) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_db):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># 记录梯度信息</span></span><br><span class="line"></span><br><span class="line">            h1 = tf.matmul(x_train, w1) + b1  <span class="comment"># 记录神经网络乘加运算</span></span><br><span class="line">            h1 = tf.nn.relu(h1)</span><br><span class="line">            y = tf.matmul(h1, w2) + b2</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span></span><br><span class="line">            loss_mse = tf.reduce_mean(tf.square(y_train - y))</span><br><span class="line">            <span class="comment"># 添加l2正则化</span></span><br><span class="line">            loss_regularization = []</span><br><span class="line">            <span class="comment"># tf.nn.l2_loss(w)=sum(w ** 2) / 2</span></span><br><span class="line">            loss_regularization.append(tf.nn.l2_loss(w1))</span><br><span class="line">            loss_regularization.append(tf.nn.l2_loss(w2))</span><br><span class="line">            <span class="comment"># 求和</span></span><br><span class="line">            <span class="comment"># 例：x=tf.constant(([1,1,1],[1,1,1]))</span></span><br><span class="line">            <span class="comment">#   tf.reduce_sum(x)</span></span><br><span class="line">            <span class="comment"># &gt;&gt;&gt;6</span></span><br><span class="line">            <span class="comment"># loss_regularization = tf.reduce_sum(tf.stack(loss_regularization))</span></span><br><span class="line">            loss_regularization = tf.reduce_sum(loss_regularization)</span><br><span class="line">            loss = loss_mse + <span class="number">0.03</span> * loss_regularization <span class="comment">#REGULARIZER = 0.03</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算loss对各个参数的梯度</span></span><br><span class="line">        variables = [w1, b1, w2, b2]</span><br><span class="line">        grads = tape.gradient(loss, variables)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 实现梯度更新</span></span><br><span class="line">        <span class="comment"># w1 = w1 - lr * w1_grad</span></span><br><span class="line">        w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">        b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br><span class="line">        w2.assign_sub(lr * grads[<span class="number">2</span>])</span><br><span class="line">        b2.assign_sub(lr * grads[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每200个epoch，打印loss信息</span></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">20</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;epoch:&#x27;</span>, epoch, <span class="string">&#x27;loss:&#x27;</span>, <span class="built_in">float</span>(loss))</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503113907701.png" alt="image-20220503113907701"></p>
 <p>可以看到,加入L2正则化后的曲线更为平缓,有效地缓解了过拟合的情况.</p>
 <h2 id="2-6-神经网络参数优化器"><a href="#2-6-神经网络参数优化器" class="headerlink" title="2.6 神经网络参数优化器"></a>2.6 神经网络参数优化器</h2><p>优化器是引导神经网络更新参数的工具.</p>
 <h3 id="1-明确一些定义"><a href="#1-明确一些定义" class="headerlink" title="(1)明确一些定义"></a>(1)明确一些定义</h3><p>待优化的参数为w,损失函数为loss,学习率为lr,每次迭代一个batch(每个batch通常包括$2^n$组数据),t表示当前batch迭代的总次数:</p>
-<p>1.计算t时刻损失函数关于当前参数的梯度:
-$$
-g_t&#x3D;\nabla loss&#x3D;\frac{\partial{loss}}{\partial(w_t)}
-$$
-2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
+<p>1.计算t时刻损失函数关于当前参数的梯度:</p>
+<script type="math/tex; mode=display">
+g_t=\nabla loss=\frac{\partial{loss}}{\partial(w_t)}</script><p>2.计算t时刻一阶动量$m_t$和二阶动量$V_t$</p>
 <ul>
 <li>一阶动量是与梯度相关的函数</li>
 <li>二阶动量是与梯度平方相关的函数</li>
 </ul>
 <p><strong>不同的优化器其实是定义了不同的一阶动量和二阶动量公式</strong></p>
-<p>3.计算t时刻下降梯度:
-$$
-\eta_t&#x3D;lr×m_t÷\sqrt{V_t}
-$$
-4.计算t+1时刻参数:
-$$
-w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}
-$$</p>
-<h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.
-$$
+<p>3.计算t时刻下降梯度:</p>
+<script type="math/tex; mode=display">
+\eta_t=lr×m_t÷\sqrt{V_t}</script><p>4.计算t+1时刻参数:</p>
+<script type="math/tex; mode=display">
+w_{t+1}=w_t-\eta_t=w_t-lr×m_t÷\sqrt{V_t}</script><h3 id="2-随机梯度下降SGD"><a href="#2-随机梯度下降SGD" class="headerlink" title="(2)随机梯度下降SGD"></a>(2)随机梯度下降SGD</h3><p><strong>常用的梯度下降法(gt指的是梯度)</strong>,一阶动量定义为梯度,二阶动量恒等于1.</p>
+<script type="math/tex; mode=display">
 \begin{cases}
-m_t&#x3D;g_t \qquad V_t&#x3D;1 \\
-\eta_t&#x3D;lr×m_t÷\sqrt{V_t}&#x3D;lr*g_t \\
-w_{t+1}&#x3D;w_t-\eta_t&#x3D;w_t-lr×m_t÷\sqrt{V_t}&#x3D;w_t-lr×g_t
-\end{cases}
-$$
-注意到这其实就是之前的梯度下降法公式了.</p>
+m_t=g_t \qquad V_t=1 \\\\
+\eta_t=lr×m_t÷\sqrt{V_t}=lr*g_t \\\\
+w_{t+1}=w_t-\eta_t=w_t-lr×m_t÷\sqrt{V_t}=w_t-lr×g_t
+\end{cases}</script><p>注意到这其实就是之前的梯度下降法公式了.</p>
 <p>在Python当中代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>])</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-
 <h4 id="补充-利用Time包来记录程序运行的时间"><a href="#补充-利用Time包来记录程序运行的时间" class="headerlink" title="补充:利用Time包来记录程序运行的时间"></a>补充:利用Time包来记录程序运行的时间</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在之前鸢尾花识别的程序的基础上,加入时间戳机制</span></span><br><span class="line"><span class="keyword">import</span> time  <span class="comment">##1##</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练部分开始前</span></span><br><span class="line">now_time = time.time()  <span class="comment">##2##</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    ...</span><br><span class="line"><span class="comment"># 在迭代测试结束后,输出总的花费的时间</span></span><br><span class="line">total_time = time.time() - now_time  <span class="comment">##3##</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;total_time&quot;</span>, total_time)  <span class="comment">##4##</span></span><br></pre></td></tr></table></figure>
-
 <p>(<strong>注意:Time包应该是不需要手动install,直接import应该就有了</strong>)</p>
 <p>测试运行结果为:<code>total_time 11.329316139221191</code></p>
 <h3 id="3-SGDM-在SGD的基础上增加一阶动量"><a href="#3-SGDM-在SGD的基础上增加一阶动量" class="headerlink" title="(3)SGDM:在SGD的基础上增加一阶动量"></a>(3)SGDM:在SGD的基础上增加一阶动量</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503120331880.png" alt="image-20220503120331880"></p>
 <p>注意这里β的经验值是0.9(<strong>也就是上一个梯度所占据的比例比较大一些</strong>)</p>
 <p>代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sgd-momentun  </span></span><br><span class="line">m_w=<span class="number">0</span>,m_b=<span class="number">0</span></span><br><span class="line">beta=<span class="number">0.9</span></span><br><span class="line">m_w = beta * m_w + (<span class="number">1</span> - beta) * grads[<span class="number">0</span>]</span><br><span class="line">m_b = beta * m_b + (<span class="number">1</span> - beta) * grads[<span class="number">1</span>]</span><br><span class="line">w1.assign_sub(lr * m_w)</span><br><span class="line">b1.assign_sub(lr * m_b)</span><br></pre></td></tr></table></figure>
-
 <p>此时的运行时间为:<code>total_time 13.160895586013794</code></p>
 <h3 id="4-Adagrad优化器"><a href="#4-Adagrad优化器" class="headerlink" title="(4)Adagrad优化器"></a>(4)Adagrad优化器</h3><p>引入二阶动量(从开始到现在位置的梯度平方的累计和),<strong>可以对模型中的每个参数分配自适应学习率了</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121023177.png" alt="image-20220503121023177"></p>
 <p>代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">v_w, v_b = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># adagrad</span></span><br><span class="line">v_w += tf.square(grads[<span class="number">0</span>])</span><br><span class="line">v_b += tf.square(grads[<span class="number">1</span>])</span><br><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>] / tf.sqrt(v_w))</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>] / tf.sqrt(v_b))</span><br></pre></td></tr></table></figure>
-
 <p>此时的运行时间为:<code>total_time 16.1231586933136</code></p>
 <h3 id="5-RMSProp-SGD基础上增加二阶动量"><a href="#5-RMSProp-SGD基础上增加二阶动量" class="headerlink" title="(5)RMSProp,SGD基础上增加二阶动量"></a>(5)RMSProp,SGD基础上增加二阶动量</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121335971.png" alt="image-20220503121335971"></p>
 <p>代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">v_w, v_b = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">beta = <span class="number">0.9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rmsprop</span></span><br><span class="line">v_w = beta * v_w + (<span class="number">1</span> - beta) * tf.square(grads[<span class="number">0</span>])</span><br><span class="line">v_b = beta * v_b + (<span class="number">1</span> - beta) * tf.square(grads[<span class="number">1</span>])</span><br><span class="line">w1.assign_sub(lr * grads[<span class="number">0</span>] / tf.sqrt(v_w))</span><br><span class="line">b1.assign_sub(lr * grads[<span class="number">1</span>] / tf.sqrt(v_b))</span><br></pre></td></tr></table></figure>
-
 <p>此时的运行时间为:<code>total_time 16.79032588005066</code></p>
 <p>注:此时的损失函数呈现如下的趋势:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121724313.png" alt="image-20220503121724313"></p>
@@ -531,11 +478,10 @@ $$
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220503121948416.png" alt="image-20220503121948416"></p>
 <p>代码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">m_w, m_b = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">v_w, v_b = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">beta1, beta2 = <span class="number">0.9</span>, <span class="number">0.999</span></span><br><span class="line">delta_w, delta_b = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">global_step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练部分</span></span><br><span class="line">now_time = time.time()  <span class="comment">##2##</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># 数据集级别的循环，每个epoch循环一次数据集</span></span><br><span class="line">    <span class="keyword">for</span> step, (x_train, y_train) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_db):  <span class="comment"># batch级别的循环 ，每个step循环一个batch</span></span><br><span class="line"> <span class="comment">##########################################################################       </span></span><br><span class="line">        global_step += <span class="number">1</span></span><br><span class="line"> <span class="comment">##########################################################################       </span></span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># with结构记录梯度信息</span></span><br><span class="line">            y = tf.matmul(x_train, w1) + b1  <span class="comment"># 神经网络乘加运算</span></span><br><span class="line">            y = tf.nn.softmax(y)  <span class="comment"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span></span><br><span class="line">            y_ = tf.one_hot(y_train, depth=<span class="number">3</span>)  <span class="comment"># 将标签值转换为独热码格式，方便计算loss和accuracy</span></span><br><span class="line">            loss = tf.reduce_mean(tf.square(y_ - y))  <span class="comment"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span></span><br><span class="line">            loss_all += loss.numpy()  <span class="comment"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span></span><br><span class="line">        <span class="comment"># 计算loss对各个参数的梯度</span></span><br><span class="line">        grads = tape.gradient(loss, [w1, b1])</span><br><span class="line"></span><br><span class="line"><span class="comment">##########################################################################</span></span><br><span class="line"> <span class="comment"># adam</span></span><br><span class="line">        m_w = beta1 * m_w + (<span class="number">1</span> - beta1) * grads[<span class="number">0</span>]</span><br><span class="line">        m_b = beta1 * m_b + (<span class="number">1</span> - beta1) * grads[<span class="number">1</span>]</span><br><span class="line">        v_w = beta2 * v_w + (<span class="number">1</span> - beta2) * tf.square(grads[<span class="number">0</span>])</span><br><span class="line">        v_b = beta2 * v_b + (<span class="number">1</span> - beta2) * tf.square(grads[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        m_w_correction = m_w / (<span class="number">1</span> - tf.<span class="built_in">pow</span>(beta1, <span class="built_in">int</span>(global_step)))</span><br><span class="line">        m_b_correction = m_b / (<span class="number">1</span> - tf.<span class="built_in">pow</span>(beta1, <span class="built_in">int</span>(global_step)))</span><br><span class="line">        v_w_correction = v_w / (<span class="number">1</span> - tf.<span class="built_in">pow</span>(beta2, <span class="built_in">int</span>(global_step)))</span><br><span class="line">        v_b_correction = v_b / (<span class="number">1</span> - tf.<span class="built_in">pow</span>(beta2, <span class="built_in">int</span>(global_step)))</span><br><span class="line"></span><br><span class="line">        w1.assign_sub(lr * m_w_correction / tf.sqrt(v_w_correction))</span><br><span class="line">        b1.assign_sub(lr * m_b_correction / tf.sqrt(v_b_correction))</span><br><span class="line"><span class="comment">##########################################################################</span></span><br></pre></td></tr></table></figure>
-
 <p>此时的运行时间为:<code>total_time 20.095345973968506</code></p>
 <p>(<strong>经过测试,这个优化器虽然运行时间会慢一些,但是运行的效果非常不错</strong>)</p>
 <h3 id="7-四种优化器的对比"><a href="#7-四种优化器的对比" class="headerlink" title="(7)四种优化器的对比"></a>(7)四种优化器的对比</h3><p>可以参考的博客如下:</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36589234/article/details/89330342?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_paycolumn_v3&utm_relevant_index=2">(11条消息) PyTorch学习之 torch.optim 的6种优化器及优化算法介绍_Line_Walker的博客-CSDN博客_pytorch 优化器</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36589234/article/details/89330342?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_paycolumn_v3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_paycolumn_v3&amp;utm_relevant_index=2">(11条消息) PyTorch学习之 torch.optim 的6种优化器及优化算法介绍_Line_Walker的博客-CSDN博客_pytorch 优化器</a></p>
 <p>后续有时间会继续进行补充</p>
 
     </div>
