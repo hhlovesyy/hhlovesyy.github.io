@@ -167,6 +167,563 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Git和Github-2-Github的使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-13 16:32:12 / 修改时间：16:33:34" itemprop="dateCreated datePublished" datetime="2022-05-13T16:32:12+08:00">2022-05-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">各种实用工具学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/Git-Github/" itemprop="url" rel="index"><span itemprop="name">Git&Github</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Github实用技巧"><a href="#Github实用技巧" class="headerlink" title="Github实用技巧"></a>Github实用技巧</h1><p>参考链接:</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/git/git_pull_from_remote.asp?remote=github">Git Pull from GitHub (w3schools.com)</a></p>
+<h2 id="一-把本地仓库Push上Github"><a href="#一-把本地仓库Push上Github" class="headerlink" title="一.把本地仓库Push上Github"></a>一.把本地仓库Push上Github</h2><h3 id="1-找到远端仓库的git地址"><a href="#1-找到远端仓库的git地址" class="headerlink" title="1.找到远端仓库的git地址"></a>1.找到远端仓库的git地址</h3><p>首先,在Github上新建一个仓库,选择public,并将git地址拷贝下来:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512204824807.png" alt="image-20220512204824807"></p>
+<p>其他的部分选择默认配置即可(<strong>注意到下面应该会提示master是主分支,如果没需求的话不用改就行</strong>).找到Git地址如下:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git">https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</a></p>
+</blockquote>
+<p><br/></p>
+<h3 id="2-把本地仓库上传到远程仓库"><a href="#2-把本地仓库上传到远程仓库" class="headerlink" title="2.把本地仓库上传到远程仓库"></a>2.把本地仓库上传到远程仓库</h3><ul>
+<li>在这之前,请确保本地的仓库已经git init,git add,git commit完成了.</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;this is the origin client of our game&quot;</span></span><br></pre></td></tr></table></figure>
+<p><br/></p>
+<h4 id="1-git-remote-add"><a href="#1-git-remote-add" class="headerlink" title="(1)git remote add"></a>(1)git remote add</h4><p>接下来,找到含有.git隐藏文件的文件夹,在git bash中输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>git remote add origin *URL*</code> specifies that you are adding a remote repository, with the specified <code>URL</code>, as an <code>origin</code> to your local Git repo.</p>
+</blockquote>
+<p><strong>如果这里的显示信息为已经有了一个git remote,则说明已经绑定了远端的仓库,如果还想要将文件上传的新的仓库则此时可以选择把.git文件删掉再重新输入上面的指令.</strong></p>
+<p>接下来,就可以使用push操作了.</p>
+<p><br/></p>
+<h4 id="2-git-push"><a href="#2-git-push" class="headerlink" title="(2)git push"></a>(2)git push</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
+<p>这样就把我们的本地仓库push到远程的origin显示的仓库,同时push到的分支是显示的master分支.</p>
+<p>成功之后会这样显示:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220628900.png" alt="image-20220512220628900"></p>
+<p>此时去Github上刷新一下自己的远程仓库,看到结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220801392.png" alt="image-20220512220801392"></p>
+<p>可以看到,本地仓库已经上传到了远端的仓库上了.</p>
+<p><br/></p>
+<h4 id="报错1-远端仓库有内容没有pull"><a href="#报错1-远端仓库有内容没有pull" class="headerlink" title="报错1:远端仓库有内容没有pull"></a>报错1:远端仓库有内容没有pull</h4><p>假如出现了下面的信息:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512214852845.png" alt="image-20220512214852845"></p>
+<p><strong>则说明此时的远端仓库并不是最新的版本,因此需要先pull下来,这个后续会再进行总结</strong>.</p>
+<h2 id="二-在Github上编辑代码并commit"><a href="#二-在Github上编辑代码并commit" class="headerlink" title="二.在Github上编辑代码并commit"></a>二.在Github上编辑代码并commit</h2><p>点击进入文件当中,选择右上角的笔的标志,对Github的文件进行编辑:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221059984.png" alt="image-20220512221059984"></p>
+<p>修改完内容之后可以直接在下方commit提交:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221208945.png" alt="image-20220512221208945"></p>
+<p>此时刷新一下,就可以看到Github的内容得到了更新.</p>
+<p><br/></p>
+<h2 id="三-Git-pull"><a href="#三-Git-pull" class="headerlink" title="三.Git pull"></a>三.Git pull</h2><blockquote>
+<p>在团队合作的过程当中,所有参与者都能获取到仓库的最新状态是十分重要的.此时<code>git pull</code>指令就是一个很常见的指令.  </p>
+</blockquote>
+<p>git pull指令由以下两部分组成:</p>
+<ul>
+<li>fetch</li>
+<li>merge</li>
+</ul>
+<h3 id="1-fetch"><a href="#1-fetch" class="headerlink" title="1.fetch"></a>1.fetch</h3><blockquote>
+<p><code>fetch</code> gets all the change history of a tracked branch/repo.</p>
+<p>So, on your local Git, <code>fetch</code> updates to see what has changed on GitHub:</p>
+</blockquote>
+<p>也就是说,<code>git fetch</code>可以看到远程仓库当中出现了哪些内容的修改,对于我们此时的情况,结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221733402.png" alt="image-20220512221733402"></p>
+<p>此时我们看到了有一些最新的变化,此时可以用<code>git status</code>查看现在的状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221934977.png" alt="image-20220512221934977"></p>
+<p>也就是说,远端仓库有一个新的commit提交,当然这个应该是我们刚才修改的readme.md文件,此时可以通过log指令来查看日志:</p>
+<h4 id="1-git-log-xxx-branch"><a href="#1-git-log-xxx-branch" class="headerlink" title="(1)git log xxx(branch)"></a>(1)git log xxx(branch)</h4><p>在这里,我们输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222205042.png" alt="image-20220512222205042"></p>
+<p>可以看到这条最近的commit记录.</p>
+<h4 id="2-git-diff-xxx-branch"><a href="#2-git-diff-xxx-branch" class="headerlink" title="(2)git diff xxx(branch)"></a>(2)git diff xxx(branch)</h4><p>虽然刚才的指令可以看到冲突的来源,但有的时候仍不够直观.这个时候可以采用git diff指令查看本地仓库和远程仓库的区别:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222510351.png" alt="image-20220512222510351"></p>
+<p>可以看到,冲突与我们的预期相符,接下来就是merge了.</p>
+<p><br/></p>
+<h3 id="2-merge"><a href="#2-merge" class="headerlink" title="2.merge"></a>2.merge</h3><p><code>git merge current specified</code></p>
+<p>表示合并specified分支到current分支,对于现在的情况来说,指令如下:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222814887.png" alt="image-20220512222814887"></p>
+<p>此时用git status进行查看:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222855840.png" alt="image-20220512222855840"></p>
+<p>这表示本地仓库已经和远端仓库同步了.</p>
+<p><br/></p>
+<h3 id="3-git-pull"><a href="#3-git-pull" class="headerlink" title="3.git pull"></a>3.git pull</h3><blockquote>
+<p>将fetch与merge操作进行合并就是pull操作了.</p>
+</blockquote>
+<p>比如这里我们又修改了远程仓库的README.md的内容,然后直接git pull origin</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223328289.png" alt="image-20220512223328289"></p>
+<p>在团队合作项目当中,<strong>git pull是一个十分实用的技巧,需要经常使用</strong></p>
+<p><br/></p>
+<h4 id="报错2"><a href="#报错2" class="headerlink" title="报错2"></a>报错2</h4><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512215345450.png" alt="image-20220512215345450"></p>
+<p>对于上面那个错误,问题出在没有pull下来最新的仓库版本.采用git pull即可.</p>
+<p>对于下面那个错误,则可以参考下述网站解决(<strong>可能是因为pull下来的仓库和本地的没什么关系,可以通过链接里的解决办法解决</strong>):</p>
+<p><a target="_blank" rel="noopener" href="https://komodor.com/learn/how-to-fix-fatal-refusing-to-merge-unrelated-histories-error/">How to fix ‘fatal: refusing to merge unrelated histories’ Git error | Komodor</a></p>
+<p><br/></p>
+<h4 id="报错3"><a href="#报错3" class="headerlink" title="报错3"></a>报错3</h4><blockquote>
+<p>关于pull的时候报conflict错误,冲突的地方会被git标注下来,进入文件夹当中修改即可.然后不要忘记git add 改过之后的文件和git commit两个步骤.(参考前一节解决冲突)</p>
+</blockquote>
+<p><br/></p>
+<h2 id="四-Git-push"><a href="#四-Git-push" class="headerlink" title="四.Git push"></a>四.Git push</h2><h3 id="1-将本地的修改push到Github"><a href="#1-将本地的修改push到Github" class="headerlink" title="1.将本地的修改push到Github"></a>1.将本地的修改push到Github</h3><p>假设我们在本地修改了README.md文件:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223653746.png" alt="image-20220512223653746"></p>
+<p>(最后一行为新增加的内容)</p>
+<p>接下来输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;add something in readme.md&quot;</span></span><br><span class="line">git status</span><br><span class="line">git push origin</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223920465.png" alt="image-20220512223920465"></p>
+<p>此时去Github当中查看新的commit,方法如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224048995.png" alt="image-20220512224048995"></p>
+<p>点击链接,查看具体详情:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224144077.png" alt="image-20220512224144077"></p>
+<p>可以看到这次commit当中新增的内容.</p>
+<p><br/></p>
+<h2 id="五-Git-amp-Github分支管理"><a href="#五-Git-amp-Github分支管理" class="headerlink" title="五.Git&amp;Github分支管理"></a>五.Git&amp;Github分支管理</h2><h3 id="1-Github分支创建"><a href="#1-Github分支创建" class="headerlink" title="1.Github分支创建"></a>1.Github分支创建</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100149817.png" alt="image-20220513100149817"></p>
+<p>在上面直接输入一个没有的分支,下面就会出现创建这个分支的信息.</p>
+<p>现在我们切换到了dev分支,接下来对文件进行一些修改:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100609649.png" alt="image-20220513100609649"></p>
+<p><strong>经过观察,此时master分支和dev分支当中的README.md文件中的内容有所不同.</strong></p>
+<p><br/></p>
+<h3 id="2-pull-branch-from-github"><a href="#2-pull-branch-from-github" class="headerlink" title="2.pull branch from github"></a>2.pull branch from github</h3><p>使用git pull指令拉取远端仓库的最新版本:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101216770.png" alt="image-20220513101216770"></p>
+<p>接下来用git status查看状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101256422.png" alt="image-20220513101256422"></p>
+<p>可以看到,此时正处于master分支当中,接下来需要做的是查看本地有的分支.</p>
+<p>输入<code>git branch</code>:</p>
+<p>显示结果如下:</p>
+<blockquote>
+<p>*master</p>
+</blockquote>
+<p>这表示我们本地这边现在只有master分支.<strong>使用git branch -a可以查看所有本地和远程的分支</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
+<p>结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101617065.png" alt="image-20220513101617065"></p>
+<blockquote>
+<p>注:如果使用git branch -r则只看远程的分支有什么.</p>
+</blockquote>
+<h4 id="a-通过git-checkout切换分支"><a href="#a-通过git-checkout切换分支" class="headerlink" title="(a)通过git checkout切换分支"></a>(a)通过git checkout切换分支</h4><p>此时输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line"><span class="comment"># 可以验证是否是最新的分支</span></span><br><span class="line">git pull</span><br><span class="line"><span class="comment"># 接下来,用git branch来查看本地有的分支</span></span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101933087.png" alt="image-20220513101933087"></p>
+<h3 id="3-push-branch-to-github"><a href="#3-push-branch-to-github" class="headerlink" title="3.push branch to github"></a>3.push branch to github</h3><p>在本地新建一个分支dev-windows,然后修改readme.md当中的内容,接下来push到github上</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev-windows</span><br><span class="line"><span class="comment"># 修改文件的内容之后</span></span><br><span class="line">git status</span><br><span class="line">git add </span><br><span class="line">git commit -m <span class="string">&quot;modify README.md&quot;</span></span><br><span class="line"><span class="comment"># 核心:push到远程分支上</span></span><br><span class="line">git push origin dev-windows</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102623371.png" alt="image-20220513102623371"></p>
+<p>此时到远程的仓库当中去查看结果,发现已经有一个新的分支了:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102705015.png" alt="image-20220513102705015"></p>
+<p><br/></p>
+<h3 id="4-Compare-amp-pull-requests"><a href="#4-Compare-amp-pull-requests" class="headerlink" title="4.Compare&amp;pull requests"></a>4.Compare&amp;pull requests</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102918898.png" alt="image-20220513102918898"></p>
+<p>可以点击框中的部分,查看如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103029071.png" alt="image-20220513103029071"></p>
+<p>这里可以看到对应的更改,如果觉得这个更改是合适的话,<strong>就可以创建一个pull request:</strong></p>
+<blockquote>
+<p>A pull request is how you propose changes. You can ask some to review your changes or pull your contribution and merge it into their branch.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103222095.png" alt="image-20220513103222095"></p>
+<p>接下来就可以根据Github的提示信息(比如是否发生冲突),以及自己观察的结果,来决定是否要merge这个pull request:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103359356.png" alt="image-20220513103359356"></p>
+<p>如上图,Github没有检测到可能的冲突,因此可以merge pull request.在点击合并pull request之后出现如下信息:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103532387.png" alt="image-20220513103532387"></p>
+<p>因为已经合并分支了,因此刚才的分支可以删掉了,点击Delete branch删除分支.</p>
+<p><br/></p>
+<h2 id="六-Github工作流"><a href="#六-Github工作流" class="headerlink" title="六.Github工作流"></a>六.Github工作流</h2><p>Github的工作流可以总结如下:</p>
+<ul>
+<li>Create a new Branch:创建新的分支</li>
+<li>Make changes and add Commits:做出改变并且commit</li>
+<li>Open a Pull Request:开启一个pull request</li>
+<li>Review: 预览</li>
+<li>Deploy: 部署</li>
+<li>Merge: 合并</li>
+</ul>
+<p>接下来具体做出介绍:</p>
+<h3 id="1-创建新的分支"><a href="#1-创建新的分支" class="headerlink" title="1.创建新的分支"></a>1.创建新的分支</h3><blockquote>
+<p>请注意:</p>
+<ul>
+<li>新的分支往往是要做一些实验性的工作所需要的,不要在这种情况下直接动master的代码:</li>
+<li><strong>如果没有特殊情况,新的分支往往都是从master衍生出来的</strong></li>
+<li>在团队合作的时候,新的分支起的名字要更好理解,方便团队更好的合作.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h3 id="2-做出改变并commit"><a href="#2-做出改变并commit" class="headerlink" title="2.做出改变并commit"></a>2.做出改变并commit</h3><blockquote>
+<p>在创建一个新的分支之后,就可以修改里面的内容了.每当完成一件事的时候,可以add+commit.</p>
+<ul>
+<li>每个commit应该包括有用的信息,因为commit可以提供结点,使得出现问题的时候可以回滚,同时也方便其他合作者看到仓库的变化.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h3 id="3-Open-a-pull-request"><a href="#3-Open-a-pull-request" class="headerlink" title="3.Open a pull request"></a>3.Open a pull request</h3><blockquote>
+<p>这部分是Github的核心.一个pull request表示你改变了某些内容,方便其他人查看,并且选择是否要merge你的代码到他们的分支上.</p>
+</blockquote>
+<p><br/></p>
+<h3 id="4-review-amp-deploy-amp-merge"><a href="#4-review-amp-deploy-amp-merge" class="headerlink" title="4.review&amp;deploy&amp;merge"></a>4.review&amp;deploy&amp;merge</h3><blockquote>
+<p>当一个Pull Request被发出时，它可以被任何对分支有适当访问权限的人审查。 这是对更改进行良好讨论和审查的地方。  </p>
+<p>如果您收到反馈可以继续改进您的更改，可以使用新的commit来添加更改，使进一步的审查成为可能.</p>
+<p>当检查完pull request并发现没有太大的问题时，就该进行最后的测试了。 GitHub允许你在与主分支合并之前从一个分支进行部署，以便在生产中进行最终测试。  </p>
+<p>如果出现任何问题，您可以通过再次将主分支部署到生产中来撤消更改!  </p>
+<p>如果都没有问题的话,就可以和master分支合并了.</p>
+</blockquote>
+<p>看到这里:</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/git/git_remote_fork.asp?remote=github">https://www.w3schools.com/git/git_remote_fork.asp?remote=github</a></p>
+<p>有时间再继续进行后续整理.</p>
+<h2 id="七-测试学习成果"><a href="#七-测试学习成果" class="headerlink" title="七.测试学习成果"></a>七.测试学习成果</h2><p>以下这个网站非常不错,可以用来测试Git的学习成果.</p>
+<p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching</a></p>
+<h2 id="八-一些其他指令"><a href="#八-一些其他指令" class="headerlink" title="八.一些其他指令"></a>八.一些其他指令</h2><h3 id="1-git-rebase"><a href="#1-git-rebase" class="headerlink" title="1.git rebase"></a>1.git rebase</h3><p>见上述网站基础部分的第四关.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/12/Git%E5%92%8CGithub-1-Git%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/12/Git%E5%92%8CGithub-1-Git%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">Git和Github(1)-Git基础指令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-12 20:39:18 / 修改时间：22:03:47" itemprop="dateCreated datePublished" datetime="2022-05-12T20:39:18+08:00">2022-05-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">各种实用工具学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/Git-Github/" itemprop="url" rel="index"><span itemprop="name">Git&Github</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Git常用指令学习-1"><a href="#Git常用指令学习-1" class="headerlink" title="Git常用指令学习(1)"></a>Git常用指令学习(1)</h1><p>最近在各种项目当中都要用到Git,在这里复习总结一下.</p>
+<p>推荐学习网站:</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/git/default.asp?remote=github">Git Tutorial (w3schools.com)</a></p>
+<blockquote>
+<p>Git works by recording the changes you make to a project, storing those changes, then allowing you to reference them as needed.</p>
+</blockquote>
+<h2 id="一-Git介绍"><a href="#一-Git介绍" class="headerlink" title="一.Git介绍"></a>一.Git介绍</h2><h3 id="What-does-Git-do"><a href="#What-does-Git-do" class="headerlink" title="What does Git do?"></a>What does Git do?</h3><ul>
+<li>Manage projects with <strong>Repositories</strong></li>
+<li><strong>Clone</strong> a project to work on a local copy</li>
+<li>Control and track changes with <strong>Staging</strong> and <strong>Committing</strong></li>
+<li><strong>Branch</strong> and <strong>Merge</strong> to allow for work on different parts and versions of a project</li>
+<li><strong>Pull</strong> the latest version of the project to a local copy</li>
+<li><strong>Push</strong> local updates to the main project</li>
+</ul>
+<h3 id="Working-with-Git"><a href="#Working-with-Git" class="headerlink" title="Working with Git"></a>Working with Git</h3><ul>
+<li>Initialize Git on a folder, making it a <strong>Repository</strong></li>
+<li>Git now creates a hidden folder to keep track of changes in that folder</li>
+<li>When a file is changed, added or deleted, it is considered <strong>modified</strong></li>
+<li>You select the modified files you want to <strong>Stage</strong></li>
+<li>The <strong>Staged</strong> files are <strong>Committed</strong>, which prompts Git to store a <strong>permanent</strong> snapshot of the files</li>
+<li>Git allows you to see the full history of every commit.</li>
+<li>You can revert back to any previous commit.</li>
+<li>Git does not store a separate copy of every file in every commit, but keeps track of changes made in each commit!</li>
+</ul>
+<p><br/></p>
+<h2 id="二-最基础Git指令"><a href="#二-最基础Git指令" class="headerlink" title="二.最基础Git指令"></a>二.最基础Git指令</h2><h3 id="1-查看git版本"><a href="#1-查看git版本" class="headerlink" title="1.查看git版本"></a>1.查看git版本</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152146419.png" alt="image-20220512152146419"></p>
+<p><br/></p>
+<h3 id="2-配置git"><a href="#2-配置git" class="headerlink" title="2.配置git"></a>2.配置git</h3><p>配置git信息对版本管理非常重要,因为每次commit都需要用到对应的信息.</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;ChrisZhang&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;1596944152@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152825629.png" alt="image-20220512152825629"></p>
+<blockquote>
+<p>注:这里使用—global是指对所有的仓库都有效,如果只想对当前仓库起效的话只需要移除global信息即可.</p>
+</blockquote>
+<p><br/></p>
+<h3 id="3-创建新的git文件"><a href="#3-创建新的git文件" class="headerlink" title="3.创建新的git文件"></a>3.创建新的git文件</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir myProject</span><br><span class="line">cd myProject</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512153111267.png" alt="image-20220512153111267"></p>
+<p><br/></p>
+<h3 id="4-创建仓库git-init"><a href="#4-创建仓库git-init" class="headerlink" title="4.创建仓库git init"></a>4.创建仓库git init</h3><p>将一个文件变成git 项目工程.</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>此时可以看到输出的结果如下:</p>
+<blockquote>
+<p>Initialized empty Git repository in xxxx/.git/(其中这个.git是一个隐藏文件)</p>
+</blockquote>
+<p>说明git仓库已经创建完成了.</p>
+<p><br/></p>
+<h3 id="5-git-help"><a href="#5-git-help" class="headerlink" title="5.git help"></a>5.git help</h3><blockquote>
+<ul>
+<li><code>git command -help</code> - See all the available options for the specific command(<strong>这里的command是具体的指令,比如git commit -help</strong>)</li>
+<li><code>git help --all</code> - See all possible commands</li>
+</ul>
+</blockquote>
+<p>举例:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161741954.png" alt="image-20220512161741954"></p>
+<p><br/></p>
+<h2 id="三-Git工作流"><a href="#三-Git工作流" class="headerlink" title="三.Git工作流"></a>三.Git工作流</h2><h3 id="1-Git工作流"><a href="#1-Git工作流" class="headerlink" title="1.Git工作流"></a>1.Git工作流</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512151101176.png" alt="image-20220512151101176"></p>
+<p>说明如下:</p>
+<ul>
+<li>git init之后产生工作目录,在这里做所有的文件增删查改操作.</li>
+<li>staging area:这里可以列出所有对工作目录的改动;</li>
+<li>仓库:通过commit指令可以把对文件的改动保存到仓库.</li>
+</ul>
+<h3 id="2-git-add"><a href="#2-git-add" class="headerlink" title="2.git add"></a>2.git add</h3><p>首先,先新建一个.txt文件Hello.txt:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512153446975.png" alt="image-20220512153446975"></p>
+<p>进入目录之后,使用<code>ls</code>命令可以查看目录结构.</p>
+<h4 id="1-常用-git-status"><a href="#1-常用-git-status" class="headerlink" title="(1)常用:git status"></a>(1)常用:git status</h4><p>输入git status查看情况:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512153638555.png" alt="image-20220512153638555"></p>
+<p>现在Git意识到了有这样一个新文件,但是还没有add到仓库当中.</p>
+<p>git中的文件有两种状态:</p>
+<ul>
+<li>tracked:Git了解并且已经加入到仓库当中</li>
+<li>untracked:在工作目录当中,但还没有加入仓库当中.</li>
+</ul>
+<p><br/></p>
+<h5 id="git-status-—short"><a href="#git-status-—short" class="headerlink" title="git status —short"></a>git status —short</h5><p>有的时候可以用这个指令来缩减显示的信息(<strong>注意这个指令有俩横线不要忘了输入</strong>):</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status --short</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160011729.png" alt="image-20220512160011729"></p>
+<p>介绍如下:</p>
+<blockquote>
+<ul>
+<li>?? - Untracked files</li>
+<li>A - Files added to stage</li>
+<li>M - Modified files</li>
+<li>D - Deleted files</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h4 id="2-git-add-1"><a href="#2-git-add-1" class="headerlink" title="(2)git add"></a>(2)git add</h4><p>输入以下指令:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add Hello.txt</span><br></pre></td></tr></table></figure>
+<p>此时就可以查看<code>git status</code>:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154046848.png" alt="image-20220512154046848"></p>
+<p><strong>注:请注意文件名不要输入错误,否则git不会报错,但是不会add成功(因为文件不存在,所以肯定加不进去)</strong></p>
+<p><br/></p>
+<h4 id="3-如果一次add比较多-用-all"><a href="#3-如果一次add比较多-用-all" class="headerlink" title="(3)如果一次add比较多,用-all"></a>(3)如果一次add比较多,用-all</h4><p>比如,现在我们有四个文件:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154224652.png" alt="image-20220512154224652"></p>
+<p>则可以使用指令:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line"><span class="comment"># 这个指令的缩写为git add -A</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154344743.png" alt="image-20220512154344743"></p>
+<p>(<strong>注:如果这个文件已经add 过了,再add也是不影响的,所以可以放心使用git add</strong>)</p>
+<p><br/></p>
+<h3 id="3-git-commit"><a href="#3-git-commit" class="headerlink" title="3.git commit"></a>3.git commit</h3><p>从之前的图我们可以看到,此时的修改都已经保存在了staging area,接下来就是commit操作了.</p>
+<p><strong>在我们commit的时候,往往要包括一些commit的信息:</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;First commit!&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154811993.png" alt="image-20220512154811993"></p>
+<p>此时staging area中的内容就被commit到了仓库当中,并且附加了一条信息.</p>
+<h4 id="1-直接commit-不用stage-area-不推荐"><a href="#1-直接commit-不用stage-area-不推荐" class="headerlink" title="(1)直接commit(不用stage area,不推荐)"></a>(1)直接commit(不用stage area,不推荐)</h4><p>首先修改某一个文件的内容:(比如Hello.txt)(<strong>如果添加了一个文件这个可能没什么效果</strong>)</p>
+<p>然后用<code>git status short</code>查看状态.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160917808.png" alt="image-20220512160917808"></p>
+<p>此时输入指令:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;update 2022_05_12&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161053951.png" alt="image-20220512161053951"></p>
+<p>可以看到,成功了.<strong>实际上,这种方式并不推荐,可能会导致commit了自己不需要的文件</strong></p>
+<p><br/></p>
+<h4 id="2-git-log"><a href="#2-git-log" class="headerlink" title="(2)git log"></a>(2)git log</h4><p>这条指令可以看到commit的日志消息:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161310440.png" alt="image-20220512161310440"></p>
+<p><br/></p>
+<h2 id="四-Git-branch"><a href="#四-Git-branch" class="headerlink" title="四.Git branch"></a>四.Git branch</h2><h3 id="1-branch介绍"><a href="#1-branch介绍" class="headerlink" title="1.branch介绍"></a>1.branch介绍</h3><blockquote>
+<p>In Git, a <code>branch</code> is a new/separate version of the main repository.</p>
+<p>Branches allow you to work on different parts of a project without impacting the main branch.</p>
+<p><strong>When the work is complete, a branch can be merged with the main project.</strong></p>
+<p>You can even switch between branches and work on different projects without them interfering with each other.</p>
+<p>Branching in Git is very lightweight and fast!</p>
+</blockquote>
+<p><br/></p>
+<h4 id="1-新建一个分支"><a href="#1-新建一个分支" class="headerlink" title="(1)新建一个分支"></a>(1)新建一个分支</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch hello-world</span><br></pre></td></tr></table></figure>
+<p>此时就新建了一个分支hello-world.</p>
+<h5 id="a-查看分支"><a href="#a-查看分支" class="headerlink" title="(a)查看分支"></a>(a)查看分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512192457308.png" alt="image-20220512192457308"></p>
+<p>此时可以看到,新的分支已经创建完成了.</p>
+<p><strong>master分支前面那个星号(*)表明我们现在正处于master分支</strong></p>
+<p><br/></p>
+<h5 id="b-切换分支"><a href="#b-切换分支" class="headerlink" title="(b)切换分支"></a>(b)切换分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Using the <code>-b</code> option on <code>checkout</code> will create a new branch, and move to it, if it does not exist</p>
+</blockquote>
+<p>运行结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512192809185.png" alt="image-20220512192809185"></p>
+<p><strong>此时我们就进入到了新的分支hello-world</strong></p>
+<p>接下来,对这个分支进行一些修改,比如新增一个文件,同时对一些文件进行修改:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512192941691.png" alt="image-20220512192941691"></p>
+<p><strong>用git status查看此时的状态</strong>:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512193147816.png" alt="image-20220512193147816"></p>
+<p>可以看到:</p>
+<ul>
+<li><p>Hello2.txt文件被修改了,但是还没有被放入到stage area并commit;</p>
+</li>
+<li><p>有一个untracked文件(也就是我们新建的文件)</p>
+</li>
+</ul>
+<p><strong>接下来,我们用git add —all和git commit来提交文件</strong>:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;new changes in hello-world branch&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512193616679.png" alt="image-20220512193616679"></p>
+<p><strong>此时我们的新分支就与master分支具有不一样的内容了</strong>.</p>
+<p><br/></p>
+<h5 id="c-检查不同的分支中的内容"><a href="#c-检查不同的分支中的内容" class="headerlink" title="(c)检查不同的分支中的内容"></a>(c)检查不同的分支中的内容</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看新的分支中的内容</span></span><br><span class="line">ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到master分支</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看master分支中的内容</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512194041653.png" alt="image-20220512194041653"></p>
+<p>可以明显地看到,两个分支当中的内容是不同的.</p>
+<p><br/></p>
+<h4 id="2-分支的使用场景"><a href="#2-分支的使用场景" class="headerlink" title="(2)分支的使用场景"></a>(2)分支的使用场景</h4><blockquote>
+<p>设想一个场景,就是我们的hello-world分支目前正在开发一个新功能,但master分支有人提出了bug.</p>
+<p>此时的正确做法应该如下:</p>
+<ul>
+<li>从master分支新建一个emergency-fix分支,用于解决bug</li>
+<li>将emergency-fix分支的bug解决掉,并与master分支merge</li>
+</ul>
+</blockquote>
+<p>首先,新建一个分支:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b emergency-fix</span><br></pre></td></tr></table></figure>
+<p>然后,修改文件中的内容以演示修复bug的过程:</p>
+<p>然后,使用<code>git status</code>查看状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195724505.png" alt="image-20220512195724505">    </p>
+<p>使用以下命令提交commit给emergency-fix分支</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;bug-fixed&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195936658.png" alt="image-20220512195936658"></p>
+<p><strong>接下来,就是合并这个分支和master分支</strong></p>
+<p><br/></p>
+<h4 id="3-分支合并"><a href="#3-分支合并" class="headerlink" title="(3)分支合并"></a>(3)分支合并</h4><blockquote>
+<p>现在我们的需求是,将emergency-fix分支的内容合并到master分支上</p>
+</blockquote>
+<ul>
+<li>a.进入到master分支</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+<ul>
+<li>b.合并当前分支与emergency-fix分支:</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge emergency-fix</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200524220.png" alt="image-20220512200524220"></p>
+<p><strong>由于emergency-fix分支是直接从master分支来的,并且在我们处理emergency-fix分支的时候没有人动master分支,因此Git认为这个可以直接合并,表示”fast-forward”.</strong>直接把两者合并.</p>
+<p>此时emergency-fix和master分支的内容是一样的,可以将emergency-fix分支删掉.</p>
+<p><br/></p>
+<h4 id="4-删除分支"><a href="#4-删除分支" class="headerlink" title="(4)删除分支"></a>(4)删除分支</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d emergency-fix</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200909907.png" alt="image-20220512200909907"></p>
+<p><br/></p>
+<h4 id="5-在merge的时候出现冲突"><a href="#5-在merge的时候出现冲突" class="headerlink" title="(5)在merge的时候出现冲突"></a>(5)在merge的时候出现冲突</h4><p>在之前,我们在emergency-fix分支中修改了Hello1.txt,现在我们进入到hello-world分支,然后同样修改Hello1.txt:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br><span class="line"><span class="comment"># 接下来,修改Hello1.txt,然后输入</span></span><br><span class="line">git status</span><br><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;change Hello1.txt&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202218893.png" alt="image-20220512202218893"></p>
+<p>接下来,<strong>进入到master分支并merge hello-world分支</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge hello-world</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202352704.png" alt="image-20220512202352704"></p>
+<p>从显示的结果来看,<strong>这里出现了一个冲突</strong>.</p>
+<p><br/></p>
+<h5 id="a-解决冲突问题"><a href="#a-解决冲突问题" class="headerlink" title="(a)解决冲突问题"></a>(a)解决冲突问题</h5><p>首先,利用<code>git status</code>查看状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202519911.png" alt="image-20220512202519911"></p>
+<p>从红色字体中可以看到,两者都修改了Hello1.txt,<strong>因此我们需要解决这部分的冲突.</strong></p>
+<ul>
+<li>点击进入Hello1.txt</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202748683.png" alt="image-20220512202748683"></p>
+<p>这里我们对文件做出如下修改:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202929660.png" alt="image-20220512202929660"></p>
+<p>此时就可以使用git add指令了:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203113207.png" alt="image-20220512203113207"></p>
+<p>这个时候已经解决了冲突问题,接下来就是git commit和删除已经合并的分支了:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;solve merge conflicts!&quot;</span></span><br><span class="line">git branch -d hello-world</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203450856-16523589320227.png" alt="image-20220512203450856"></p>
+<h5 id="b-在merge的时候出现了冲突-想退出怎么办"><a href="#b-在merge的时候出现了冲突-想退出怎么办" class="headerlink" title="(b)在merge的时候出现了冲突,想退出怎么办"></a>(b)在merge的时候出现了冲突,想退出怎么办</h5><p>如果出现了下面的情况:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220053187.png" alt="image-20220512220053187"></p>
+<p>则此时可以通过<code>git reset --merge</code>指令来解决问题.</p>
+<p>参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/101752/i-ran-into-a-merge-conflict-how-can-i-abort-the-merge">git - I ran into a merge conflict. How can I abort the merge? - Stack Overflow</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Python-OpenCV%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%B7%E6%9C%89%E4%B8%80%E5%AE%9A%E6%99%AE%E9%80%82%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2443,371 +3000,6 @@ w_{t+1}=w_t-\eta_t=w_t-lr×m_t÷\sqrt{V_t}=w_t-lr×g_t
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/Tensorflow%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="ChrisZhang">
-      <meta itemprop="description" content="我的技美学习之路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ChrisZhang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/02/Tensorflow%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-1/" class="post-title-link" itemprop="url">Tensorflow基础学习(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-05-02 16:34:57 / 修改时间：22:55:35" itemprop="dateCreated datePublished" datetime="2022-05-02T16:34:57+08:00">2022-05-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/tensorflow/" itemprop="url" rel="index"><span itemprop="name">tensorflow</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="TensorFlow-学习-1"><a href="#TensorFlow-学习-1" class="headerlink" title="TensorFlow  学习(1)"></a>TensorFlow  学习(1)</h1><p>参考视频:</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=1">【北京大学】Tensorflow2.0_哔哩哔哩_bilibili</a></p>
-<h1 id="一-初识神经网络"><a href="#一-初识神经网络" class="headerlink" title="一.初识神经网络"></a>一.初识神经网络</h1><h2 id="1-1-人工智能三学派"><a href="#1-1-人工智能三学派" class="headerlink" title="1.1 人工智能三学派"></a>1.1 人工智能三学派</h2><ul>
-<li>行为主义<ul>
-<li>基于控制论,构建感知-动作控制系统</li>
-</ul>
-</li>
-<li>符号主义<ul>
-<li>基于算数逻辑表达式,可用公式描述(如专家系统)</li>
-</ul>
-</li>
-<li>连接主义<ul>
-<li>仿生学,<strong>模仿神经元连接关系</strong></li>
-</ul>
-</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501210406652.png" alt="image-20220501210406652"></p>
-<h2 id="1-2-神经网络设计过程"><a href="#1-2-神经网络设计过程" class="headerlink" title="1.2 神经网络设计过程"></a>1.2 神经网络设计过程</h2><p>案例:给鸢尾花分类(基于神经网络的方法，具体过程见<a href="# 1.6 鸢尾花分类——数据集读入">鸢尾花分类</a>)</p>
-<ul>
-<li><strong>神经网络:</strong>采集大量输入特征,以及对应的类别(作为<strong>标签,需要人工标定</strong>)作为数据对构成数据集.</li>
-<li>将数据集喂入搭建好的神经网络结构,<strong>网络优化参数得到模型</strong>,模型读入新输入的特征,然后输出识别的结果.</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501210852707.png" alt="image-20220501210852707"></p>
-<p><strong>注意,w和b会被随机赋予一些初值,然后根据前向传播和反向传播来调整参数</strong></p>
-<ul>
-<li>利用<strong>损失函数</strong>来定义预测值$y$与标准答案$y’$的差距<ul>
-<li>常用的损失函数有<strong>均方误差</strong>等</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501211244083.png" alt="image-20220501211244083"></p>
-<h3 id="1-尝试一个反向传播使梯度减小的例子"><a href="#1-尝试一个反向传播使梯度减小的例子" class="headerlink" title="(1)尝试一个反向传播使梯度减小的例子"></a>(1)尝试一个反向传播使梯度减小的例子</h3><ul>
-<li>注：<strong>如果下例中有难以理解的函数，或许看完后面部分再回来就会更好理解</strong></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w = tf.Variable(tf.constant(<span class="number">5</span>, dtype=tf.float32))  <span class="comment"># 设定参数w的随机初始值为5,可训练</span></span><br><span class="line">lr = <span class="number">0.2</span>  <span class="comment"># 学习率</span></span><br><span class="line">epoch = <span class="number">40</span>  <span class="comment"># 循环迭代次数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># 对数据集循环epoch次</span></span><br><span class="line">    <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># with结构到grads框起了梯度的计算过程</span></span><br><span class="line">        loss = tf.square(w + <span class="number">1</span>)  <span class="comment"># 损失函数</span></span><br><span class="line">    grads = tape.gradient(loss, w)  <span class="comment"># .gradient函数告知谁对谁求导</span></span><br><span class="line"></span><br><span class="line">    w.assign_sub(lr * grads)  <span class="comment"># .assign_sub 对变量做自减,即w-=lr*grads</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;After %s epoch,w is %f,loss is %f&quot;</span> % (epoch, w.numpy(), loss))</span><br><span class="line"></span><br><span class="line"><span class="comment"># lr初始值:0.2 请自选学习率0.001,0.009查看收敛过程</span></span><br><span class="line"><span class="comment"># 最终目的:找到loss最小 即w=-1的最优参数w</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="学习率过小或过大的情况"><a href="#学习率过小或过大的情况" class="headerlink" title="学习率过小或过大的情况"></a>学习率过小或过大的情况</h4><p>修改学习率lr的值,测试学习率过小或者过大的结果:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501212540892.png" alt="image-20220501212540892"></p>
-<h2 id="1-3-张量生成"><a href="#1-3-张量生成" class="headerlink" title="1.3 张量生成"></a>1.3 张量生成</h2><p>Tensor的意思就是张量,可以直观理解成<strong>多维数组(列表)</strong>,其中张量的维数叫做<strong>阶</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501212810950.png" alt="image-20220501212810950"></p>
-<p><code>[</code>的层数可以很好地说明张量的阶数。</p>
-<p>其他的数据类型如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.int32,tf.float32,t.constant([True,False]),tf.constant(&quot;Hello,world!&quot;)等</span><br></pre></td></tr></table></figure>
-<h3 id="（1）如何创建一个张量？"><a href="#（1）如何创建一个张量？" class="headerlink" title="（1）如何创建一个张量？"></a>（1）如何创建一个张量？</h3><p>使用constant创建一个张量：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.constant([<span class="number">1</span>,<span class="number">5</span>],dtype=tf.int64)  <span class="comment"># 一阶张量</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(a.dtype)</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br></pre></td></tr></table></figure>
-<p>创建张量模板：</p>
-<p><code>tf.constant(张量内容,dtype=数据类型（可选）)</code></p>
-<ul>
-<li>直接打印a会输出张量的所有信息，其中shape的逗号隔开了几个数字，张量就是几维的（比如上例shape隔开了一个数字，就是一维的，2表示张量里有2个元素）</li>
-<li>也可以打印<code>a.dtype</code> 和<code>a.shape</code>，如上。</li>
-</ul>
-<h3 id="（2）Numpy数据转为Tensor"><a href="#（2）Numpy数据转为Tensor" class="headerlink" title="（2）Numpy数据转为Tensor"></a>（2）Numpy数据转为Tensor</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.arange(<span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">b = tf.convert_to_tensor(a, dtype=tf.int64)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果：</span></span><br><span class="line">[<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>]</span><br><span class="line">tf.Tensor([<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>], shape=(<span class="number">5</span>,), dtype=int64)</span><br></pre></td></tr></table></figure>
-<h3 id="（3）创建一些固定的张量"><a href="#（3）创建一些固定的张量" class="headerlink" title="（3）创建一些固定的张量"></a>（3）创建一些固定的张量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.zeros([<span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># 参数：维度</span></span><br><span class="line">b = tf.ones([<span class="number">4</span>])</span><br><span class="line">c = tf.fill([<span class="number">2</span>, <span class="number">2</span>], <span class="number">9</span>)  <span class="comment"># 参数:维度,指定值</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">tf.Tensor([[<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>][<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]], shape=(<span class="number">2</span>, <span class="number">3</span>),dtype=float32)</span><br><span class="line">tf.Tensor([<span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span>], shape=(<span class="number">4</span>,),dtype=float32)</span><br><span class="line">tf.Tensor([[<span class="number">9</span> <span class="number">9</span>][<span class="number">9</span> <span class="number">9</span>]], shape=(<span class="number">2</span>, <span class="number">2</span>), dtype=int32)</span><br></pre></td></tr></table></figure>
-<h3 id="（4）随机生成随机数"><a href="#（4）随机生成随机数" class="headerlink" title="（4）随机生成随机数"></a>（4）随机生成随机数</h3><ul>
-<li>生成正态分布随机数，默认均值0，标准差1</li>
-</ul>
-<p><code>tf.random.normal(维度,mean=均值,stddev=标准差)</code></p>
-<ul>
-<li>生成截断式正态分布的随机数(<strong>使得生成的随机数可以更集中一些</strong>)</li>
-</ul>
-<p><code>tf.random_truncated_normal(维度,mean=均值,stddev=标准差)</code></p>
-<p>对截断式正态分布进行补充：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220501214431416.png" alt="image-20220501214431416"></p>
-<p>示例如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">d = tf.random.normal([<span class="number">2</span>, <span class="number">2</span>], mean=<span class="number">0.5</span>, stddev=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(d)</span><br><span class="line"></span><br><span class="line">e = tf.random.truncated_normal([<span class="number">2</span>, <span class="number">2</span>], mean=<span class="number">0.5</span>, stddev=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">tf.Tensor([[<span class="number">0.9194691</span> <span class="number">0.8282855</span>] [<span class="number">2.7526226</span> <span class="number">0.9153044</span>]], shape=(<span class="number">2</span>, <span class="number">2</span>), dtype=float32)</span><br><span class="line">tf.Tensor([[-<span class="number">0.77154016</span>  <span class="number">0.6888927</span> ] [ <span class="number">1.4981992</span>   <span class="number">1.229878</span>  ]], shape=(<span class="number">2</span>, <span class="number">2</span>), dtype=float32)</span><br></pre></td></tr></table></figure>
-<h3 id="（5）生成均匀分布随机数"><a href="#（5）生成均匀分布随机数" class="headerlink" title="（5）生成均匀分布随机数"></a>（5）生成均匀分布随机数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform(维度,minval=最小值,maxval=最大值)</span><br></pre></td></tr></table></figure>
-<p>比如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">f=tf.random.uniform([<span class="number">2</span>,<span class="number">2</span>],minval=<span class="number">0</span>,maxval=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果：</span></span><br><span class="line">tf.Tensor([[<span class="number">0.46490908</span> <span class="number">0.5134711</span> ][<span class="number">0.71371794</span> <span class="number">0.76942956</span>]], shape=(<span class="number">2</span>, <span class="number">2</span>), dtype=float32)</span><br></pre></td></tr></table></figure>
-<h2 id="1-4-1-5-Tensorflow常用函数"><a href="#1-4-1-5-Tensorflow常用函数" class="headerlink" title="1.4-1.5 Tensorflow常用函数"></a>1.4-1.5 Tensorflow常用函数</h2><p>注：以下tensor_name表示张量的名字</p>
-<p>（1）强制tensor转换为该数据类型</p>
-<p><code>tf.cast(tensor_name,dtype=xxx)</code></p>
-<p>（2）计算张量维度上元素的最小值</p>
-<p><code>tf.reduce_min(tensor_name)</code></p>
-<p>（3）计算张量维度上元素的最大值</p>
-<p><code>tf.reduce_max(tensor_name)</code></p>
-<p>一个例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">x1 = tf.constant([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], dtype=tf.float64)</span><br><span class="line"><span class="built_in">print</span>(x1)</span><br><span class="line"></span><br><span class="line">x2 = tf.cast(x1, tf.int32)</span><br><span class="line"><span class="built_in">print</span>(x2)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.reduce_min(x2), tf.reduce_max(x2))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">tf.Tensor([<span class="number">1.</span> <span class="number">2.</span> <span class="number">3.</span>], shape=(<span class="number">3</span>,), dtype=float64)</span><br><span class="line">tf.Tensor([<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>], shape=(<span class="number">3</span>,), dtype=int32)</span><br><span class="line">tf.Tensor(<span class="number">1</span>, shape=(), dtype=int32) tf.Tensor(<span class="number">3</span>, shape=(), dtype=int32)</span><br></pre></td></tr></table></figure>
-<p>（4）<strong>axis</strong>函数</p>
-<p>在一个二维张量或数组中，可以通过调整axis=0或1来控制执行维度，（<strong>axis=0表示跨行（经度，down），axis=1表示跨列（纬度，across）</strong>）</p>
-<p>如果不指定axis，则所有元素参与运算。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502104026064.png" alt="image-20220502104026064"></p>
-<p>（5）计算张量沿着指定维度的平均值</p>
-<p><code>tf.reduce_mean(tensor_name,axis=XXX)</code></p>
-<p>（6）计算张量沿着指定维度的和</p>
-<p><code>tf.reduce_sum(tensor_name,axis=XXX)</code></p>
-<p>一个例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">x = tf.constant([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>]])  <span class="comment"># 两维的</span></span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.reduce_mean(x))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tf.reduce_sum(x, axis=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果</span></span><br><span class="line">tf.Tensor(</span><br><span class="line">[[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">2</span> <span class="number">3</span>]], shape=(<span class="number">2</span>, <span class="number">3</span>), dtype=int32)</span><br><span class="line"></span><br><span class="line">tf.Tensor(<span class="number">2</span>, shape=(), dtype=int32)</span><br><span class="line">tf.Tensor([<span class="number">6</span> <span class="number">7</span>], shape=(<span class="number">2</span>,), dtype=int32)  <span class="comment"># 沿着横向移动，所以每行求个和</span></span><br></pre></td></tr></table></figure>
-<h3 id="（7）标记可训练"><a href="#（7）标记可训练" class="headerlink" title="（7）标记可训练"></a><strong>（7）标记可训练</strong></h3><p>被标记的变量会在反向传播中记录梯度信息。神经网络训练中，常用该函数标记待训练参数。</p>
-<p><code>tf.Variable(初始值)</code></p>
-<p>例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w=tf.Variable(tf.random.normal[<span class="number">2</span>,<span class="number">2</span>],mean=<span class="number">0</span>,stddev=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>（8）常用数学运算：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tf.add(tensor1,tensor2)</span><br><span class="line">tf.subtract(tensor1,tensor2)</span><br><span class="line">tf.multiply(tensor1,tensor2)</span><br><span class="line">tf.divide(tensor1,tensor2)</span><br><span class="line"></span><br><span class="line">tf.square(tensor1)</span><br><span class="line">tf.<span class="built_in">pow</span>(tensor1,n)</span><br><span class="line">tf,sqrt(tensor1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵乘法</span></span><br><span class="line">tf.matmul(matrix1,matrix2)</span><br></pre></td></tr></table></figure>
-<p><strong>只有维度相同的张量才能进行四则运算。</strong></p>
-<h3 id="（9）特征配对函数"><a href="#（9）特征配对函数" class="headerlink" title="（9）特征配对函数"></a>（9）特征配对函数</h3><p><code>tf.data.Dateset.from_tensor_slices((输入特征，标签))</code></p>
-<p><strong>切分传入张量的第一维度，生成输入特征标签对，构建数据集。</strong></p>
-<p>注：Numpy和Tensor格式都可以用该语句读入数据</p>
-<p>例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">features = tf.constant([<span class="number">12</span>, <span class="number">23</span>, <span class="number">10</span>, <span class="number">17</span>])</span><br><span class="line">labels = tf.constant([<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>])</span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((features, labels))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dataset)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> dataset:</span><br><span class="line">    <span class="built_in">print</span>(element)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 输出结果如下：</span></span><br><span class="line">(&lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">9</span>, shape=(), dtype=int32, numpy=<span class="number">12</span>&gt;, &lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">10</span>, shape=(), dtype=int32, numpy=<span class="number">0</span>&gt;)</span><br><span class="line">(&lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">11</span>, shape=(), dtype=int32, numpy=<span class="number">23</span>&gt;, &lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">12</span>, shape=(), dtype=int32, numpy=<span class="number">1</span>&gt;)</span><br><span class="line">(&lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">13</span>, shape=(), dtype=int32, numpy=<span class="number">10</span>&gt;, &lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">14</span>, shape=(), dtype=int32, numpy=<span class="number">1</span>&gt;)</span><br><span class="line">(&lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">15</span>, shape=(), dtype=int32, numpy=<span class="number">17</span>&gt;, &lt;tf.Tensor: <span class="built_in">id</span>=<span class="number">16</span>, shape=(), dtype=int32, numpy=<span class="number">0</span>&gt;)</span><br></pre></td></tr></table></figure>
-<p>可以看到，数据与标签进行了很好地匹配，这就是我们后续计算的基础。</p>
-<h3 id="（10）实现函数对某参数的求导运算"><a href="#（10）实现函数对某参数的求导运算" class="headerlink" title="（10）实现函数对某参数的求导运算"></a>（10）实现函数对某参数的求导运算</h3><p><code>tf.GradientTape</code></p>
-<ul>
-<li>with结构记录计算过程，gradient求出张量的梯度</li>
-</ul>
-<p>结构如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    若干个计算过程</span><br><span class="line">grad=tape.gradient(函数,对谁求导)</span><br></pre></td></tr></table></figure>
-<p>比如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    w = tf.Variable(tf.constant(<span class="number">3.0</span>))</span><br><span class="line">    loss = tf.<span class="built_in">pow</span>(w, <span class="number">2</span>)</span><br><span class="line">grad = tape.gradient(loss, w)</span><br><span class="line"><span class="built_in">print</span>(grad)</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502110601376.png" alt="image-20220502110601376"></p>
-<h3 id="（11）enumerate枚举"><a href="#（11）enumerate枚举" class="headerlink" title="（11）enumerate枚举"></a>（11）enumerate枚举</h3><p>这个函数是python的内建函数，可以遍历每个元素（如列表，元组或字符串），并组合为<strong>索引  元素</strong>，常在for循环中使用，如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">seq = [<span class="string">&#x27;one&#x27;</span>, <span class="string">&#x27;two&#x27;</span>, <span class="string">&#x27;three&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i, element <span class="keyword">in</span> <span class="built_in">enumerate</span>(seq):</span><br><span class="line">    <span class="built_in">print</span>(i, element)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="number">0</span> one</span><br><span class="line"><span class="number">1</span> two</span><br><span class="line"><span class="number">2</span> three</span><br></pre></td></tr></table></figure>
-<h3 id="（12）分类问题常用——独热编码"><a href="#（12）分类问题常用——独热编码" class="headerlink" title="（12）分类问题常用——独热编码"></a>（12）分类问题常用——独热编码</h3><p><code>tf.one_hot</code></p>
-<p><strong>独热编码（one-hot encoding）：在分类问题中，常用独热码做标签，标记类别：1表示是，0表示非。</strong></p>
-<p>比如：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502111159869.png" alt="image-20220502111159869"></p>
-<p>（标签是1（杂色鸢尾），百分之0是狗尾草鸢尾，百分之0是弗吉尼亚鸢尾，百分之百是杂色鸢尾）</p>
-<ul>
-<li><code>tf.one_hot()</code>函数将待转换数据，转换为one_hot形式的数据输出.</li>
-</ul>
-<p><code>tf.one_hot(待转换数据,depth=几分类)</code></p>
-<p>比如:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">classes = <span class="number">3</span>  <span class="comment"># 三分类问题</span></span><br><span class="line">labels = tf.constant([<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>])  <span class="comment"># 输入元素最小值为0,最大值为2</span></span><br><span class="line">output = tf.one_hot(labels, depth=classes)</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果:</span></span><br><span class="line">tf.Tensor(</span><br><span class="line">[[<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]], shape=(<span class="number">3</span>, <span class="number">3</span>), dtype=float32)</span><br></pre></td></tr></table></figure>
-<h3 id="（13）tf-nn-softmax"><a href="#（13）tf-nn-softmax" class="headerlink" title="（13）tf.nn.softmax"></a>（13）tf.nn.softmax</h3><p>对于分类问题，神经网络完成前向传播，计算出了每种类型的可能性大小，<strong>但这些可能性输出需要符合概率分布，如下述示意图：</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502111901887.png" alt="image-20220502111901887"></p>
-<p>以图中为例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">y = tf.constant([<span class="number">1.01</span>, <span class="number">2.01</span>, -<span class="number">0.66</span>])</span><br><span class="line">y_pro = tf.nn.softmax(y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;After softmax,y_pro is:&quot;</span>, y_pro)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果：</span></span><br><span class="line">After softmax,y_pro <span class="keyword">is</span>: tf.Tensor([<span class="number">0.25598174</span> <span class="number">0.69583046</span> <span class="number">0.0481878</span> ], shape=(<span class="number">3</span>,), dtype=float32)</span><br></pre></td></tr></table></figure>
-<h3 id="（14）自减函数"><a href="#（14）自减函数" class="headerlink" title="（14）自减函数"></a>（14）自减函数</h3><ul>
-<li>该函数要求数据是可训练的（需要用tf.Variable先定义可训练）</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">w=tf.Variable(<span class="number">4</span>)</span><br><span class="line">w.assign_sub(<span class="number">1</span>)  <span class="comment"># 即w-=1</span></span><br><span class="line"><span class="built_in">print</span>(w)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;tf.Variable <span class="string">&#x27;Variable:0&#x27;</span> shape=() dtype=int32, numpy=<span class="number">3</span>&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="（15）返回张量沿指定维度最大值的索引"><a href="#（15）返回张量沿指定维度最大值的索引" class="headerlink" title="（15）返回张量沿指定维度最大值的索引"></a>（15）返回张量沿指定维度最大值的索引</h3><p><code>tf.argmax(tensor_name,axis=XXX)</code></p>
-<p>比如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">test = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>], [<span class="number">8</span>, <span class="number">7</span>, <span class="number">2</span>]])</span><br><span class="line"><span class="built_in">print</span>(test)</span><br><span class="line"><span class="built_in">print</span>(tf.argmax(test, axis=<span class="number">0</span>))  <span class="comment"># 返回每一列(经度)的最大值的索引</span></span><br><span class="line"><span class="built_in">print</span>(tf.argmax(test, axis=<span class="number">1</span>))  <span class="comment"># 返回每一行(纬度)的最大值的索引</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果：</span></span><br><span class="line">[[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">3</span> <span class="number">4</span>]</span><br><span class="line"> [<span class="number">5</span> <span class="number">4</span> <span class="number">3</span>]</span><br><span class="line"> [<span class="number">8</span> <span class="number">7</span> <span class="number">2</span>]]</span><br><span class="line">tf.Tensor([<span class="number">3</span> <span class="number">3</span> <span class="number">1</span>], shape=(<span class="number">3</span>,), dtype=int64)</span><br><span class="line">tf.Tensor([<span class="number">2</span> <span class="number">2</span> <span class="number">0</span> <span class="number">0</span>], shape=(<span class="number">4</span>,), dtype=int64)</span><br></pre></td></tr></table></figure>
-<h2 id="1-6-鸢尾花分类——数据集读入"><a href="#1-6-鸢尾花分类——数据集读入" class="headerlink" title="1.6 鸢尾花分类——数据集读入"></a>1.6 鸢尾花分类——数据集读入</h2><p>数据集介绍：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502113123185.png" alt="image-20220502113123185"></p>
-<p><strong>这个用例需要用到Pandas包和sklearn包，可以通过pip install来进行安装（有可能Pycharm无法找到sklearn，所以用pip install会比较稳妥），具体可以看[Tensorflow安装]这一篇博客</strong></p>
-<p>可以用sklearn包datasets读入数据集，语法如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">x_data = datasets.load_iris().data</span><br><span class="line">y_data = datasets.load_iris().target</span><br></pre></td></tr></table></figure>
-<p>完整的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">x_data = datasets.load_iris().data</span><br><span class="line">y_data = datasets.load_iris().target</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_data from datasets:\n&quot;</span>, x_data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y_data from datasets:\n&quot;</span>, y_data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为了美观,采用表格的方式输出</span></span><br><span class="line">x_data = DataFrame(x_data, columns=[<span class="string">&#x27;花萼长度&#x27;</span>, <span class="string">&#x27;花萼宽度&#x27;</span>, <span class="string">&#x27;花瓣长度&#x27;</span>, <span class="string">&#x27;花瓣宽度&#x27;</span>])</span><br><span class="line">pd.set_option(<span class="string">&#x27;display.unicode.east_asian_width&#x27;</span>, <span class="literal">True</span>)  <span class="comment"># 设置列名对齐</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_data add index: \n&quot;</span>, x_data)</span><br><span class="line"></span><br><span class="line">x_data[<span class="string">&#x27;类别&#x27;</span>] = y_data  <span class="comment"># 新加一列,列标签为&quot;类别&quot;,数据为y_data</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x_data add a column:\n&quot;</span>, x_data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>最后可以看到的数据集+标签效果如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502115457987.png" alt="image-20220502115457987"></p>
-<h2 id="1-7-神经网络实现鸢尾花分类-重要！"><a href="#1-7-神经网络实现鸢尾花分类-重要！" class="headerlink" title="1.7 神经网络实现鸢尾花分类(重要！)"></a>1.7 神经网络实现鸢尾花分类(重要！)</h2><p>具体的步骤如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502115605657.png" alt="image-20220502115605657"></p>
-<p>整体过程如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.数据集读入(一共150组)</span></span><br><span class="line">x_data = datasets.load_iris().data</span><br><span class="line">y_data = datasets.load_iris().target</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.数据集乱序(模拟人脑乱序处理信息)</span></span><br><span class="line">np.random.seed(<span class="number">116</span>)  <span class="comment"># 使用相同的seed,使输入特征/标签一一对应</span></span><br><span class="line">np.random.shuffle(x_data)</span><br><span class="line">np.random.seed(<span class="number">116</span>)</span><br><span class="line">np.random.shuffle(y_data)</span><br><span class="line">tf.random.set_seed(<span class="number">116</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.数据集分出永不相见的训练集和测试集(训练集和测试集不能重复)</span></span><br><span class="line">x_train = x_data[:-<span class="number">30</span>]  <span class="comment"># 前120个数据取出来作为训练集</span></span><br><span class="line">y_train = y_data[:-<span class="number">30</span>]</span><br><span class="line">x_test = x_data[-<span class="number">30</span>:]  <span class="comment"># 后30个数据取出来作为测试集</span></span><br><span class="line">y_test = y_data[-<span class="number">30</span>:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换x的数据类型,否则后面矩阵相乘时会因数据类型不一致而报错</span></span><br><span class="line">x_train = tf.cast(x_train, tf.float32)</span><br><span class="line">x_test = tf.cast(x_test, tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.配成[输入特征,标签]对,每次喂入一个batch</span></span><br><span class="line">train_db = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(<span class="number">32</span>)</span><br><span class="line">test_db = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(<span class="number">32</span>)  <span class="comment"># 每32组打包成一个batch</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5.定义神经网络的所有可训练参数,只有一层网络,输入结点四个,输出结点3个(3分类)</span></span><br><span class="line">w1 = tf.Variable(tf.random.truncated_normal([<span class="number">4</span>, <span class="number">3</span>], stddev=<span class="number">0.1</span>, seed=<span class="number">1</span>))</span><br><span class="line">b1 = tf.Variable(tf.random.truncated_normal([<span class="number">3</span>], stddev=<span class="number">0.1</span>, seed=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一些超参数</span></span><br><span class="line">lr = <span class="number">0.1</span>  <span class="comment"># 学习率</span></span><br><span class="line"><span class="comment"># 下面两个是画图用的</span></span><br><span class="line">train_loss_results = []  <span class="comment"># 每轮的loss记录进去</span></span><br><span class="line">test_acc = []  <span class="comment"># 每轮的准确率记录进去</span></span><br><span class="line">epoch = <span class="number">500</span>  <span class="comment"># 迭代次数</span></span><br><span class="line">loss_all = <span class="number">0</span>  <span class="comment"># 每轮四个step(150数据量,32个一个batch,共四组batch训练一次,记录四个batch生成的4个loss的和)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6.嵌套循环迭代,with结构更新参数,显示当前loss</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epoch):  <span class="comment"># 数据集级别迭代</span></span><br><span class="line">    <span class="keyword">for</span> step, (x_train, y_train) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_db):  <span class="comment"># 针对batch级别的迭代</span></span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:  <span class="comment"># 记录梯度信息</span></span><br><span class="line">            y = tf.matmul(x_train, w1) + b1  <span class="comment"># 神经网络乘加运算:32*4 4*3,可以相乘</span></span><br><span class="line">            y = tf.nn.softmax(y)  <span class="comment"># 使得输出y符合概率分布(这样才能和独热码求均方误差loss)</span></span><br><span class="line">            y_ = tf.one_hot(y_train, depth=<span class="number">3</span>)  <span class="comment"># 转换为独热码模式方便求loss</span></span><br><span class="line">            loss = tf.reduce_mean(tf.square(y_ - y))  <span class="comment"># reduce_mean计算沿某一维度的平均值,默认所有</span></span><br><span class="line">            loss_all += loss.numpy()</span><br><span class="line">        <span class="comment"># 计算loss对各个参数的梯度</span></span><br><span class="line">        grads = tape.gradient(loss, [w1, b1])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 实现梯度下降</span></span><br><span class="line">        w1.assign_sub(lr * grads[<span class="number">0</span>])  <span class="comment"># 参数w1自更新,下面类似,每个batch训练完更新一次</span></span><br><span class="line">        b1.assign_sub(lr * grads[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每个epoch,打印loss信息</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Epoch&#123;&#125;,loss:&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch, loss_all / <span class="number">4</span>))  <span class="comment"># 因为一次迭代是4个batch,所以这里/4</span></span><br><span class="line">    train_loss_results.append(loss_all / <span class="number">4</span>)</span><br><span class="line">    loss_all = <span class="number">0</span>  <span class="comment"># 归零,方便下次epoch的计算</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试部分,每次迭代都测试一下(主要是为了看学习过程)</span></span><br><span class="line">    <span class="comment"># total_correct为预测对的样本个数,total_number为测试的总样本数,都初始化为0</span></span><br><span class="line">    total_correct, total_number = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> x_test, y_test <span class="keyword">in</span> test_db:</span><br><span class="line">        <span class="comment"># 使用更新后的参数预测</span></span><br><span class="line">        y = tf.matmul(x_test, w1) + b1</span><br><span class="line">        y = tf.nn.softmax(y)</span><br><span class="line">        pred = tf.argmax(y, axis=<span class="number">1</span>)  <span class="comment"># 返回y中最大值的索引,即预测的分类</span></span><br><span class="line">        pred = tf.cast(pred, dtype=y_test.dtype)  <span class="comment"># 转换数据类型</span></span><br><span class="line">        <span class="comment"># 若分类正确,则correct=1,否则为0,将bool的结果转换为int型</span></span><br><span class="line">        correct = tf.cast(tf.equal(pred, y_test), dtype=tf.int32)</span><br><span class="line">        <span class="comment"># 将每个batch的correct数加起来</span></span><br><span class="line">        correct = tf.reduce_sum(correct)  <span class="comment"># reduce_sum计算张量沿着指定维度的和,默认全维度</span></span><br><span class="line">        <span class="comment"># 将所有batch中的correct数加起来</span></span><br><span class="line">        total_correct += <span class="built_in">int</span>(correct)</span><br><span class="line">        <span class="comment"># total_number为测试的总样本数,也就是x_test的行数</span></span><br><span class="line">        total_number += x_test.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 总的准确率计算</span></span><br><span class="line">    acc = total_correct / total_number</span><br><span class="line">    test_acc.append(acc)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Test_acc:&quot;</span>, acc)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;--------------------------&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制loss曲线</span></span><br><span class="line">plt.title(<span class="string">&#x27;Loss Function Curve&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Epoch&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;loss&#x27;</span>)</span><br><span class="line">plt.plot(train_loss_results, label=<span class="string">&quot;$Loss$&quot;</span>)  <span class="comment"># 逐点画出train_loss_results并连线.连线图标是Loss</span></span><br><span class="line">plt.legend()  <span class="comment"># 画出曲线坐标</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制Accuracy曲线</span></span><br><span class="line">plt.title(<span class="string">&#x27;Acc Curve&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Epoch&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Acc&#x27;</span>)</span><br><span class="line">plt.plot(test_acc, label=<span class="string">&quot;$Accuracy&quot;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><strong>针对上述的代码，有几点注意事项：</strong></p>
-<p>1、我们所搭建的神经网络如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502162605534.png" alt=""></p>
-<p>（四层输入层，三层输出层，以全连接的形式）</p>
-<p>2、注意所有的输入和输出（比如xtest，xtrain，ytest，ytrain）都是矩阵的形式，每个矩阵当中包含一整个batch的数据集，因此在做矩阵相乘的时候要注意维度是否匹配；</p>
-<p>3、<strong>如果对于矩阵乘法仍感觉迷惑的话，需要复习一下与线性代数有关的内容，可以手动计算一下各个矩阵的维度和计算结果的维度</strong></p>
-<p>最后的输出结果如下：</p>
-<p>（1）首先是运行结果：可以看到，控制台输出的准确率越来越高，最后可以达到百分之百的准确率，同时损失函数值越来越小：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502162245222.png" alt="image-20220502162245222"></p>
-<p>（2）观察损失函数值随迭代次数的变化，可以看到上述趋势：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502162326718.png" alt=""></p>
-<p>（3）观察准确率随迭代次数的变化，可以看到正确的趋势：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502162402489.png" alt=""></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/Tensorflow%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="ChrisZhang">
-      <meta itemprop="description" content="我的技美学习之路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ChrisZhang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/01/Tensorflow%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Tensorflow安装配置步骤</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-01 20:41:25" itemprop="dateCreated datePublished" datetime="2022-05-01T20:41:25+08:00">2022-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-03 10:48:13" itemprop="dateModified" datetime="2022-05-03T10:48:13+08:00">2022-05-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Tensorflow安装配置"><a href="#Tensorflow安装配置" class="headerlink" title="Tensorflow安装配置"></a>Tensorflow安装配置</h2><h3 id="一-Anaconda和Conda配置"><a href="#一-Anaconda和Conda配置" class="headerlink" title="一.Anaconda和Conda配置"></a>一.Anaconda和Conda配置</h3><h4 id="1-安装Anaconda"><a href="#1-安装Anaconda" class="headerlink" title="1.安装Anaconda"></a>1.安装Anaconda</h4><p><a target="_blank" rel="noopener" href="https://www.anaconda.com/products/distribution#Downloads">Anaconda | Anaconda Distribution</a></p>
-<p>打开之后,按照自己机器对应的版本进行下载:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501104842870.png" alt=""></p>
-<p>在合适的路径安装即可.</p>
-<h4 id="2-配置Anaconda环境变量"><a href="#2-配置Anaconda环境变量" class="headerlink" title="2.配置Anaconda环境变量"></a>2.配置Anaconda环境变量</h4><p>参考博客:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qhd1994/article/details/111299942">https://blog.csdn.net/qhd1994/article/details/111299942</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501144954539.png" alt="image-20220501144954539"></p>
-<p>(<strong>将Anaconda的Scripts文件夹路径配置在环境变量下</strong>)</p>
-<p>此时打开CMD，输入conda并回车，查看是否能看到如下结果，如果能看到说明配置成功：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501145045582.png" alt="image-20220501145045582"></p>
-<p>接下来，安装pycharm（过程略，网上可以找到不少符合要求的教程）</p>
-<h3 id="二-安装Pycharm-略"><a href="#二-安装Pycharm-略" class="headerlink" title="二.安装Pycharm(略)"></a>二.安装Pycharm(略)</h3><h3 id="三-创建虚拟环境"><a href="#三-创建虚拟环境" class="headerlink" title="三.创建虚拟环境"></a>三.创建虚拟环境</h3><p>（1）打开cmd，输入<code>conda create --name tf_2.3 python=3.9</code>创建虚拟环境（根据自己的python版本来决定，可以在pycharm当中查看）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501145425949.png" alt="image-20220501145425949"></p>
-<p>(<strong>这里要考虑Anaconda和conda的版本,如果不是最新版的话建议不要安装过新的Python版本,下述的Tensorflow同</strong>)</p>
-<p>等待安装完成即可。</p>
-<p>（2）检验虚拟环境是否创建成功，使用<code>conda env list</code>命令查看虚拟环境列表：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501145545502.png" alt="image-20220501145545502"></p>
-<p>可以看到，tf_2.3正是我们刚才配置的虚拟环境。</p>
-<p>（3）在上一步基础上利用<code>activate tf_2.3</code>命令进入到虚拟环境；</p>
-<p>（4）安装tensorflow-gpu（如果不带gpu，则默认是cpu版本），代码<code>conda install tensorflow-gpu=2.5</code>（<strong>注意这里的版本要和python的版本保持一致，同时最好兼顾一下anaconda的版本问题</strong>）</p>
-<p>查看conda，tensorflow和python版本是否匹配：<a target="_blank" rel="noopener" href="https://blog.csdn.net/K1052176873/article/details/114526086">(25条消息) 2021最新：TensorFlow各个GPU版本CUDA和cuDNN对应版本整理(最简洁)_Kakaluotuo的博客-CSDN博客_tensorflow对应的cuda版本</a></p>
-<p>接下来，只需要通过上述指令下载安装即可。等待安装之后进行测试。</p>
-<h4 id="测试环节"><a href="#测试环节" class="headerlink" title="测试环节"></a>测试环节</h4><ul>
-<li>先输入python，查看python的版本是否有问题：</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501151335646.png" alt="image-20220501151335646"></p>
-<p>可以看到，此时Python的版本是3.9，与之前指令中所写的保持一致</p>
-<p>接下来输入<code>from tensorflow.python.client import device_lib</code>回车；接着输入<code>print(device_lib.list_local_devices())</code>,并回车</p>
-<p><strong>如果看到一个CPU一个GPU表示tensorflow安装成功！</strong>安装成功的界面如下图所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501151455330.png" alt="image-20220501151455330"></p>
-<h3 id="四-设置Pycharm工程为虚拟环境"><a href="#四-设置Pycharm工程为虚拟环境" class="headerlink" title="四.设置Pycharm工程为虚拟环境"></a>四.设置Pycharm工程为虚拟环境</h3><p>（1）进入到Pycharm的Settings界面，查看当前的虚拟环境：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501202411182.png" alt="image-20220501202411182"></p>
-<p>如果没有找到之前配置的虚拟环境,则新建一个环境并进行编辑:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501202534903.png" alt="image-20220501202534903"></p>
-<p><strong>注意:选择Existing enviroment,然后Interpreter选择虚拟环境当中的python.exe,Conda executable选择Conda安装路径的conda.exe文件.</strong></p>
-<p><strong>注：可能需要进行升级Conda的操作</strong>（针对无法在Pycharm当中看到Conda虚拟环境的3.9版本的情况，升级后可能也看不到但是如果不升级虚拟环境可能无法被识别，会报错）：</p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51713776/article/details/109501111">(25条消息) 在anaconda中创建Python3.9的环境_YKL66的博客-CSDN博客_anaconda支持python3.9吗</a></p>
-<p><strong>一定要进行升级，否则会报错！！（当然也可以不使用这么新的版本）</strong></p>
-<p>核心指令：</p>
-<p><code>conda update conda</code></p>
-<p>（2）将工程部署到该环境下，然后新建脚本<code>test1.py</code>，查看tensorflow是否安装成功：</p>
-<p>以下是实例程序：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># View more python learning tutorial on my Youtube and Youku channel!!!</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Youtube video tutorial: https://www.youtube.com/channel/UCdyjiB5H8Pu7aDTNVXTTpcg</span></span><br><span class="line"><span class="comment"># Youku video tutorial: http://i.youku.com/pythontutorial</span></span><br><span class="line"> </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Please note, this code is only for python 3+. If you are using python 2+, please modify the code accordingly.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_layer</span>(<span class="params">inputs, in_size, out_size, activation_function=<span class="literal">None</span></span>):</span><br><span class="line">    Weights = tf.Variable(tf.random_normal([in_size, out_size]))</span><br><span class="line">    biases = tf.Variable(tf.zeros([<span class="number">1</span>, out_size]) + <span class="number">0.1</span>)</span><br><span class="line">    Wx_plus_b = tf.matmul(inputs, Weights) + biases</span><br><span class="line">    <span class="keyword">if</span> activation_function <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        outputs = Wx_plus_b</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        outputs = activation_function(Wx_plus_b)</span><br><span class="line">    <span class="keyword">return</span> outputs</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Make up some real data</span></span><br><span class="line">x_data = np.linspace(-<span class="number">1</span>, <span class="number">1</span>, <span class="number">300</span>)[:, np.newaxis]</span><br><span class="line">noise = np.random.normal(<span class="number">0</span>, <span class="number">0.05</span>, x_data.shape)</span><br><span class="line">y_data = np.square(x_data) - <span class="number">0.5</span> + noise</span><br><span class="line"> </span><br><span class="line"><span class="comment">##plt.scatter(x_data, y_data)</span></span><br><span class="line"><span class="comment">##plt.show()</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># define placeholder for inputs to network</span></span><br><span class="line">xs = tf.placeholder(tf.float32, [<span class="literal">None</span>, <span class="number">1</span>])</span><br><span class="line">ys = tf.placeholder(tf.float32, [<span class="literal">None</span>, <span class="number">1</span>])</span><br><span class="line"><span class="comment"># add hidden layer</span></span><br><span class="line">l1 = add_layer(xs, <span class="number">1</span>, <span class="number">10</span>, activation_function=tf.nn.relu)</span><br><span class="line"><span class="comment"># add output layer</span></span><br><span class="line">prediction = add_layer(l1, <span class="number">10</span>, <span class="number">1</span>, activation_function=<span class="literal">None</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># the error between prediction and real data</span></span><br><span class="line">loss = tf.reduce_mean(tf.reduce_sum(tf.square(ys-prediction), reduction_indices=[<span class="number">1</span>]))</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.1</span>).minimize(loss)</span><br><span class="line"><span class="comment"># important step</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"><span class="comment"># tf.initialize_all_variables() no long valid from</span></span><br><span class="line"><span class="comment"># 2017-03-02 if using tensorflow &gt;= 0.12</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>((tf.__version__).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">1</span>]) &lt; <span class="number">12</span> <span class="keyword">and</span> <span class="built_in">int</span>((tf.__version__).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]) &lt; <span class="number">1</span>:</span><br><span class="line">    init = tf.initialize_all_variables()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># plot the real data</span></span><br><span class="line">fig = plt.figure()<span class="comment">#画出幕布，以便在上面画图</span></span><br><span class="line">ax = fig.add_subplot(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="comment">#将幕布分为1行1列，然后从左往右从上到下在第1个子网格中画图</span></span><br><span class="line">ax.scatter(x_data, y_data)<span class="comment">#画出真实数据的点状图</span></span><br><span class="line">plt.ion()</span><br><span class="line"><span class="comment">#如果不加这个，每画完一条线程序会暂停，加了后会一直画，如果一直画不是会很</span></span><br><span class="line"><span class="comment">#密密麻麻看不清吗，后面 有语句会移除当前线条防止出现该情况</span></span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment">#显示画好后的散点图，plt这个函数如果画完第一次整个程序就暂停了，</span></span><br><span class="line"><span class="comment">#如果想连续画图就要加上plt.ion（）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    <span class="comment"># training</span></span><br><span class="line">    sess.run(train_step, feed_dict=&#123;xs: x_data, ys: y_data&#125;)</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># to visualize the result and improvement</span></span><br><span class="line">        <span class="keyword">try</span>:<span class="comment">#尝试以下语句</span></span><br><span class="line">            ax.lines.remove(lines[<span class="number">0</span>])<span class="comment">#抹除画出来的第一条线</span></span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="comment">#如果没有的话，忽略第一次的错误，因为这时还没画第一条线</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        prediction_value = sess.run(prediction, feed_dict=&#123;xs: x_data&#125;)<span class="comment">#预测值</span></span><br><span class="line">        <span class="comment"># plot the prediction</span></span><br><span class="line">        lines = ax.plot(x_data, prediction_value, <span class="string">&#x27;r-&#x27;</span>, lw=<span class="number">5</span>)</span><br><span class="line">        <span class="comment">#画出预测线，r-表红色，lw表粗度为5</span></span><br><span class="line">        plt.pause(<span class="number">1</span>)<span class="comment">#每画完一条线暂停一秒</span></span><br></pre></td></tr></table></figure>
-<p>需要下载Matplotlib包，如果运行没有问题的话tensorflow的环境应该就配好了。</p>
-<h3 id="五-配置环境的好处"><a href="#五-配置环境的好处" class="headerlink" title="五.配置环境的好处"></a>五.配置环境的好处</h3><p>(1)针对不同的开发需求,我们可以使用不同的虚拟环境,这样以后再遇到需要Tensorflow开发的时候,就可以直接使用配置好的虚拟环境即可.</p>
-<p>(2)虚拟环境当中可以随时增加和删除包,有如下两种方式:</p>
-<ul>
-<li>(a)直接使用Pycharm安装,方法如下:</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501203046252.png" alt="image-20220501203046252"></p>
-<ul>
-<li>(b)使用pip 命令安装(<strong>实测有的时候这种方法更快捷一些</strong>):</li>
-</ul>
-<p><strong>方法1：用CMD进行安装</strong></p>
-<p>首先,进入到虚拟环境当中:</p>
-<p>打开CMD,输入<code>conda env list</code>,显示虚拟环境列表。比如现在我们想要给tf_2.3环境配置某个包，可以使用<code>activate tf_2.3</code>进入这个环境当中；</p>
-<p>接下来，使用<code>pip install xxx</code>就可以安装某个包了。</p>
-<p>这里示例如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501203700948.png" alt="image-20220501203700948"></p>
-<p>安装成功之后，可以在Pycharm当中查看：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501203814115.png" alt="image-20220501203814115"></p>
-<p>可以看到，安装也是成功的。</p>
-<p><strong>方法2：直接用Pycharm的Terminal进行安装</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502114922361.png" alt="image-20220502114922361"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2879,18 +3071,18 @@ w_{t+1}=w_t-\eta_t=w_t-lr×m_t÷\sqrt{V_t}=w_t-lr×g_t
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>

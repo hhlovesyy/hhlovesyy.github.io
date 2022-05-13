@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Github实用技巧参考链接: Git Pull from GitHub (w3schools.com) 一.把本地仓库Push上Github1.找到远端仓库的git地址首先,在Github上新建一个仓库,选择public,并将git地址拷贝下来:  其他的部分选择默认配置即可(注意到下面应该会提示master是主分支,如果没需求的话不用改就行).找到Git地址如下:  https:&#x2F;&#x2F;githu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git和Github-2-Github的使用">
+<meta property="og:url" content="http://example.com/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="ChrisZhang">
+<meta property="og:description" content="Github实用技巧参考链接: Git Pull from GitHub (w3schools.com) 一.把本地仓库Push上Github1.找到远端仓库的git地址首先,在Github上新建一个仓库,选择public,并将git地址拷贝下来:  其他的部分选择默认配置即可(注意到下面应该会提示master是主分支,如果没需求的话不用改就行).找到Git地址如下:  https:&#x2F;&#x2F;githu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512204824807.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220628900.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220801392.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512214852845.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221059984.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221208945.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221733402.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221934977.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222205042.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222510351.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222814887.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222855840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223328289.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512215345450.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223653746.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223920465.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224048995.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224144077.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100149817.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100609649.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101216770.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101256422.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101617065.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101933087.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102623371.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102705015.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102918898.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103029071.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103222095.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103359356.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103532387.png">
+<meta property="article:published_time" content="2022-05-13T08:32:12.000Z">
+<meta property="article:modified_time" content="2022-05-13T08:33:34.589Z">
+<meta property="article:author" content="ChrisZhang">
+<meta property="article:tag" content="实用工具学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512204824807.png">
+
+<link rel="canonical" href="http://example.com/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Git和Github-2-Github的使用 | ChrisZhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChrisZhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git和Github-2-Github的使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-13 16:32:12 / 修改时间：16:33:34" itemprop="dateCreated datePublished" datetime="2022-05-13T16:32:12+08:00">2022-05-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">各种实用工具学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%84%E7%A7%8D%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/Git-Github/" itemprop="url" rel="index"><span itemprop="name">Git&Github</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Github实用技巧"><a href="#Github实用技巧" class="headerlink" title="Github实用技巧"></a>Github实用技巧</h1><p>参考链接:</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/git/git_pull_from_remote.asp?remote=github">Git Pull from GitHub (w3schools.com)</a></p>
+<h2 id="一-把本地仓库Push上Github"><a href="#一-把本地仓库Push上Github" class="headerlink" title="一.把本地仓库Push上Github"></a>一.把本地仓库Push上Github</h2><h3 id="1-找到远端仓库的git地址"><a href="#1-找到远端仓库的git地址" class="headerlink" title="1.找到远端仓库的git地址"></a>1.找到远端仓库的git地址</h3><p>首先,在Github上新建一个仓库,选择public,并将git地址拷贝下来:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512204824807.png" alt="image-20220512204824807"></p>
+<p>其他的部分选择默认配置即可(<strong>注意到下面应该会提示master是主分支,如果没需求的话不用改就行</strong>).找到Git地址如下:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git">https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</a></p>
+</blockquote>
+<p><br/></p>
+<h3 id="2-把本地仓库上传到远程仓库"><a href="#2-把本地仓库上传到远程仓库" class="headerlink" title="2.把本地仓库上传到远程仓库"></a>2.把本地仓库上传到远程仓库</h3><ul>
+<li>在这之前,请确保本地的仓库已经git init,git add,git commit完成了.</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;this is the origin client of our game&quot;</span></span><br></pre></td></tr></table></figure>
+<p><br/></p>
+<h4 id="1-git-remote-add"><a href="#1-git-remote-add" class="headerlink" title="(1)git remote add"></a>(1)git remote add</h4><p>接下来,找到含有.git隐藏文件的文件夹,在git bash中输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>git remote add origin *URL*</code> specifies that you are adding a remote repository, with the specified <code>URL</code>, as an <code>origin</code> to your local Git repo.</p>
+</blockquote>
+<p><strong>如果这里的显示信息为已经有了一个git remote,则说明已经绑定了远端的仓库,如果还想要将文件上传的新的仓库则此时可以选择把.git文件删掉再重新输入上面的指令.</strong></p>
+<p>接下来,就可以使用push操作了.</p>
+<p><br/></p>
+<h4 id="2-git-push"><a href="#2-git-push" class="headerlink" title="(2)git push"></a>(2)git push</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
+<p>这样就把我们的本地仓库push到远程的origin显示的仓库,同时push到的分支是显示的master分支.</p>
+<p>成功之后会这样显示:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220628900.png" alt="image-20220512220628900"></p>
+<p>此时去Github上刷新一下自己的远程仓库,看到结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220801392.png" alt="image-20220512220801392"></p>
+<p>可以看到,本地仓库已经上传到了远端的仓库上了.</p>
+<p><br/></p>
+<h4 id="报错1-远端仓库有内容没有pull"><a href="#报错1-远端仓库有内容没有pull" class="headerlink" title="报错1:远端仓库有内容没有pull"></a>报错1:远端仓库有内容没有pull</h4><p>假如出现了下面的信息:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512214852845.png" alt="image-20220512214852845"></p>
+<p><strong>则说明此时的远端仓库并不是最新的版本,因此需要先pull下来,这个后续会再进行总结</strong>.</p>
+<h2 id="二-在Github上编辑代码并commit"><a href="#二-在Github上编辑代码并commit" class="headerlink" title="二.在Github上编辑代码并commit"></a>二.在Github上编辑代码并commit</h2><p>点击进入文件当中,选择右上角的笔的标志,对Github的文件进行编辑:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221059984.png" alt="image-20220512221059984"></p>
+<p>修改完内容之后可以直接在下方commit提交:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221208945.png" alt="image-20220512221208945"></p>
+<p>此时刷新一下,就可以看到Github的内容得到了更新.</p>
+<p><br/></p>
+<h2 id="三-Git-pull"><a href="#三-Git-pull" class="headerlink" title="三.Git pull"></a>三.Git pull</h2><blockquote>
+<p>在团队合作的过程当中,所有参与者都能获取到仓库的最新状态是十分重要的.此时<code>git pull</code>指令就是一个很常见的指令.  </p>
+</blockquote>
+<p>git pull指令由以下两部分组成:</p>
+<ul>
+<li>fetch</li>
+<li>merge</li>
+</ul>
+<h3 id="1-fetch"><a href="#1-fetch" class="headerlink" title="1.fetch"></a>1.fetch</h3><blockquote>
+<p><code>fetch</code> gets all the change history of a tracked branch/repo.</p>
+<p>So, on your local Git, <code>fetch</code> updates to see what has changed on GitHub:</p>
+</blockquote>
+<p>也就是说,<code>git fetch</code>可以看到远程仓库当中出现了哪些内容的修改,对于我们此时的情况,结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221733402.png" alt="image-20220512221733402"></p>
+<p>此时我们看到了有一些最新的变化,此时可以用<code>git status</code>查看现在的状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221934977.png" alt="image-20220512221934977"></p>
+<p>也就是说,远端仓库有一个新的commit提交,当然这个应该是我们刚才修改的readme.md文件,此时可以通过log指令来查看日志:</p>
+<h4 id="1-git-log-xxx-branch"><a href="#1-git-log-xxx-branch" class="headerlink" title="(1)git log xxx(branch)"></a>(1)git log xxx(branch)</h4><p>在这里,我们输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222205042.png" alt="image-20220512222205042"></p>
+<p>可以看到这条最近的commit记录.</p>
+<h4 id="2-git-diff-xxx-branch"><a href="#2-git-diff-xxx-branch" class="headerlink" title="(2)git diff xxx(branch)"></a>(2)git diff xxx(branch)</h4><p>虽然刚才的指令可以看到冲突的来源,但有的时候仍不够直观.这个时候可以采用git diff指令查看本地仓库和远程仓库的区别:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222510351.png" alt="image-20220512222510351"></p>
+<p>可以看到,冲突与我们的预期相符,接下来就是merge了.</p>
+<p><br/></p>
+<h3 id="2-merge"><a href="#2-merge" class="headerlink" title="2.merge"></a>2.merge</h3><p><code>git merge current specified</code></p>
+<p>表示合并specified分支到current分支,对于现在的情况来说,指令如下:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222814887.png" alt="image-20220512222814887"></p>
+<p>此时用git status进行查看:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222855840.png" alt="image-20220512222855840"></p>
+<p>这表示本地仓库已经和远端仓库同步了.</p>
+<p><br/></p>
+<h3 id="3-git-pull"><a href="#3-git-pull" class="headerlink" title="3.git pull"></a>3.git pull</h3><blockquote>
+<p>将fetch与merge操作进行合并就是pull操作了.</p>
+</blockquote>
+<p>比如这里我们又修改了远程仓库的README.md的内容,然后直接git pull origin</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223328289.png" alt="image-20220512223328289"></p>
+<p>在团队合作项目当中,<strong>git pull是一个十分实用的技巧,需要经常使用</strong></p>
+<p><br/></p>
+<h4 id="报错2"><a href="#报错2" class="headerlink" title="报错2"></a>报错2</h4><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512215345450.png" alt="image-20220512215345450"></p>
+<p>对于上面那个错误,问题出在没有pull下来最新的仓库版本.采用git pull即可.</p>
+<p>对于下面那个错误,则可以参考下述网站解决(<strong>可能是因为pull下来的仓库和本地的没什么关系,可以通过链接里的解决办法解决</strong>):</p>
+<p><a target="_blank" rel="noopener" href="https://komodor.com/learn/how-to-fix-fatal-refusing-to-merge-unrelated-histories-error/">How to fix ‘fatal: refusing to merge unrelated histories’ Git error | Komodor</a></p>
+<p><br/></p>
+<h4 id="报错3"><a href="#报错3" class="headerlink" title="报错3"></a>报错3</h4><blockquote>
+<p>关于pull的时候报conflict错误,冲突的地方会被git标注下来,进入文件夹当中修改即可.然后不要忘记git add 改过之后的文件和git commit两个步骤.(参考前一节解决冲突)</p>
+</blockquote>
+<p><br/></p>
+<h2 id="四-Git-push"><a href="#四-Git-push" class="headerlink" title="四.Git push"></a>四.Git push</h2><h3 id="1-将本地的修改push到Github"><a href="#1-将本地的修改push到Github" class="headerlink" title="1.将本地的修改push到Github"></a>1.将本地的修改push到Github</h3><p>假设我们在本地修改了README.md文件:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223653746.png" alt="image-20220512223653746"></p>
+<p>(最后一行为新增加的内容)</p>
+<p>接下来输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;add something in readme.md&quot;</span></span><br><span class="line">git status</span><br><span class="line">git push origin</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223920465.png" alt="image-20220512223920465"></p>
+<p>此时去Github当中查看新的commit,方法如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224048995.png" alt="image-20220512224048995"></p>
+<p>点击链接,查看具体详情:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224144077.png" alt="image-20220512224144077"></p>
+<p>可以看到这次commit当中新增的内容.</p>
+<p><br/></p>
+<h2 id="五-Git-amp-Github分支管理"><a href="#五-Git-amp-Github分支管理" class="headerlink" title="五.Git&amp;Github分支管理"></a>五.Git&amp;Github分支管理</h2><h3 id="1-Github分支创建"><a href="#1-Github分支创建" class="headerlink" title="1.Github分支创建"></a>1.Github分支创建</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100149817.png" alt="image-20220513100149817"></p>
+<p>在上面直接输入一个没有的分支,下面就会出现创建这个分支的信息.</p>
+<p>现在我们切换到了dev分支,接下来对文件进行一些修改:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100609649.png" alt="image-20220513100609649"></p>
+<p><strong>经过观察,此时master分支和dev分支当中的README.md文件中的内容有所不同.</strong></p>
+<p><br/></p>
+<h3 id="2-pull-branch-from-github"><a href="#2-pull-branch-from-github" class="headerlink" title="2.pull branch from github"></a>2.pull branch from github</h3><p>使用git pull指令拉取远端仓库的最新版本:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101216770.png" alt="image-20220513101216770"></p>
+<p>接下来用git status查看状态:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101256422.png" alt="image-20220513101256422"></p>
+<p>可以看到,此时正处于master分支当中,接下来需要做的是查看本地有的分支.</p>
+<p>输入<code>git branch</code>:</p>
+<p>显示结果如下:</p>
+<blockquote>
+<p>*master</p>
+</blockquote>
+<p>这表示我们本地这边现在只有master分支.<strong>使用git branch -a可以查看所有本地和远程的分支</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
+<p>结果如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101617065.png" alt="image-20220513101617065"></p>
+<blockquote>
+<p>注:如果使用git branch -r则只看远程的分支有什么.</p>
+</blockquote>
+<h4 id="a-通过git-checkout切换分支"><a href="#a-通过git-checkout切换分支" class="headerlink" title="(a)通过git checkout切换分支"></a>(a)通过git checkout切换分支</h4><p>此时输入:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line"><span class="comment"># 可以验证是否是最新的分支</span></span><br><span class="line">git pull</span><br><span class="line"><span class="comment"># 接下来,用git branch来查看本地有的分支</span></span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101933087.png" alt="image-20220513101933087"></p>
+<h3 id="3-push-branch-to-github"><a href="#3-push-branch-to-github" class="headerlink" title="3.push branch to github"></a>3.push branch to github</h3><p>在本地新建一个分支dev-windows,然后修改readme.md当中的内容,接下来push到github上</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev-windows</span><br><span class="line"><span class="comment"># 修改文件的内容之后</span></span><br><span class="line">git status</span><br><span class="line">git add </span><br><span class="line">git commit -m <span class="string">&quot;modify README.md&quot;</span></span><br><span class="line"><span class="comment"># 核心:push到远程分支上</span></span><br><span class="line">git push origin dev-windows</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102623371.png" alt="image-20220513102623371"></p>
+<p>此时到远程的仓库当中去查看结果,发现已经有一个新的分支了:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102705015.png" alt="image-20220513102705015"></p>
+<p><br/></p>
+<h3 id="4-Compare-amp-pull-requests"><a href="#4-Compare-amp-pull-requests" class="headerlink" title="4.Compare&amp;pull requests"></a>4.Compare&amp;pull requests</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102918898.png" alt="image-20220513102918898"></p>
+<p>可以点击框中的部分,查看如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103029071.png" alt="image-20220513103029071"></p>
+<p>这里可以看到对应的更改,如果觉得这个更改是合适的话,<strong>就可以创建一个pull request:</strong></p>
+<blockquote>
+<p>A pull request is how you propose changes. You can ask some to review your changes or pull your contribution and merge it into their branch.</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103222095.png" alt="image-20220513103222095"></p>
+<p>接下来就可以根据Github的提示信息(比如是否发生冲突),以及自己观察的结果,来决定是否要merge这个pull request:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103359356.png" alt="image-20220513103359356"></p>
+<p>如上图,Github没有检测到可能的冲突,因此可以merge pull request.在点击合并pull request之后出现如下信息:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103532387.png" alt="image-20220513103532387"></p>
+<p>因为已经合并分支了,因此刚才的分支可以删掉了,点击Delete branch删除分支.</p>
+<p><br/></p>
+<h2 id="六-Github工作流"><a href="#六-Github工作流" class="headerlink" title="六.Github工作流"></a>六.Github工作流</h2><p>Github的工作流可以总结如下:</p>
+<ul>
+<li>Create a new Branch:创建新的分支</li>
+<li>Make changes and add Commits:做出改变并且commit</li>
+<li>Open a Pull Request:开启一个pull request</li>
+<li>Review: 预览</li>
+<li>Deploy: 部署</li>
+<li>Merge: 合并</li>
+</ul>
+<p>接下来具体做出介绍:</p>
+<h3 id="1-创建新的分支"><a href="#1-创建新的分支" class="headerlink" title="1.创建新的分支"></a>1.创建新的分支</h3><blockquote>
+<p>请注意:</p>
+<ul>
+<li>新的分支往往是要做一些实验性的工作所需要的,不要在这种情况下直接动master的代码:</li>
+<li><strong>如果没有特殊情况,新的分支往往都是从master衍生出来的</strong></li>
+<li>在团队合作的时候,新的分支起的名字要更好理解,方便团队更好的合作.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h3 id="2-做出改变并commit"><a href="#2-做出改变并commit" class="headerlink" title="2.做出改变并commit"></a>2.做出改变并commit</h3><blockquote>
+<p>在创建一个新的分支之后,就可以修改里面的内容了.每当完成一件事的时候,可以add+commit.</p>
+<ul>
+<li>每个commit应该包括有用的信息,因为commit可以提供结点,使得出现问题的时候可以回滚,同时也方便其他合作者看到仓库的变化.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h3 id="3-Open-a-pull-request"><a href="#3-Open-a-pull-request" class="headerlink" title="3.Open a pull request"></a>3.Open a pull request</h3><blockquote>
+<p>这部分是Github的核心.一个pull request表示你改变了某些内容,方便其他人查看,并且选择是否要merge你的代码到他们的分支上.</p>
+</blockquote>
+<p><br/></p>
+<h3 id="4-review-amp-deploy-amp-merge"><a href="#4-review-amp-deploy-amp-merge" class="headerlink" title="4.review&amp;deploy&amp;merge"></a>4.review&amp;deploy&amp;merge</h3><blockquote>
+<p>当一个Pull Request被发出时，它可以被任何对分支有适当访问权限的人审查。 这是对更改进行良好讨论和审查的地方。  </p>
+<p>如果您收到反馈可以继续改进您的更改，可以使用新的commit来添加更改，使进一步的审查成为可能.</p>
+<p>当检查完pull request并发现没有太大的问题时，就该进行最后的测试了。 GitHub允许你在与主分支合并之前从一个分支进行部署，以便在生产中进行最终测试。  </p>
+<p>如果出现任何问题，您可以通过再次将主分支部署到生产中来撤消更改!  </p>
+<p>如果都没有问题的话,就可以和master分支合并了.</p>
+</blockquote>
+<p>看到这里:</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/git/git_remote_fork.asp?remote=github">https://www.w3schools.com/git/git_remote_fork.asp?remote=github</a></p>
+<p>有时间再继续进行后续整理.</p>
+<h2 id="七-测试学习成果"><a href="#七-测试学习成果" class="headerlink" title="七.测试学习成果"></a>七.测试学习成果</h2><p>以下这个网站非常不错,可以用来测试Git的学习成果.</p>
+<p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching</a></p>
+<h2 id="八-一些其他指令"><a href="#八-一些其他指令" class="headerlink" title="八.一些其他指令"></a>八.一些其他指令</h2><h3 id="1-git-rebase"><a href="#1-git-rebase" class="headerlink" title="1.git rebase"></a>1.git rebase</h3><p>见上述网站基础部分的第四关.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ChrisZhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Git和Github-2-Github的使用">http://example.com/2022/05/13/Git和Github-2-Github的使用/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" rel="tag"># 实用工具学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/12/Git%E5%92%8CGithub-1-Git%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/" rel="prev" title="Git和Github(1)-Git基础指令">
+      <i class="fa fa-chevron-left"></i> Git和Github(1)-Git基础指令
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Github%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">Github实用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E6%8A%8A%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93Push%E4%B8%8AGithub"><span class="nav-number">1.1.</span> <span class="nav-text">一.把本地仓库Push上Github</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%89%BE%E5%88%B0%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93%E7%9A%84git%E5%9C%B0%E5%9D%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.找到远端仓库的git地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8A%8A%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.把本地仓库上传到远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-git-remote-add"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">(1)git remote add</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-push"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">(2)git push</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E9%94%991-%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93%E6%9C%89%E5%86%85%E5%AE%B9%E6%B2%A1%E6%9C%89pull"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">报错1:远端仓库有内容没有pull</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E5%9C%A8Github%E4%B8%8A%E7%BC%96%E8%BE%91%E4%BB%A3%E7%A0%81%E5%B9%B6commit"><span class="nav-number">1.2.</span> <span class="nav-text">二.在Github上编辑代码并commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-Git-pull"><span class="nav-number">1.3.</span> <span class="nav-text">三.Git pull</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-fetch"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.fetch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-git-log-xxx-branch"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">(1)git log xxx(branch)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-diff-xxx-branch"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">(2)git diff xxx(branch)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-merge"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-git-pull"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.git pull</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E9%94%992"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">报错2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E9%94%993"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">报错3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-Git-push"><span class="nav-number">1.4.</span> <span class="nav-text">四.Git push</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B0%86%E6%9C%AC%E5%9C%B0%E7%9A%84%E4%BF%AE%E6%94%B9push%E5%88%B0Github"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.将本地的修改push到Github</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-Git-amp-Github%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">五.Git&amp;Github分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Github%E5%88%86%E6%94%AF%E5%88%9B%E5%BB%BA"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.Github分支创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-pull-branch-from-github"><span class="nav-number">1.5.2.</span> <span class="nav-text">2.pull branch from github</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E9%80%9A%E8%BF%87git-checkout%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">(a)通过git checkout切换分支</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-push-branch-to-github"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.push branch to github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Compare-amp-pull-requests"><span class="nav-number">1.5.4.</span> <span class="nav-text">4.Compare&amp;pull requests</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD-Github%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.6.</span> <span class="nav-text">六.Github工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.创建新的分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%81%9A%E5%87%BA%E6%94%B9%E5%8F%98%E5%B9%B6commit"><span class="nav-number">1.6.2.</span> <span class="nav-text">2.做出改变并commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Open-a-pull-request"><span class="nav-number">1.6.3.</span> <span class="nav-text">3.Open a pull request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-review-amp-deploy-amp-merge"><span class="nav-number">1.6.4.</span> <span class="nav-text">4.review&amp;deploy&amp;merge</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83-%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%88%90%E6%9E%9C"><span class="nav-number">1.7.</span> <span class="nav-text">七.测试学习成果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB-%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E6%8C%87%E4%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">八.一些其他指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-git-rebase"><span class="nav-number">1.8.1.</span> <span class="nav-text">1.git rebase</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChrisZhang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ChrisZhang</p>
+  <div class="site-description" itemprop="description">我的技美学习之路</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhlovesyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhlovesyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1596944152@qq.com" title="E-Mail → mailto:1596944152@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liang-dao-men" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank"><i class="fa fa-quora fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/people/liang-dao-men" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank">个人知乎</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/24361666" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;24361666" rel="noopener" target="_blank">个人bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Apr 30 2022 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChrisZhang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
