@@ -280,28 +280,37 @@
 <li>You can revert back to any previous commit.</li>
 <li>Git does not store a separate copy of every file in every commit, but keeps track of changes made in each commit!</li>
 </ul>
-<p><br/></p>
+<br/>
+
 <h2 id="二-最基础Git指令"><a href="#二-最基础Git指令" class="headerlink" title="二.最基础Git指令"></a>二.最基础Git指令</h2><h3 id="1-查看git版本"><a href="#1-查看git版本" class="headerlink" title="1.查看git版本"></a>1.查看git版本</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152146419.png" alt="image-20220512152146419"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-配置git"><a href="#2-配置git" class="headerlink" title="2.配置git"></a>2.配置git</h3><p>配置git信息对版本管理非常重要,因为每次commit都需要用到对应的信息.</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;ChrisZhang&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;1596944152@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152825629.png" alt="image-20220512152825629"></p>
 <blockquote>
-<p>注:这里使用—global是指对所有的仓库都有效,如果只想对当前仓库起效的话只需要移除global信息即可.</p>
+<p>注:这里使用–global是指对所有的仓库都有效,如果只想对当前仓库起效的话只需要移除global信息即可.</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="3-创建新的git文件"><a href="#3-创建新的git文件" class="headerlink" title="3.创建新的git文件"></a>3.创建新的git文件</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir myProject</span><br><span class="line">cd myProject</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512153111267.png" alt="image-20220512153111267"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="4-创建仓库git-init"><a href="#4-创建仓库git-init" class="headerlink" title="4.创建仓库git init"></a>4.创建仓库git init</h3><p>将一个文件变成git 项目工程.</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
 <p>此时可以看到输出的结果如下:</p>
 <blockquote>
-<p>Initialized empty Git repository in xxxx/.git/(其中这个.git是一个隐藏文件)</p>
+<p>Initialized empty Git repository in xxxx&#x2F;.git&#x2F;(其中这个.git是一个隐藏文件)</p>
 </blockquote>
 <p>说明git仓库已经创建完成了.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="5-git-help"><a href="#5-git-help" class="headerlink" title="5.git help"></a>5.git help</h3><blockquote>
 <ul>
 <li><code>git command -help</code> - See all the available options for the specific command(<strong>这里的command是具体的指令,比如git commit -help</strong>)</li>
@@ -310,7 +319,8 @@
 </blockquote>
 <p>举例:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161741954.png" alt="image-20220512161741954"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="三-Git工作流"><a href="#三-Git工作流" class="headerlink" title="三.Git工作流"></a>三.Git工作流</h2><h3 id="1-Git工作流"><a href="#1-Git工作流" class="headerlink" title="1.Git工作流"></a>1.Git工作流</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512151101176.png" alt="image-20220512151101176"></p>
 <p>说明如下:</p>
 <ul>
@@ -329,9 +339,11 @@
 <li>tracked:Git了解并且已经加入到仓库当中</li>
 <li>untracked:在工作目录当中,但还没有加入仓库当中.</li>
 </ul>
-<p><br/></p>
-<h5 id="git-status-—short"><a href="#git-status-—short" class="headerlink" title="git status —short"></a>git status —short</h5><p>有的时候可以用这个指令来缩减显示的信息(<strong>注意这个指令有俩横线不要忘了输入</strong>):</p>
+<br/>
+
+<h5 id="git-status-–short"><a href="#git-status-–short" class="headerlink" title="git status –short"></a>git status –short</h5><p>有的时候可以用这个指令来缩减显示的信息(<strong>注意这个指令有俩横线不要忘了输入</strong>):</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status --short</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160011729.png" alt="image-20220512160011729"></p>
 <p>介绍如下:</p>
 <blockquote>
@@ -342,23 +354,29 @@
 <li>D - Deleted files</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h4 id="2-git-add-1"><a href="#2-git-add-1" class="headerlink" title="(2)git add"></a>(2)git add</h4><p>输入以下指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add Hello.txt</span><br></pre></td></tr></table></figure>
+
 <p>此时就可以查看<code>git status</code>:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154046848.png" alt="image-20220512154046848"></p>
 <p><strong>注:请注意文件名不要输入错误,否则git不会报错,但是不会add成功(因为文件不存在,所以肯定加不进去)</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="3-如果一次add比较多-用-all"><a href="#3-如果一次add比较多-用-all" class="headerlink" title="(3)如果一次add比较多,用-all"></a>(3)如果一次add比较多,用-all</h4><p>比如,现在我们有四个文件:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154224652.png" alt="image-20220512154224652"></p>
 <p>则可以使用指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line"><span class="comment"># 这个指令的缩写为git add -A</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154344743.png" alt="image-20220512154344743"></p>
 <p>(<strong>注:如果这个文件已经add 过了,再add也是不影响的,所以可以放心使用git add</strong>)</p>
-<p><br/></p>
+<br/>
+
 <h3 id="3-git-commit"><a href="#3-git-commit" class="headerlink" title="3.git commit"></a>3.git commit</h3><p>从之前的图我们可以看到,此时的修改都已经保存在了staging area,接下来就是commit操作了.</p>
 <p><strong>在我们commit的时候,往往要包括一些commit的信息:</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;First commit!&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154811993.png" alt="image-20220512154811993"></p>
 <p>此时staging area中的内容就被commit到了仓库当中,并且附加了一条信息.</p>
 <h4 id="1-直接commit-不用stage-area-不推荐"><a href="#1-直接commit-不用stage-area-不推荐" class="headerlink" title="(1)直接commit(不用stage area,不推荐)"></a>(1)直接commit(不用stage area,不推荐)</h4><p>首先修改某一个文件的内容:(比如Hello.txt)(<strong>如果添加了一个文件这个可能没什么效果</strong>)</p>
@@ -366,29 +384,38 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160917808.png" alt="image-20220512160917808"></p>
 <p>此时输入指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;update 2022_05_12&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161053951.png" alt="image-20220512161053951"></p>
 <p>可以看到,成功了.<strong>实际上,这种方式并不推荐,可能会导致commit了自己不需要的文件</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-git-log"><a href="#2-git-log" class="headerlink" title="(2)git log"></a>(2)git log</h4><p>这条指令可以看到commit的日志消息:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161310440.png" alt="image-20220512161310440"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="四-Git-branch"><a href="#四-Git-branch" class="headerlink" title="四.Git branch"></a>四.Git branch</h2><h3 id="1-branch介绍"><a href="#1-branch介绍" class="headerlink" title="1.branch介绍"></a>1.branch介绍</h3><blockquote>
-<p>In Git, a <code>branch</code> is a new/separate version of the main repository.</p>
+<p>In Git, a <code>branch</code> is a new&#x2F;separate version of the main repository.</p>
 <p>Branches allow you to work on different parts of a project without impacting the main branch.</p>
 <p><strong>When the work is complete, a branch can be merged with the main project.</strong></p>
 <p>You can even switch between branches and work on different projects without them interfering with each other.</p>
 <p>Branching in Git is very lightweight and fast!</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h4 id="1-新建一个分支"><a href="#1-新建一个分支" class="headerlink" title="(1)新建一个分支"></a>(1)新建一个分支</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch hello-world</span><br></pre></td></tr></table></figure>
+
 <p>此时就新建了一个分支hello-world.</p>
 <h5 id="a-查看分支"><a href="#a-查看分支" class="headerlink" title="(a)查看分支"></a>(a)查看分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512192457308.png" alt="image-20220512192457308"></p>
 <p>此时可以看到,新的分支已经创建完成了.</p>
 <p><strong>master分支前面那个星号(*)表明我们现在正处于master分支</strong></p>
-<p><br/></p>
+<br/>
+
 <h5 id="b-切换分支"><a href="#b-切换分支" class="headerlink" title="(b)切换分支"></a>(b)切换分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>Using the <code>-b</code> option on <code>checkout</code> will create a new branch, and move to it, if it does not exist</p>
 </blockquote>
@@ -406,15 +433,19 @@
 <li><p>有一个untracked文件(也就是我们新建的文件)</p>
 </li>
 </ul>
-<p><strong>接下来,我们用git add —all和git commit来提交文件</strong>:</p>
+<p><strong>接下来,我们用git add –all和git commit来提交文件</strong>:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;new changes in hello-world branch&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512193616679.png" alt="image-20220512193616679"></p>
 <p><strong>此时我们的新分支就与master分支具有不一样的内容了</strong>.</p>
-<p><br/></p>
+<br/>
+
 <h5 id="c-检查不同的分支中的内容"><a href="#c-检查不同的分支中的内容" class="headerlink" title="(c)检查不同的分支中的内容"></a>(c)检查不同的分支中的内容</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看新的分支中的内容</span></span><br><span class="line">ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到master分支</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看master分支中的内容</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512194041653.png" alt="image-20220512194041653"></p>
 <p>可以明显地看到,两个分支当中的内容是不同的.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-分支的使用场景"><a href="#2-分支的使用场景" class="headerlink" title="(2)分支的使用场景"></a>(2)分支的使用场景</h4><blockquote>
 <p>设想一个场景,就是我们的hello-world分支目前正在开发一个新功能,但master分支有人提出了bug.</p>
 <p>此时的正确做法应该如下:</p>
@@ -425,14 +456,17 @@
 </blockquote>
 <p>首先,新建一个分支:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p>然后,修改文件中的内容以演示修复bug的过程:</p>
 <p>然后,使用<code>git status</code>查看状态:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195724505.png" alt="image-20220512195724505">    </p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195724505.png" alt="image-20220512195724505">	</p>
 <p>使用以下命令提交commit给emergency-fix分支</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;bug-fixed&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195936658.png" alt="image-20220512195936658"></p>
 <p><strong>接下来,就是合并这个分支和master分支</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="3-分支合并"><a href="#3-分支合并" class="headerlink" title="(3)分支合并"></a>(3)分支合并</h4><blockquote>
 <p>现在我们的需求是,将emergency-fix分支的内容合并到master分支上</p>
 </blockquote>
@@ -440,25 +474,33 @@
 <li>a.进入到master分支</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>b.合并当前分支与emergency-fix分支:</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200524220.png" alt="image-20220512200524220"></p>
-<p><strong>由于emergency-fix分支是直接从master分支来的,并且在我们处理emergency-fix分支的时候没有人动master分支,因此Git认为这个可以直接合并,表示”fast-forward”.</strong>直接把两者合并.</p>
+<p>**由于emergency-fix分支是直接从master分支来的,并且在我们处理emergency-fix分支的时候没有人动master分支,因此Git认为这个可以直接合并,表示”fast-forward”.**直接把两者合并.</p>
 <p>此时emergency-fix和master分支的内容是一样的,可以将emergency-fix分支删掉.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="4-删除分支"><a href="#4-删除分支" class="headerlink" title="(4)删除分支"></a>(4)删除分支</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200909907.png" alt="image-20220512200909907"></p>
-<p><br/></p>
+<br/>
+
 <h4 id="5-在merge的时候出现冲突"><a href="#5-在merge的时候出现冲突" class="headerlink" title="(5)在merge的时候出现冲突"></a>(5)在merge的时候出现冲突</h4><p>在之前,我们在emergency-fix分支中修改了Hello1.txt,现在我们进入到hello-world分支,然后同样修改Hello1.txt:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br><span class="line"><span class="comment"># 接下来,修改Hello1.txt,然后输入</span></span><br><span class="line">git status</span><br><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;change Hello1.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202218893.png" alt="image-20220512202218893"></p>
 <p>接下来,<strong>进入到master分支并merge hello-world分支</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge hello-world</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202352704.png" alt="image-20220512202352704"></p>
 <p>从显示的结果来看,<strong>这里出现了一个冲突</strong>.</p>
-<p><br/></p>
+<br/>
+
 <h5 id="a-解决冲突问题"><a href="#a-解决冲突问题" class="headerlink" title="(a)解决冲突问题"></a>(a)解决冲突问题</h5><p>首先,利用<code>git status</code>查看状态:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202519911.png" alt="image-20220512202519911"></p>
 <p>从红色字体中可以看到,两者都修改了Hello1.txt,<strong>因此我们需要解决这部分的冲突.</strong></p>
@@ -470,9 +512,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202929660.png" alt="image-20220512202929660"></p>
 <p>此时就可以使用git add指令了:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203113207.png" alt="image-20220512203113207"></p>
 <p>这个时候已经解决了冲突问题,接下来就是git commit和删除已经合并的分支了:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;solve merge conflicts!&quot;</span></span><br><span class="line">git branch -d hello-world</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203450856-16523589320227.png" alt="image-20220512203450856"></p>
 <h5 id="b-在merge的时候出现了冲突-想退出怎么办"><a href="#b-在merge的时候出现了冲突-想退出怎么办" class="headerlink" title="(b)在merge的时候出现了冲突,想退出怎么办"></a>(b)在merge的时候出现了冲突,想退出怎么办</h5><p>如果出现了下面的情况:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220053187.png" alt="image-20220512220053187"></p>
@@ -579,7 +623,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0-1"><span class="nav-number">1.</span> <span class="nav-text">Git常用指令学习(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-Git%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">一.Git介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-does-Git-do"><span class="nav-number">1.1.1.</span> <span class="nav-text">What does Git do?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Working-with-Git"><span class="nav-number">1.1.2.</span> <span class="nav-text">Working with Git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%9C%80%E5%9F%BA%E7%A1%80Git%E6%8C%87%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">二.最基础Git指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%A5%E7%9C%8Bgit%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.查看git版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEgit"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.配置git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84git%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.创建新的git文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93git-init"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.创建仓库git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-git-help"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.git help</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-Git%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.3.</span> <span class="nav-text">三.Git工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Git%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.Git工作流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-git-add"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.git add</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B8%B8%E7%94%A8-git-status"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">(1)常用:git status</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#git-status-%E2%80%94short"><span class="nav-number">1.3.2.1.1.</span> <span class="nav-text">git status —short</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-add-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">(2)git add</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A6%82%E6%9E%9C%E4%B8%80%E6%AC%A1add%E6%AF%94%E8%BE%83%E5%A4%9A-%E7%94%A8-all"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">(3)如果一次add比较多,用-all</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-git-commit"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.git commit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%9B%B4%E6%8E%A5commit-%E4%B8%8D%E7%94%A8stage-area-%E4%B8%8D%E6%8E%A8%E8%8D%90"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">(1)直接commit(不用stage area,不推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-log"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">(2)git log</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-Git-branch"><span class="nav-number">1.4.</span> <span class="nav-text">四.Git branch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-branch%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.branch介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">(1)新建一个分支</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">(a)查看分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.2.</span> <span class="nav-text">(b)切换分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-%E6%A3%80%E6%9F%A5%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E6%94%AF%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.4.1.1.3.</span> <span class="nav-text">(c)检查不同的分支中的内容</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%88%86%E6%94%AF%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">(2)分支的使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">(3)分支合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">(4)删除分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%9C%A8merge%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%86%B2%E7%AA%81"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">(5)在merge的时候出现冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.1.5.1.</span> <span class="nav-text">(a)解决冲突问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-%E5%9C%A8merge%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E4%BA%86%E5%86%B2%E7%AA%81-%E6%83%B3%E9%80%80%E5%87%BA%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-number">1.4.1.5.2.</span> <span class="nav-text">(b)在merge的时候出现了冲突,想退出怎么办</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0-1"><span class="nav-number">1.</span> <span class="nav-text">Git常用指令学习(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-Git%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">一.Git介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-does-Git-do"><span class="nav-number">1.1.1.</span> <span class="nav-text">What does Git do?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Working-with-Git"><span class="nav-number">1.1.2.</span> <span class="nav-text">Working with Git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%9C%80%E5%9F%BA%E7%A1%80Git%E6%8C%87%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">二.最基础Git指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%A5%E7%9C%8Bgit%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.查看git版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEgit"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.配置git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84git%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.创建新的git文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93git-init"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.创建仓库git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-git-help"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.git help</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-Git%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.3.</span> <span class="nav-text">三.Git工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Git%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.Git工作流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-git-add"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.git add</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B8%B8%E7%94%A8-git-status"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">(1)常用:git status</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#git-status-%E2%80%93short"><span class="nav-number">1.3.2.1.1.</span> <span class="nav-text">git status –short</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-add-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">(2)git add</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A6%82%E6%9E%9C%E4%B8%80%E6%AC%A1add%E6%AF%94%E8%BE%83%E5%A4%9A-%E7%94%A8-all"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">(3)如果一次add比较多,用-all</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-git-commit"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.git commit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%9B%B4%E6%8E%A5commit-%E4%B8%8D%E7%94%A8stage-area-%E4%B8%8D%E6%8E%A8%E8%8D%90"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">(1)直接commit(不用stage area,不推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-git-log"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">(2)git log</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-Git-branch"><span class="nav-number">1.4.</span> <span class="nav-text">四.Git branch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-branch%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.branch介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">(1)新建一个分支</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">(a)查看分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.1.2.</span> <span class="nav-text">(b)切换分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-%E6%A3%80%E6%9F%A5%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%86%E6%94%AF%E4%B8%AD%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.4.1.1.3.</span> <span class="nav-text">(c)检查不同的分支中的内容</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%88%86%E6%94%AF%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">(2)分支的使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">(3)分支合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">(4)删除分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%9C%A8merge%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E5%86%B2%E7%AA%81"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">(5)在merge的时候出现冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.1.5.1.</span> <span class="nav-text">(a)解决冲突问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-%E5%9C%A8merge%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E7%8E%B0%E4%BA%86%E5%86%B2%E7%AA%81-%E6%83%B3%E9%80%80%E5%87%BA%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-number">1.4.1.5.2.</span> <span class="nav-text">(b)在merge的时候出现了冲突,想退出怎么办</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
