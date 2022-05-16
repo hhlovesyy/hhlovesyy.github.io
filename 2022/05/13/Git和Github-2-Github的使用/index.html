@@ -262,35 +262,28 @@
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git">https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</a></p>
 </blockquote>
-<br/>
-
+<p><br/></p>
 <h3 id="2-把本地仓库上传到远程仓库"><a href="#2-把本地仓库上传到远程仓库" class="headerlink" title="2.把本地仓库上传到远程仓库"></a>2.把本地仓库上传到远程仓库</h3><ul>
 <li>在这之前,请确保本地的仓库已经git init,git add,git commit完成了.</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;this is the origin client of our game&quot;</span></span><br></pre></td></tr></table></figure>
-
-<br/>
-
+<p><br/></p>
 <h4 id="1-git-remote-add"><a href="#1-git-remote-add" class="headerlink" title="(1)git remote add"></a>(1)git remote add</h4><p>接下来,找到含有.git隐藏文件的文件夹,在git bash中输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p><code>git remote add origin *URL*</code> specifies that you are adding a remote repository, with the specified <code>URL</code>, as an <code>origin</code> to your local Git repo.</p>
 </blockquote>
 <p><strong>如果这里的显示信息为已经有了一个git remote,则说明已经绑定了远端的仓库,如果还想要将文件上传的新的仓库则此时可以选择把.git文件删掉再重新输入上面的指令.</strong></p>
 <p>接下来,就可以使用push操作了.</p>
-<br/>
-
+<p><br/></p>
 <h4 id="2-git-push"><a href="#2-git-push" class="headerlink" title="(2)git push"></a>(2)git push</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
-
 <p>这样就把我们的本地仓库push到远程的origin显示的仓库,同时push到的分支是显示的master分支.</p>
 <p>成功之后会这样显示:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220628900.png" alt="image-20220512220628900"></p>
 <p>此时去Github上刷新一下自己的远程仓库,看到结果如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220801392.png" alt="image-20220512220801392"></p>
 <p>可以看到,本地仓库已经上传到了远端的仓库上了.</p>
-<br/>
-
+<p><br/></p>
 <h4 id="报错1-远端仓库有内容没有pull"><a href="#报错1-远端仓库有内容没有pull" class="headerlink" title="报错1:远端仓库有内容没有pull"></a>报错1:远端仓库有内容没有pull</h4><p>假如出现了下面的信息:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512214852845.png" alt="image-20220512214852845"></p>
 <p><strong>则说明此时的远端仓库并不是最新的版本,因此需要先pull下来,这个后续会再进行总结</strong>.</p>
@@ -299,8 +292,7 @@
 <p>修改完内容之后可以直接在下方commit提交:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221208945.png" alt="image-20220512221208945"></p>
 <p>此时刷新一下,就可以看到Github的内容得到了更新.</p>
-<br/>
-
+<p><br/></p>
 <h2 id="三-Git-pull"><a href="#三-Git-pull" class="headerlink" title="三.Git pull"></a>三.Git pull</h2><blockquote>
 <p>在团队合作的过程当中,所有参与者都能获取到仓库的最新状态是十分重要的.此时<code>git pull</code>指令就是一个很常见的指令.  </p>
 </blockquote>
@@ -310,7 +302,7 @@
 <li>merge</li>
 </ul>
 <h3 id="1-fetch"><a href="#1-fetch" class="headerlink" title="1.fetch"></a>1.fetch</h3><blockquote>
-<p><code>fetch</code> gets all the change history of a tracked branch&#x2F;repo.</p>
+<p><code>fetch</code> gets all the change history of a tracked branch/repo.</p>
 <p>So, on your local Git, <code>fetch</code> updates to see what has changed on GitHub:</p>
 </blockquote>
 <p>也就是说,<code>git fetch</code>可以看到远程仓库当中出现了哪些内容的修改,对于我们此时的情况,结果如下:</p>
@@ -320,71 +312,58 @@
 <p>也就是说,远端仓库有一个新的commit提交,当然这个应该是我们刚才修改的readme.md文件,此时可以通过log指令来查看日志:</p>
 <h4 id="1-git-log-xxx-branch"><a href="#1-git-log-xxx-branch" class="headerlink" title="(1)git log xxx(branch)"></a>(1)git log xxx(branch)</h4><p>在这里,我们输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log origin/master</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222205042.png" alt="image-20220512222205042"></p>
 <p>可以看到这条最近的commit记录.</p>
 <h4 id="2-git-diff-xxx-branch"><a href="#2-git-diff-xxx-branch" class="headerlink" title="(2)git diff xxx(branch)"></a>(2)git diff xxx(branch)</h4><p>虽然刚才的指令可以看到冲突的来源,但有的时候仍不够直观.这个时候可以采用git diff指令查看本地仓库和远程仓库的区别:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff origin/master</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222510351.png" alt="image-20220512222510351"></p>
 <p>可以看到,冲突与我们的预期相符,接下来就是merge了.</p>
-<br/>
-
+<p><br/></p>
 <h3 id="2-merge"><a href="#2-merge" class="headerlink" title="2.merge"></a>2.merge</h3><p><code>git merge current specified</code></p>
 <p>表示合并specified分支到current分支,对于现在的情况来说,指令如下:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222814887.png" alt="image-20220512222814887"></p>
 <p>此时用git status进行查看:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222855840.png" alt="image-20220512222855840"></p>
 <p>这表示本地仓库已经和远端仓库同步了.</p>
-<br/>
-
+<p><br/></p>
 <h3 id="3-git-pull"><a href="#3-git-pull" class="headerlink" title="3.git pull"></a>3.git pull</h3><blockquote>
 <p>将fetch与merge操作进行合并就是pull操作了.</p>
 </blockquote>
 <p>比如这里我们又修改了远程仓库的README.md的内容,然后直接git pull origin</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223328289.png" alt="image-20220512223328289"></p>
 <p>在团队合作项目当中,<strong>git pull是一个十分实用的技巧,需要经常使用</strong></p>
-<br/>
-
+<p><br/></p>
 <h4 id="报错2"><a href="#报错2" class="headerlink" title="报错2"></a>报错2</h4><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512215345450.png" alt="image-20220512215345450"></p>
 <p>对于上面那个错误,问题出在没有pull下来最新的仓库版本.采用git pull即可.</p>
 <p>对于下面那个错误,则可以参考下述网站解决(<strong>可能是因为pull下来的仓库和本地的没什么关系,可以通过链接里的解决办法解决</strong>):</p>
 <p><a target="_blank" rel="noopener" href="https://komodor.com/learn/how-to-fix-fatal-refusing-to-merge-unrelated-histories-error/">How to fix ‘fatal: refusing to merge unrelated histories’ Git error | Komodor</a></p>
-<br/>
-
+<p><br/></p>
 <h4 id="报错3"><a href="#报错3" class="headerlink" title="报错3"></a>报错3</h4><blockquote>
 <p>关于pull的时候报conflict错误,冲突的地方会被git标注下来,进入文件夹当中修改即可.然后不要忘记git add 改过之后的文件和git commit两个步骤.(参考前一节解决冲突)</p>
 </blockquote>
-<br/>
-
+<p><br/></p>
 <h2 id="四-Git-push"><a href="#四-Git-push" class="headerlink" title="四.Git push"></a>四.Git push</h2><h3 id="1-将本地的修改push到Github"><a href="#1-将本地的修改push到Github" class="headerlink" title="1.将本地的修改push到Github"></a>1.将本地的修改push到Github</h3><p>假设我们在本地修改了README.md文件:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223653746.png" alt="image-20220512223653746"></p>
 <p>(最后一行为新增加的内容)</p>
 <p>接下来输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;add something in readme.md&quot;</span></span><br><span class="line">git status</span><br><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223920465.png" alt="image-20220512223920465"></p>
 <p>此时去Github当中查看新的commit,方法如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224048995.png" alt="image-20220512224048995"></p>
 <p>点击链接,查看具体详情:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224144077.png" alt="image-20220512224144077"></p>
 <p>可以看到这次commit当中新增的内容.</p>
-<br/>
-
+<p><br/></p>
 <h2 id="五-Git-amp-Github分支管理"><a href="#五-Git-amp-Github分支管理" class="headerlink" title="五.Git&amp;Github分支管理"></a>五.Git&amp;Github分支管理</h2><h3 id="1-Github分支创建"><a href="#1-Github分支创建" class="headerlink" title="1.Github分支创建"></a>1.Github分支创建</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100149817.png" alt="image-20220513100149817"></p>
 <p>在上面直接输入一个没有的分支,下面就会出现创建这个分支的信息.</p>
 <p>现在我们切换到了dev分支,接下来对文件进行一些修改:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100609649.png" alt="image-20220513100609649"></p>
 <p><strong>经过观察,此时master分支和dev分支当中的README.md文件中的内容有所不同.</strong></p>
-<br/>
-
+<p><br/></p>
 <h3 id="2-pull-branch-from-github"><a href="#2-pull-branch-from-github" class="headerlink" title="2.pull branch from github"></a>2.pull branch from github</h3><p>使用git pull指令拉取远端仓库的最新版本:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101216770.png" alt="image-20220513101216770"></p>
 <p>接下来用git status查看状态:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101256422.png" alt="image-20220513101256422"></p>
@@ -396,7 +375,6 @@
 </blockquote>
 <p>这表示我们本地这边现在只有master分支.<strong>使用git branch -a可以查看所有本地和远程的分支</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
-
 <p>结果如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101617065.png" alt="image-20220513101617065"></p>
 <blockquote>
@@ -404,16 +382,13 @@
 </blockquote>
 <h4 id="a-通过git-checkout切换分支"><a href="#a-通过git-checkout切换分支" class="headerlink" title="(a)通过git checkout切换分支"></a>(a)通过git checkout切换分支</h4><p>此时输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line"><span class="comment"># 可以验证是否是最新的分支</span></span><br><span class="line">git pull</span><br><span class="line"><span class="comment"># 接下来,用git branch来查看本地有的分支</span></span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101933087.png" alt="image-20220513101933087"></p>
 <h3 id="3-push-branch-to-github"><a href="#3-push-branch-to-github" class="headerlink" title="3.push branch to github"></a>3.push branch to github</h3><p>在本地新建一个分支dev-windows,然后修改readme.md当中的内容,接下来push到github上</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev-windows</span><br><span class="line"><span class="comment"># 修改文件的内容之后</span></span><br><span class="line">git status</span><br><span class="line">git add </span><br><span class="line">git commit -m <span class="string">&quot;modify README.md&quot;</span></span><br><span class="line"><span class="comment"># 核心:push到远程分支上</span></span><br><span class="line">git push origin dev-windows</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102623371.png" alt="image-20220513102623371"></p>
 <p>此时到远程的仓库当中去查看结果,发现已经有一个新的分支了:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102705015.png" alt="image-20220513102705015"></p>
-<br/>
-
+<p><br/></p>
 <h3 id="4-Compare-amp-pull-requests"><a href="#4-Compare-amp-pull-requests" class="headerlink" title="4.Compare&amp;pull requests"></a>4.Compare&amp;pull requests</h3><p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102918898.png" alt="image-20220513102918898"></p>
 <p>可以点击框中的部分,查看如下:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103029071.png" alt="image-20220513103029071"></p>
@@ -427,8 +402,7 @@
 <p>如上图,Github没有检测到可能的冲突,因此可以merge pull request.在点击合并pull request之后出现如下信息:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103532387.png" alt="image-20220513103532387"></p>
 <p>因为已经合并分支了,因此刚才的分支可以删掉了,点击Delete branch删除分支.</p>
-<br/>
-
+<p><br/></p>
 <h2 id="六-Github工作流"><a href="#六-Github工作流" class="headerlink" title="六.Github工作流"></a>六.Github工作流</h2><p>Github的工作流可以总结如下:</p>
 <ul>
 <li>Create a new Branch:创建新的分支</li>
@@ -447,21 +421,18 @@
 <li>在团队合作的时候,新的分支起的名字要更好理解,方便团队更好的合作.</li>
 </ul>
 </blockquote>
-<br/>
-
+<p><br/></p>
 <h3 id="2-做出改变并commit"><a href="#2-做出改变并commit" class="headerlink" title="2.做出改变并commit"></a>2.做出改变并commit</h3><blockquote>
 <p>在创建一个新的分支之后,就可以修改里面的内容了.每当完成一件事的时候,可以add+commit.</p>
 <ul>
 <li>每个commit应该包括有用的信息,因为commit可以提供结点,使得出现问题的时候可以回滚,同时也方便其他合作者看到仓库的变化.</li>
 </ul>
 </blockquote>
-<br/>
-
+<p><br/></p>
 <h3 id="3-Open-a-pull-request"><a href="#3-Open-a-pull-request" class="headerlink" title="3.Open a pull request"></a>3.Open a pull request</h3><blockquote>
 <p>这部分是Github的核心.一个pull request表示你改变了某些内容,方便其他人查看,并且选择是否要merge你的代码到他们的分支上.</p>
 </blockquote>
-<br/>
-
+<p><br/></p>
 <h3 id="4-review-amp-deploy-amp-merge"><a href="#4-review-amp-deploy-amp-merge" class="headerlink" title="4.review&amp;deploy&amp;merge"></a>4.review&amp;deploy&amp;merge</h3><blockquote>
 <p>当一个Pull Request被发出时，它可以被任何对分支有适当访问权限的人审查。 这是对更改进行良好讨论和审查的地方。  </p>
 <p>如果您收到反馈可以继续改进您的更改，可以使用新的commit来添加更改，使进一步的审查成为可能.</p>
@@ -513,7 +484,10 @@
     <a href="/2022/05/12/Git%E5%92%8CGithub-1-Git%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/" rel="prev" title="Git和Github(1)-Git基础指令">
       <i class="fa fa-chevron-left"></i> Git和Github(1)-Git基础指令
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" rel="next" title="RNN基础介绍">
+      RNN基础介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -588,18 +562,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>

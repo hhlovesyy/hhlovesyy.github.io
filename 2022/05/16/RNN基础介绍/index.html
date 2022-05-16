@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="RNN介绍最近读到的论文当中有涉及到RNN的知识,因此在这里整理一下与RNN有关的知识点. 参考文章： 一文看懂循环神经网络 RNN（2种优化算法+5个实际应用） (easyai.tech) 一、RNN介绍卷积神经网络 – CNN 和普通的算法大部分都是输入和输出的一一对应，也就是一个输入得到一个输出。不同的输入之间是没有联系的。 但有些时候,我们希望得到序列的信息来综合考虑,比如下面的场景:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN基础介绍">
+<meta property="og:url" content="http://example.com/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="ChrisZhang">
+<meta property="og:description" content="RNN介绍最近读到的论文当中有涉及到RNN的知识,因此在这里整理一下与RNN有关的知识点. 参考文章： 一文看懂循环神经网络 RNN（2种优化算法+5个实际应用） (easyai.tech) 一、RNN介绍卷积神经网络 – CNN 和普通的算法大部分都是输入和输出的一一对应，也就是一个输入得到一个输出。不同的输入之间是没有联系的。 但有些时候,我们希望得到序列的信息来综合考虑,比如下面的场景:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515210543488.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-rnn-1.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Recurrent_neural_network_unfold.svg.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/Elman_srnn.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-b45f69904d546edde41d9539e4c5548c_r.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161027871-165269730228219.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-fenci.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-input-time.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515212701880.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Long_Short-Term_Memory.svg.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161408762.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516162753321.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163413093.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163708653.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180115451.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180739285.png">
+<meta property="article:published_time" content="2022-05-16T10:33:17.000Z">
+<meta property="article:modified_time" content="2022-05-16T10:35:35.240Z">
+<meta property="article:author" content="ChrisZhang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="RNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515210543488.png">
+
+<link rel="canonical" href="http://example.com/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RNN基础介绍 | ChrisZhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChrisZhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RNN基础介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-16 18:33:17 / 修改时间：18:35:35" itemprop="dateCreated datePublished" datetime="2022-05-16T18:33:17+08:00">2022-05-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RNN/" itemprop="url" rel="index"><span itemprop="name">RNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="RNN介绍"><a href="#RNN介绍" class="headerlink" title="RNN介绍"></a>RNN介绍</h2><p>最近读到的论文当中有涉及到RNN的知识,因此在这里整理一下与RNN有关的知识点.</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/rnn/">一文看懂循环神经网络 RNN（2种优化算法+5个实际应用） (easyai.tech)</a></p>
+<h2 id="一、RNN介绍"><a href="#一、RNN介绍" class="headerlink" title="一、RNN介绍"></a>一、RNN介绍</h2><p>卷积神经网络 – <a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/cnn/">CNN</a> 和普通的算法大部分都是输入和输出的一一对应，也就是一个输入得到一个输出。不同的输入之间是没有联系的。</p>
+<p><strong>但有些时候,我们希望得到序列的信息来综合考虑,比如下面的场景:</strong></p>
+<blockquote>
+<p>当我们提到Apple的时候,有的时候是说苹果这种水果,有的时候则是指苹果公司;具体如何识别<strong>要结合具体的语义</strong>。</p>
+</blockquote>
+<p><strong>这种需要处理「序列数据 – 一串相互依赖的数据流」的场景就需要使用 RNN 来解决了。</strong>类似的还有比如音频处理，语言翻译，股票市场中的价格走势等领域。</p>
+<p><br/></p>
+<h2 id="二、RNN的基本原理"><a href="#二、RNN的基本原理" class="headerlink" title="二、RNN的基本原理"></a>二、RNN的基本原理</h2><p>首先，以我们所熟悉的全连接神经网络为例：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515210543488.png" alt="image-20220515210543488"></p>
+<p>这个全连接网络由输入层-隐藏层-输出层所组成，如上图所示；</p>
+<p>而对于RNN来说，<strong>其与全连接神经网络的区别在于每次都会将前一次的输出结果，带到下一次的隐藏层中，如果用动图表示则如下：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-rnn-1.gif" alt="RNN区别"></p>
+<p>也就是说，RNN之所以可以解决序列问题，<strong>是因为它可以记住每一时刻的信息，每一时刻的隐藏层不仅由该时刻的输入层决定，还由上一时刻的隐藏层决定</strong>。如果我们把上面的动图变为静态图，则表示如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Recurrent_neural_network_unfold.svg.png" alt="img"></p>
+<p>在上面的图当中，<strong>V指的是每个时间点之间的权重矩阵，可以看到，隐藏层h的值同时由上一时刻的隐藏层所决定。</strong></p>
+<p><strong>值得注意的是，在整个神经网络的训练过程中，每一时刻的V是一样的。</strong></p>
+<p><br/></p>
+<p>再以一个有一定历史的Elman network为例：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/Elman_srnn.png" alt="img"></p>
+<p>用公式表示类似如下（以下为Elman network的相关公式，仅为了方便说明）：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}h_{t}&=\sigma _{h}(W_{h}x_{t}+U_{h}h_{t-1}+b_{h})\\y_{t}&=\sigma _{y}(W_{y}h_{t}+b_{y})\end{aligned}</script><p>引用知乎上的一个理解方式，下图就可以体现出RNN的特点（图源在文章末尾链接中）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-b45f69904d546edde41d9539e4c5548c_r.jpg" alt="preview"></p>
+<h3 id="（1）激活函数"><a href="#（1）激活函数" class="headerlink" title="（1）激活函数"></a>（1）激活函数</h3><p>采用tanh作为激活函数，这种函数的特点如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161027871-165269730228219.png" alt="image-20220516161027871"></p>
+<p>使用tanh作为激活函数可以有效避免某些参数呈现爆炸式的增长（因为再大的数经过激活函数之后都会被限制在-1到1之间）。</p>
+<p><br/></p>
+<h2 id="三、一个直观理解的实例"><a href="#三、一个直观理解的实例" class="headerlink" title="三、一个直观理解的实例"></a>三、一个直观理解的实例</h2><p>假如现在我们想要判断用户的想法，则首先获取用户的输入并将其进行分词处理：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-fenci.gif" alt="对输入进行分词"></p>
+<p>接下来，按照序列顺序输入到RNN网络当中，可以看到前面的输出确实会对后面的输入有所影响：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-input-time.gif" alt="img"></p>
+<p>此时我们可以看到，当判断到最后一个序列的时候，前面的序列均对其产生了影响。</p>
+<p><br/></p>
+<h3 id="（1）RNN的问题"><a href="#（1）RNN的问题" class="headerlink" title="（1）RNN的问题"></a>（1）RNN的问题</h3><p>如果我们观察最后一个节点的颜色，会发现RNN存在短期记忆问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515212701880.png" alt="image-20220515212701880"></p>
+<p>不难发现，短期记忆的影响比较大，而随着输入序列的增长，前面处理的数据所占据的比例越来越小，可能会造成关键信息的缺失（比如这个案例当中的time可能就无法很好识别）</p>
+<p><strong>这就是在反向传播的过程当中梯度消失和梯度爆炸的情况(此时这部分权重就很少得到训练)，具体地推导过程可以参考如下博客：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
+<p><br/></p>
+<h2 id="四、LSTM（长短期记忆）"><a href="#四、LSTM（长短期记忆）" class="headerlink" title="四、LSTM（长短期记忆）"></a>四、LSTM（长短期记忆）</h2><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation | by Michael Phi | Towards Data Science</a></p>
+<p>在普通的RNN当中，越晚的输入影响越大，而越早地输入影响则越小，并且无法更改这个逻辑。</p>
+<p>而相对的，<strong>LSTM改变了这个逻辑，使用一套灵活的方案——只保留重要的信息。</strong></p>
+<p>首先来看一下LSTM的结构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Long_Short-Term_Memory.svg.png" alt="img"></p>
+<p>相比RNN而言，LSTM采用了门控装置，可以有选择性的存储信息。</p>
+<p>我们来仔细看一下LSTM的内部结构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161408762.png" alt="image-20220516161408762"></p>
+<h3 id="（1）核心概念"><a href="#（1）核心概念" class="headerlink" title="（1）核心概念"></a>（1）核心概念</h3><p>LSTM的核心概念是cell state，以及不同的门控设施。</p>
+<ul>
+<li><p>cell state可以理解为是网络的“记忆”，会沿着序列链“一路传递消息”</p>
+<ul>
+<li>可以在序列处理的过程当中不断地传递相关的信息。</li>
+<li>在LSTM当中，哪怕是最早的一些时间的信息都可以对后面的处理造成影响，<strong>这就解决了传统RNN的短期记忆问题</strong></li>
+<li>在传递过程当中，信息可能会被添加或者移除（通过门控系统，也就是gate）</li>
+</ul>
+</li>
+<li><p>门控系统是不同的神经网络，作用是决定哪些信息可以呈现在cell state当中。门控系统可以学习哪些知识是相关知识，从而学习如何保持或遗忘。</p>
+</li>
+</ul>
+<p><br/></p>
+<h3 id="（2）Sigmoid"><a href="#（2）Sigmoid" class="headerlink" title="（2）Sigmoid"></a>（2）Sigmoid</h3><p>门控系统以sigmoid作为激活函数。sigmoid函数类似于tanh，但其会限制输出范围为0到1。</p>
+<p>这样做的好处在于，<strong>可以很好地更新或者遗忘数据</strong>，这是因为：</p>
+<ul>
+<li>任何数乘0的结果都是0，通过这种方式就可以“遗忘”数据。</li>
+<li>任何数乘1的结果都是这个数，通过这种方式可以“保留”数据。</li>
+</ul>
+<p>神经网络可以学习哪些数据是需要遗忘的，哪些则需要留下来。</p>
+<p>下面是sigmoid函数：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516162753321.png" alt="image-20220516162753321"></p>
+<blockquote>
+<p>LSTM当中一共有三种gate来构成门控系统，分别是：</p>
+<ul>
+<li>forget gate</li>
+<li>input gate</li>
+<li>output gate</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h3 id="（3）forget-gate"><a href="#（3）forget-gate" class="headerlink" title="（3）forget gate"></a>（3）forget gate</h3><blockquote>
+<p>这扇门决定了哪些信息应该丢弃，哪些信息应该保留。来自前一个隐藏状态(hidden state)的信息和来自当前输入的信息通过sigmoid函数传递。值在0和1之间。越接近0表示忘记，越接近1表示保留。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163413093.png" alt="image-20220516163413093"></p>
+<p><br/></p>
+<h3 id="（4）input-gate"><a href="#（4）input-gate" class="headerlink" title="（4）input gate"></a>（4）input gate</h3><blockquote>
+<p>以下图为例，进行说明：</p>
+<ul>
+<li>①将hidden state和当前输入通过sigmoid激活函数。这一点和之前是类似的，输出的结果将在0到1之间，决定数据是否应该留下或遗忘；</li>
+<li>②蓝色的是tanh函数，这一部分就与传统的RNN类似了，控制输出范围在-1到1之间有助于管理神经网络。</li>
+<li>接下来，将①和②的输出结果相乘，<strong>sigmoid激活函数的输出结果会决定是否应该保留tanh激活函数输出的结果</strong></li>
+</ul>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163708653.png" alt="image-20220516163708653"></p>
+<p><br/></p>
+<h3 id="（5）cell-state"><a href="#（5）cell-state" class="headerlink" title="（5）cell state"></a>（5）cell state</h3><blockquote>
+<p>到目前为止，已经有足够的信息去计算cell state了。首先，cell state会与forget vector逐点相乘。如果相乘的值接近于0则会被遗忘。接下来会把input gate出来的值与刚才的值进行一个相加处理，<strong>从而更新cell state到新的值</strong>。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1.gif" alt="1"></p>
+<p><br/></p>
+<h3 id="（6）output-gate"><a href="#（6）output-gate" class="headerlink" title="（6）output gate"></a>（6）output gate</h3><blockquote>
+<p>这个output gate会决定下一个hidden state是什么样的。首先，我们把之前的hidden state和现在的输入放入一个sigmoid激活函数，然后会把新的cell state放入一个tanh函数（<strong>当然这里是复制一份，见下面的动图</strong>）。接下来我们会把tanh的输出结果与sigmoid的输出结果相乘，<strong>来决定hidden state应该保存什么内容</strong>。此时的输出就是hidden state的状态，走下面的那条管道，用来对下个步骤做出贡献。</p>
+</blockquote>
+<p>动图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2.gif" alt="2"></p>
+<blockquote>
+<p>以作者的原话来总结：</p>
+<p>To review,：</p>
+<ul>
+<li>the Forget gate decides what is relevant to keep from prior steps. </li>
+<li>The input gate decides what information is relevant to add from the current step. </li>
+<li>The output gate determines what the next hidden state should be.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h2 id="五、LSTM的伪代码"><a href="#五、LSTM的伪代码" class="headerlink" title="五、LSTM的伪代码"></a>五、LSTM的伪代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSTMCELL</span>(<span class="params">prev_ct, prev_ht, <span class="built_in">input</span></span>):</span><br><span class="line">    combine = prev_ht + <span class="built_in">input</span></span><br><span class="line">    ft = forget_layer(combine)</span><br><span class="line">    candidate = candidate_layer(combine)</span><br><span class="line">    it = input_layer(combine)</span><br><span class="line">    Ct = prev_ht * ft + candidate * it</span><br><span class="line">    ot = output_layer(combine)</span><br><span class="line">    ht = ot * tanh(Ct)</span><br><span class="line">    <span class="keyword">return</span> ht, Ct</span><br><span class="line"></span><br><span class="line">ct = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">ht = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">input</span> <span class="keyword">in</span> inputs:</span><br><span class="line">    ct, ht = LSTMCELL(ct, ht, <span class="built_in">input</span>)</span><br></pre></td></tr></table></figure>
+<p>总的过程如下：</p>
+<blockquote>
+<p>1.首先，之前的hidden state会与现在的输入串联在一起，将其命名为combine；</p>
+<p>2.combine会先被喂入forget layer，这层会移除掉不相关的数据。</p>
+<p>3.一个candidate layer会通过combine来创立，这个candidate会保留一个值，用来决定是否通过加法操作加入新的cell state。</p>
+<p>4.将combine喂入input layer，这一层会决定candidate中的哪些数据会被加入新的cell state当中。</p>
+<p>5.在计算完forget layer，candidate layer和input layer之后，cell state会根据这些向量和之前的cell state来进行计算。</p>
+<p>6.计算出output的值。</p>
+<p>7.output和新的cell state逐点相乘，可以给出最新的hidden state的状态。</p>
+</blockquote>
+<p>综上，LSTM可以使用隐藏状态进行预测。结合所有这些机制，LSTM可以在序列处理过程中选择要记住或忘记的相关信息。</p>
+<p><br/></p>
+<p>可以结合下图，对上图的过程进行理解和复习：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180115451.png" alt="image-20220516180115451"></p>
+<p><br/></p>
+<h2 id="六、GRU"><a href="#六、GRU" class="headerlink" title="六、GRU"></a>六、GRU</h2><p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">https://en.wikipedia.org/wiki/Gated_recurrent_unit</a></p>
+<blockquote>
+<p>GRU是比较新的一代RNN神经网络，结构上比较近似于LSTM。</p>
+<p>GRU抛弃了cell state的概念，使用hidden state去传递信息。相对来说，<strong>GRU只有两个门控系统</strong>：</p>
+<ul>
+<li>reset gate</li>
+<li>update gate</li>
+</ul>
+</blockquote>
+<p>结构如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180739285.png" alt="image-20220516180739285"></p>
+<h3 id="（1）Update-Gate"><a href="#（1）Update-Gate" class="headerlink" title="（1）Update Gate"></a>（1）Update Gate</h3><blockquote>
+<p>与LSTM的forget和input结构类似。他会决定什么信息会被丢弃，什么信息会被加入进来。这样可以用来解决梯度消失的问题。</p>
+</blockquote>
+<h3 id="（2）Reset-Gate"><a href="#（2）Reset-Gate" class="headerlink" title="（2）Reset Gate"></a>（2）Reset Gate</h3><blockquote>
+<p>这个门用来决定有多少过去的信息要被遗忘掉。</p>
+</blockquote>
+<p>首先，reset gate起作用，它将过去时间步的相关信息存储到新的记忆模块（memory content）中。 然后将输入向量和hidden state与它们的权值相乘。 接下来，它计算reset gate与先前hidden state倍数之间的元素级乘法。 总结以上步骤后，应用非线性激活函数，生成下一个序列。  </p>
+<p><br/></p>
+<h2 id="七、GRU和LSTM"><a href="#七、GRU和LSTM" class="headerlink" title="七、GRU和LSTM"></a>七、GRU和LSTM</h2><p>GRU的张量运算较少;因此，他比LSTM训练得更快。不过对于两者来说，<strong>目前还没有明确的赢家</strong>。研究人员和工程师通常会同时尝试两种方法，以确定哪种方法更适合他们的用例。</p>
+<p>关于两者的更详细介绍，可以参考下面的博客：</p>
+<p><a target="_blank" rel="noopener" href="https://analyticsindiamag.com/lstm-vs-gru-in-recurrent-neural-network-a-comparative-study/">LSTM Vs GRU in Recurrent Neural Network: A Comparative Study (analyticsindiamag.com)</a></p>
+<p><br/></p>
+<h2 id="八、其他参考文章"><a href="#八、其他参考文章" class="headerlink" title="八、其他参考文章"></a>八、其他参考文章</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/68552209/answer/329359882">(5 封私信 / 30 条消息) (新手向)能否简单易懂的介绍一下RNN(循环神经网络)？ - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/45289691">如何深度理解RNN？——看图就好！ - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76772734">从反向传播推导到梯度消失and爆炸的原因及解决方案（从DNN到RNN，内附详细反向传播公式推导） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30844905">一文搞懂RNN（循环神经网络）基础篇 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52036405">编码器-解码器网络：神经翻译模型详解 - 知乎 (zhihu.com)</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ChrisZhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" title="RNN基础介绍">http://example.com/2022/05/16/RNN基础介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/RNN/" rel="tag"># RNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Git和Github-2-Github的使用">
+      <i class="fa fa-chevron-left"></i> Git和Github-2-Github的使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">RNN介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81RNN%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">一、RNN介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81RNN%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">二、RNN的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">（1）激活函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">三、一个直观理解的实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89RNN%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">（1）RNN的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81LSTM%EF%BC%88%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">四、LSTM（长短期记忆）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text">（1）核心概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89Sigmoid"><span class="nav-number">5.2.</span> <span class="nav-text">（2）Sigmoid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89forget-gate"><span class="nav-number">5.3.</span> <span class="nav-text">（3）forget gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89input-gate"><span class="nav-number">5.4.</span> <span class="nav-text">（4）input gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89cell-state"><span class="nav-number">5.5.</span> <span class="nav-text">（5）cell state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89output-gate"><span class="nav-number">5.6.</span> <span class="nav-text">（6）output gate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81LSTM%E7%9A%84%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">五、LSTM的伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81GRU"><span class="nav-number">7.</span> <span class="nav-text">六、GRU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89Update-Gate"><span class="nav-number">7.1.</span> <span class="nav-text">（1）Update Gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89Reset-Gate"><span class="nav-number">7.2.</span> <span class="nav-text">（2）Reset Gate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81GRU%E5%92%8CLSTM"><span class="nav-number">8.</span> <span class="nav-text">七、GRU和LSTM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">9.</span> <span class="nav-text">八、其他参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChrisZhang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ChrisZhang</p>
+  <div class="site-description" itemprop="description">我的技美学习之路</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhlovesyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhlovesyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1596944152@qq.com" title="E-Mail → mailto:1596944152@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liang-dao-men" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank"><i class="fa fa-quora fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/people/liang-dao-men" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank">个人知乎</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/24361666" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;24361666" rel="noopener" target="_blank">个人bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Apr 30 2022 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChrisZhang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
