@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502163514571.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/TensorflowLearn/image-20220502163630699.png">
 <meta property="article:published_time" content="2022-05-01T04:15:25.000Z">
-<meta property="article:modified_time" content="2022-05-06T15:13:17.843Z">
+<meta property="article:modified_time" content="2022-05-16T14:32:55.781Z">
 <meta property="article:author" content="ChrisZhang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430153207313.png">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-06 23:13:17" itemprop="dateModified" datetime="2022-05-06T23:13:17+08:00">2022-05-06</time>
+                <time title="修改时间：2022-05-16 22:32:55" itemprop="dateModified" datetime="2022-05-16T22:32:55+08:00">2022-05-16</time>
               </span>
 
           
@@ -244,7 +244,7 @@
 <li>这里利用SSH来完成Github的绑定并提交文件.</li>
 </ul>
 <blockquote>
-<p>SSH（安全外壳协议，Secure Shell 的缩写）是建立在应用层基础上的安全协议。<strong>SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议，利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。</strong>简单来说，SSH就是保障你的账户安全，将你的数据加密压缩，不仅防止其他人截获你的数据，还能加快传输速度。如果想详细了解的话，可以看这篇文章：<a href="https://link.zhihu.com/?target=https%3A//blog.csdn.net/qq_35246620/article/details/54317740">详述 SSH 的原理及其应用 - CSDN</a></p>
+<p>SSH（安全外壳协议，Secure Shell 的缩写）是建立在应用层基础上的安全协议。<strong>SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议，利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。</strong>简单来说，SSH就是保障你的账户安全，将你的数据加密压缩，不仅防止其他人截获你的数据，还能加快传输速度。如果想详细了解的话，可以看这篇文章：<a href="https://link.zhihu.com/?target=https://blog.csdn.net/qq_35246620/article/details/54317740">详述 SSH 的原理及其应用 - CSDN</a></p>
 </blockquote>
 <h4 id="1-绑定Github"><a href="#1-绑定Github" class="headerlink" title="1.绑定Github"></a>1.绑定Github</h4><p>如果想要使用git上传文件,需要先利用SSH登录远程主机,<strong>登陆方式分为口令登录和公钥登录</strong>:</p>
 <ul>
@@ -252,7 +252,7 @@
 <li>公钥登录需要在Github上添加<strong>SSH key配置</strong>,这里采用第二种方式</li>
 </ul>
 <h5 id="1-检查本机是否安装了SSH"><a href="#1-检查本机是否安装了SSH" class="headerlink" title="(1)检查本机是否安装了SSH:"></a>(1)<strong>检查本机是否安装了SSH:</strong></h5><p>打开Git Bash,输入ssh查看结果:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430153207313.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430153207313.png"></p>
 <p>上图表示已经安装了SSH,接下来输入<code>ssh-keygen -t rsa</code>(注意空格),表示指定RSA算法生成密钥.按下回车后按照提示进行操作(<strong>比如说是否要覆盖掉之前的文件等</strong>).</p>
 <blockquote>
 <p>注:在Git当中,复制粘贴的快捷键是Ctrl+Insert和Shift+Insert,也可以通过鼠标右键复制.</p>
@@ -262,22 +262,23 @@
 </ul>
 <h5 id="2-将公钥id-rsa-pub的内容添加到Github"><a href="#2-将公钥id-rsa-pub的内容添加到Github" class="headerlink" title="(2)将公钥id_rsa.pub的内容添加到Github"></a>(2)将公钥id_rsa.pub的内容添加到Github</h5><p>(a)找到该文件,用记事本打开文件复制.如果找不到的话也可以用Git Bash直接打开.只需要输入以下指令:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh</span><br><span class="line">$ ls</span><br><span class="line">$ cat id_rsa.pub</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154016644.png" alt=""></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154016644.png"></p>
 <p>(b)接下来,利用Ctrl+Insert复制公钥内容,进入Github主页,单击右上角头像进入Settings界面.</p>
 <p>(c)选择<code>SSH and GPG keys</code>项,将公钥<code>id_rsa.pub</code>的内容粘贴到key当中,然后点击<code>Add SSH key</code>,如下图所示:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154631831.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154631831.png"></p>
 <p>(d)验证是否成功,可以在<code>Git Bash</code>用输入:</p>
 <p><code>ssh -T git@github.com</code>来进行检验.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154830022.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430154830022.png"></p>
 <p>(第一次执行上述步骤的话可能会出现一句提示:Are you sure you want to continue connecting?,在这里选择yes就可以,正常也会出现上图的成功情况)</p>
 <h4 id="2-提交文件"><a href="#2-提交文件" class="headerlink" title="2.提交文件"></a>2.提交文件</h4><p>这里可以参考关于Git操作的博客,总而言之提交文件有如下方式:</p>
 <blockquote>
-<p><strong>方式1:如果本地没有git仓库</strong><a href="# (1">实战</a>方式1实战)</p>
+<p><strong>方式1:如果本地没有git仓库</strong>[实战](# (1)方式1实战)</p>
 <ul>
 <li>1.clone远程仓库</li>
 <li>2.添加文件,commit并push到远程仓库.</li>
 </ul>
-<p><strong>方式2:如果本地已经有仓库,并且有commit操作:</strong><a href="# (2">实战</a>方法2实战)</p>
+<p><strong>方式2:如果本地已经有仓库,并且有commit操作:</strong>[实战](# (2)方法2实战)</p>
 <ul>
 <li>1.建立一个本地仓库并进入,init初始化</li>
 <li>2.关联远程仓库</li>
@@ -292,116 +293,139 @@
 <ul>
 <li><p><strong>测试环节:本地添加一个额外的文件test.txt</strong>,随便输入一些内容,然后在文件夹内打开<code>Git Bash</code>并输入<code>git status</code>查看状态:</p>
 <ul>
-<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160000536.png" alt=""></li>
+<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160000536.png"></li>
 </ul>
 </li>
 <li><p>这是因为我们新建的文件没有被追踪,接下来就是熟悉的Git操作了(不了解的话可以看参考文章),输入以下内容:</p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add test.txt</span><br><span class="line">git commit -m &quot;commit test file&quot;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p><strong>如果第一次提交的话会出现下述情况让输入用户名和邮箱,按参考文章步骤即可:</strong></p>
 <ul>
-<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160408252.png" alt=""></li>
+<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160408252.png"></li>
 </ul>
 </li>
 <li><p>完成后输入<code>git log</code>命令查看仓库提交日志</p>
 </li>
 <li><p>再输入一下<code>git status</code>查看仓库状态</p>
 <ul>
-<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160720826.png" alt=""></li>
+<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430160720826.png"></li>
 </ul>
 </li>
 <li><p>注意到此时远程主机的名字是mains,因此在这里使用push命令<code>git push origin mains</code>(<strong>一般没有特殊处理过的话这里应该是git push origin master</strong>)</p>
 </li>
 </ul>
 <p>(如果第一次上传的话需要输入密码,验证成功后即可,此时刷新远端仓库应该就可以看到上传成功了,如果出现错误的话参考下图的解决方案:)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430161945951.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430161945951.png"></p>
 <h5 id="2-方法2实战"><a href="#2-方法2实战" class="headerlink" title="(2)方法2实战"></a>(2)方法2实战</h5><ul>
-<li>首先,新建一个本地仓库demo,然后用<code>git init</code>初始化仓库.接下来输入<code>git remote add origin xxx.git</code>关联到远程仓库.</li>
+<li><p>首先,新建一个本地仓库demo,然后用<code>git init</code>初始化仓库.接下来输入<code>git remote add origin xxx.git</code>关联到远程仓库.</p>
+</li>
 <li><p>输入<code>git pull origin mains(没有改过就是master)</code>,同步远程仓库和本地仓库,如下:</p>
 <ul>
-<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430161654621.png" alt=""></li>
+<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430161654621.png"></li>
 </ul>
 </li>
-<li><p>此时回到本地仓库,会发现我们已经把远程仓库内容同步到了本地仓库,接下来就是基本同<a href="# (1">方法1</a>方法1实战),使用<code>git add,git commit和git push origin master</code>命令,将本地仓库修改或添加的内容提交到远程仓库了.</p>
+<li><p>此时回到本地仓库,会发现我们已经把远程仓库内容同步到了本地仓库,接下来就是基本同[方法1](# (1)方法1实战),使用<code>git add,git commit和git push origin master</code>命令,将本地仓库修改或添加的内容提交到远程仓库了.</p>
 </li>
 </ul>
 <h3 id="四-购买域名-这一步可以跳过"><a href="#四-购买域名-这一步可以跳过" class="headerlink" title="四.购买域名(这一步可以跳过)"></a>四.购买域名(这一步可以跳过)</h3><h3 id="五-安装node-js和Hexo"><a href="#五-安装node-js和Hexo" class="headerlink" title="五.安装node.js和Hexo"></a>五.安装node.js和Hexo</h3><h4 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1.安装node.js"></a>1.安装node.js</h4><p>下载网站如下:</p>
 <p><a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js (nodejs.org)</a></p>
 <p>选择LTS版本进行安装(中间出现了需要打勾的地方可以选择打勾),安装之后可以打开cmd,输入下述指令检查版本(如果未能识别相关指令,<strong>注意看是否是由于没有配置环境变量导致的</strong>):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
 <p>过程当中可能需要配置一些与环境变量相关的内容,可以参考文章(<strong>建议阅读一下,否则可能会出现一些安装上的问题</strong>):<a target="_blank" rel="noopener" href="https://blog.csdn.net/antma/article/details/86104068">(11条消息) node.js 安装详细步骤教程_程序员老油条的博客-CSDN博客_node.js</a></p>
 <p>(1)安装完nodejs并配置好环境变量之后,在安装的文件夹当中新建两个文件夹<code>node_cache</code>和<code>node_global</code>用来解决占用C盘的问题.</p>
 <p><strong>注意,需要右键设置文件属性,将用户具有完全属性的权限,否则后续安装可能会出错.</strong></p>
 <p>(2)打开cmd,输入下述指令:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set prefix &quot;D:nodejsnew\node_global&quot;</span><br><span class="line">npm config set cache &quot;D:nodejsnew\node_cache&quot;</span><br></pre></td></tr></table></figure>
+
 <p>(要灵活根据自己的文件夹的路径进行修改)</p>
 <p>(3)新建系统环境变量NODE_PATH,值为以下路径(<strong>注意,这一步要编辑系统变量,不是用户环境变量</strong>):</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164048730.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164048730.png"></p>
 <p>(4)<strong>编辑用户环境变量path,将其中对应的npm路径改为node_global的路径,如下</strong>:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164335520.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164335520.png"></p>
 <p>修改之后,进行测试:</p>
 <p>(5)在cmd命令下执行<code>npm install webpack -g</code></p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164848682.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430164848682.png"></p>
 <p>注意,<strong>如果有很多错误信息则可能是因为文件夹给的权限不够高,此时需要修改权限为完全控制</strong></p>
 <h4 id="2-安装Hexo"><a href="#2-安装Hexo" class="headerlink" title="2.安装Hexo"></a>2.安装Hexo</h4><p>在安装Hexo之前,需要在Github上先创立一个仓库(<strong>注意,该仓库要是Public,并且该仓库要以.github.io结尾</strong>,名字是用户名).</p>
 <h5 id="1-安装Hexo"><a href="#1-安装Hexo" class="headerlink" title="(1)安装Hexo"></a>(1)安装Hexo</h5><p>(a)首先,在本机上新建一个文件夹Blog,右键打开<code>Git Bash</code>,输入npm指令安装Hexo:</p>
-<p><code>npm install -g hexo-cli</code></p>
+<p><code> npm install -g hexo-cli</code></p>
 <p>(b)安装完成后,输入<code>hexo init</code>命令初始化博客;</p>
 <p>(c)接下来,输入<code>hexo g</code>静态部署;</p>
 <p>(d)此时网页应该已经部署完成,输入<code>hexo s</code>命令可以查看:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430165839224.png" alt=""></p>
-<p>浏览器输入对应的网址((<a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>))</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430165839224.png"></p>
+<p>浏览器输入对应的网址((<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>))</p>
 <p>即可打开新部署的网页.效果如下(<strong>注意此时需要保持服务器的开启状态</strong>):</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430165943730.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430165943730.png"></p>
 <p>此时按下Ctrl+C即可停止运行服务器.</p>
 <h5 id="2-将Hexo部署到Github"><a href="#2-将Hexo部署到Github" class="headerlink" title="(2)将Hexo部署到Github"></a>(2)将Hexo部署到Github</h5><p>回到Blog文件夹,用记事本打开<code>_config.yml</code>文件,下滑到最底部,添加如下内容:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/hhlovesyy/hhlovesyy.github.io.git  #你的仓库地址</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
 <p>(注意命令中空格不要忘记)</p>
 <h5 id="3-安装Git部署插件-重要"><a href="#3-安装Git部署插件-重要" class="headerlink" title="(3)安装Git部署插件(重要!)"></a>(3)安装Git部署插件(重要!)</h5><p>回到Blog文件夹并打开<code>Git Bash</code>,此时通过以下命令安装Git部署插件:</p>
 <p><code>npm install hexo-deployer-git --save</code></p>
 <p>接下来分别输入三条命令(<strong>每次更新博客的内容都要记得输入这个相关的内容</strong>):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean   #清除缓存文件 db.json 和已生成的静态文件 public</span><br><span class="line">hexo g       #生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)</span><br><span class="line">hexo d       #自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</span><br></pre></td></tr></table></figure>
-<h5 id="4-查看部署的结果"><a href="#4-查看部署的结果" class="headerlink" title="(4)查看部署的结果"></a>(4)查看部署的结果</h5><p>打开浏览器,输入((<a target="_blank" rel="noopener" href="http://xxx.github.io">http://xxx.github.io</a>))</p>
+
+
+
+<h5 id="4-查看部署的结果"><a href="#4-查看部署的结果" class="headerlink" title="(4)查看部署的结果"></a>(4)查看部署的结果</h5><p>打开浏览器,输入((<a target="_blank" rel="noopener" href="http://xxx.github.io/">http://xxx.github.io</a>))</p>
 <p>即可尝试访问(xxx为仓库前面的前缀,比如我是hhlovesyy),注意在输入网址测试的时候可能要保持服务器开启(<strong>在这里我输入的是hexo s开启服务器</strong>,不过经过后面的尝试实际上不开启也是可以的)</p>
 <p>效果如下:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430175352262.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430175352262.png"></p>
 <h3 id="六-设置next主题"><a href="#六-设置next主题" class="headerlink" title="六.设置next主题"></a>六.设置next主题</h3><p>目前来说虽然博客有界面了,但是并不美观,因此这里我们相对其进行美化.</p>
 <p>这里使用的是next来更改设置,步骤如下:</p>
 <p>(1)大概博客根目录Blog,右键<code>Git Bash</code>,输入如下内容将next主题下载到<code>Blog/themes</code>:</p>
 <p><code>git clone https://github.com/theme-next/hexo-theme-next themes/next</code></p>
 <p>此时下载后的地址如下:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430175928617.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430175928617.png"></p>
 <p>打开根目录下的_config.yml(称为<strong>站点配置文件</strong>)，修改主题（<strong>注意冒号后都要有空格</strong>）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: ChrisZhang  #标题</span><br><span class="line">subtitle: &#x27;&#x27;</span><br><span class="line">description: 我的技美学习之路     #简介或者格言</span><br><span class="line">keywords:</span><br><span class="line">author: ChrisZhang     #作者</span><br><span class="line">language: zh-CN     #主题语言</span><br><span class="line">timezone: Asia/Shanghai    #中国的时区</span><br><span class="line"></span><br><span class="line"># Extensions</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next   #主题改为next(不要忘了这个)</span><br></pre></td></tr></table></figure>
+
 <p><strong>不要忘了修改主题为next,否则部署会一直出现问题(因为没有改为next配置)</strong></p>
 <p>(2)修改主题,选择喜欢的主题(next主题有四种，如下图依次为Muse、Mist、Pisces、Gemini)</p>
-<p>比如选择Gemini,则打开目录Blog/themes/next/下的_config.yml（称为<strong>主题配置文件</strong>），只要将选的主题前的#删除就行了：</p>
+<p>比如选择Gemini,则打开目录Blog&#x2F;themes&#x2F;next&#x2F;下的_config.yml（称为<strong>主题配置文件</strong>），只要将选的主题前的#删除就行了：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: Muse</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">scheme: Gemini    #选择这个主题</span><br></pre></td></tr></table></figure>
+
+
+
 <p>(3)回到根目录,然后<code>Git Bash</code>,输入之前的那三条指令:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean   #清除缓存文件 db.json 和已生成的静态文件 public</span><br><span class="line">hexo g       #生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)</span><br><span class="line">hexo d       #自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</span><br></pre></td></tr></table></figure>
+
 <p><strong>此时再登录网站,查看是否可以看到更新之后的结果</strong>.</p>
 <p>如果不行的话,可以试一下作者的解决方案:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430180918640.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220430180918640.png"></p>
 <h3 id="七-额外的各种功能-根据喜好"><a href="#七-额外的各种功能-根据喜好" class="headerlink" title="七.额外的各种功能(根据喜好)"></a>七.额外的各种功能(根据喜好)</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106060640">个人博客第8篇——优化主题（持续更新） - 知乎 (zhihu.com)</a></p>
-<h4 id="1-设置菜单"><a href="#1-设置菜单" class="headerlink" title="1.设置菜单"></a>1.设置菜单</h4><p>打开配置文件themes/next下的_config.yml，查找menu，将前面的#删除就行了。</p>
+<h4 id="1-设置菜单"><a href="#1-设置菜单" class="headerlink" title="1.设置菜单"></a>1.设置菜单</h4><p>打开配置文件themes&#x2F;next下的_config.yml，查找menu，将前面的#删除就行了。</p>
 <p>结果如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home                      #首页</span><br><span class="line">  archives: /archives/ || archive      #归档</span><br><span class="line">  categories: /categories/ || th       #分类</span><br><span class="line">  tags: /tags/ || tags                 #标签</span><br><span class="line">  about: /about/ || user               #关于</span><br><span class="line">  resources: /resources/ || download   #资源</span><br><span class="line">  #schedule: /schedule/ || calendar    #日历</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap    #站点地图，供搜索引擎爬取</span><br><span class="line">  #commonweal: /404/ || heartbeat      #腾讯公益404</span><br></pre></td></tr></table></figure>
+
 <p>(注:新版可能变成类似于<code>fafa-home</code>这种,其他的不用担心)</p>
-<p>“||”前面的是目标链接，后面的是图标名称，next使用的图标全是<a href="https://link.zhihu.com/?target=http%3A//www.fontawesome.com.cn/faicons/%23web-application">图标库 - Font Awesome 中文网</a>这一网站的，有想用的图标直接在font awesome上面找图标的名称就行。resources是自己后面添加的,如果有其他的需求也可以对应添加.</p>
-<p><strong>新添加的菜单需要翻译中文,因此打开theme/next/languages/zh-CN.yml,在menu下把对应的中文放进去</strong></p>
+<p>“||”前面的是目标链接，后面的是图标名称，next使用的图标全是<a href="https://link.zhihu.com/?target=http://www.fontawesome.com.cn/faicons/%23web-application">图标库 - Font Awesome 中文网</a>这一网站的，有想用的图标直接在font awesome上面找图标的名称就行。resources是自己后面添加的,如果有其他的需求也可以对应添加.</p>
+<p><strong>新添加的菜单需要翻译中文,因此打开theme&#x2F;next&#x2F;languages&#x2F;zh-CN.yml,在menu下把对应的中文放进去</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: 首页</span><br><span class="line">  archives: 归档</span><br><span class="line">  categories: 分类</span><br><span class="line">  tags: 标签</span><br><span class="line">  about: 关于</span><br><span class="line">  resources: 资源</span><br><span class="line">  search: 搜索</span><br></pre></td></tr></table></figure>
+
+
+
 <p>然后在根目录下打开<code>Git Bash</code>,输入如下代码:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;categories&quot;</span><br><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo new page &quot;resources&quot;</span><br></pre></td></tr></table></figure>
+
 <p>此时可以看到blog文件夹下的source文件夹中会生成上面的几个文件夹,每个对应的文件夹里面有一个<code>index.md</code>文件,修改内容如下(<strong>注意:要删掉原来所有的内容,加入下面的部分,不要保留一些typora的格式否则会自带一些编辑状态才能看到的内容,会导致网页生成错误</strong>):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line">date: 2022-04-30 22:07:08</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line">date: 2022-04-30 22:07:08</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: 关于</span><br><span class="line">date: 2022-04-30 22:07:08</span><br><span class="line">type: &quot;about&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: 资源</span><br><span class="line">date: 2022-04-30 22:07:08</span><br><span class="line">type: &quot;resources&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
 <p>注：如果有启用评论，默认页面带有评论。需要关闭的话，添加字段comments并将值设置为false。</p>
-<h4 id="2-设置建站时间"><a href="#2-设置建站时间" class="headerlink" title="2.设置建站时间"></a>2.设置建站时间</h4><p>打开主题配置文件即themes/next下的_config.yml，查找since：</p>
+<h4 id="2-设置建站时间"><a href="#2-设置建站时间" class="headerlink" title="2.设置建站时间"></a>2.设置建站时间</h4><p>打开主题配置文件即themes&#x2F;next下的_config.yml，查找since：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">footer:</span><br><span class="line">  # Specify the date when the site was setup. If not defined, current year will be used.</span><br><span class="line">  since: 2022-04-30   #建站时间</span><br></pre></td></tr></table></figure>
-<h4 id="3-设置头像"><a href="#3-设置头像" class="headerlink" title="3.设置头像"></a>3.设置头像</h4><p>打开主题配置文件即themes/next下的_config.yml，查找avatar，url后是图片的链接地址：</p>
+
+
+
+<h4 id="3-设置头像"><a href="#3-设置头像" class="headerlink" title="3.设置头像"></a>3.设置头像</h4><p>打开主题配置文件即themes&#x2F;next下的_config.yml，查找avatar，url后是图片的链接地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: /images/avatar.gif   #图片的位置，也可以是http://xxx.com/avatar.png</span><br><span class="line">  # If true, the avatar will be dispalyed in circle.</span><br><span class="line">  rounded: true   #头像展示在圈里</span><br><span class="line">  # If true, the avatar will be rotated with the cursor.</span><br><span class="line">  rotated: false  #头像随光标旋转</span><br></pre></td></tr></table></figure>
-<p>然后将你要的头像图片复制到themes/next/source/images里，重命名为avatar.png。</p>
+
+<p>然后将你要的头像图片复制到themes&#x2F;next&#x2F;source&#x2F;images里，重命名为avatar.png。</p>
 <h4 id="4-网站图标设置"><a href="#4-网站图标设置" class="headerlink" title="4.网站图标设置"></a>4.网站图标设置</h4><p>暂未进行设置</p>
 <h4 id="5-设置动态背景"><a href="#5-设置动态背景" class="headerlink" title="5.设置动态背景"></a>5.设置动态背景</h4><ul>
 <li>这一条目前没有很大的需求(希望个人的博客可以保持简约直白的风格),因此这里不做处理</li>
@@ -412,21 +436,36 @@
 <h4 id="8-添加顶部加载条"><a href="#8-添加顶部加载条" class="headerlink" title="8.添加顶部加载条"></a>8.添加顶部加载条</h4><p>暂无需求</p>
 <h4 id="9-设置预览摘要"><a href="#9-设置预览摘要" class="headerlink" title="9.设置预览摘要"></a>9.设置预览摘要</h4><p>next（v7.7.1）已经没有如下代码：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
 <p>所以不需要设置，只要我们在文章中插入 <code>&lt;!-- more --&gt;</code>，该标签之上的是摘要，之后的内容不可见，需点击全文阅读按钮：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="10-设置侧边栏显示效果"><a href="#10-设置侧边栏显示效果" class="headerlink" title="10.设置侧边栏显示效果"></a>10.设置侧边栏显示效果</h4><p>打开<strong>主题配置文件</strong>即themes/next下的_config.yml，找到Sidebar Settings，设置：</p>
+
+
+
+<h4 id="10-设置侧边栏显示效果"><a href="#10-设置侧边栏显示效果" class="headerlink" title="10.设置侧边栏显示效果"></a>10.设置侧边栏显示效果</h4><p>打开<strong>主题配置文件</strong>即themes&#x2F;next下的_config.yml，找到Sidebar Settings，设置：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">  # Sidebar Position. #设置侧边栏位置</span><br><span class="line">  position: left</span><br><span class="line">  #position: right</span><br><span class="line"></span><br><span class="line">  #  - post    默认显示模式</span><br><span class="line">  #  - always  一直显示</span><br><span class="line">  #  - hide    初始隐藏</span><br><span class="line">  #  - remove  移除侧边栏</span><br><span class="line">  display: post</span><br></pre></td></tr></table></figure>
+
+
+
 <h4 id="11-侧边栏推荐阅读"><a href="#11-侧边栏推荐阅读" class="headerlink" title="11.侧边栏推荐阅读"></a>11.侧边栏推荐阅读</h4><p>这里可以放置一些自己在其他平台所写的文章(比如知乎,bilibili等)</p>
-<p>打开<strong>主题配置文件</strong>即themes/next下的_config.yml，搜索links（里面写你想要的链接）：</p>
+<p>打开<strong>主题配置文件</strong>即themes&#x2F;next下的_config.yml，搜索links（里面写你想要的链接）：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">links_settings:</span><br><span class="line">  icon: link</span><br><span class="line">  title: 链接网站  #修改名称</span><br><span class="line"></span><br><span class="line">links:</span><br><span class="line">  #Title: http://yoursite.com</span><br><span class="line">  百度: https://baidu.com</span><br></pre></td></tr></table></figure>
+
+
+
 <h4 id="12-添加社交链接"><a href="#12-添加社交链接" class="headerlink" title="12.添加社交链接"></a>12.添加社交链接</h4><p>同样也是打开主题配置文件,搜索social,添加个人常使用的社交平台.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">social:</span><br><span class="line">  GitHub: https://github.com/hhlovesyy || fab fa-github</span><br><span class="line">  E-Mail: mailto:1596944152@qq.com || fa fa-envelope</span><br><span class="line">  知乎: https://www.zhihu.com/people/liang-dao-men || fa fa-quora</span><br></pre></td></tr></table></figure>
+
 <p>设置完11,12两个步骤之后,就可以在<code>资源</code>一栏的<code>站点概览</code>中浏览到个人相关的链接了.</p>
 <h4 id="13-设置博文内的链接为蓝色"><a href="#13-设置博文内的链接为蓝色" class="headerlink" title="13.设置博文内的链接为蓝色"></a>13.设置博文内的链接为蓝色</h4><p>打开<code>themes/next/source/css/_common/components/post/post.styl</code>文件，将下面的代码复制到文件最后：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">     color: #0593d3;</span><br><span class="line">     border-bottom: none;</span><br><span class="line">     &amp;:hover &#123;</span><br><span class="line">       color: #0477ab;</span><br><span class="line">       text-decoration: underline;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <p>到这里可以重新部署一下,看看效果怎么样.</p>
 <h4 id="14-设置图床"><a href="#14-设置图床" class="headerlink" title="14.设置图床"></a>14.设置图床</h4><p>这里有一篇很适合阅读的图床搭建教程：</p>
 <p><a target="_blank" rel="noopener" href="https://www.itbob.cn/article/005/">Github + jsDelivr + PicGo 打造稳定快速、高效免费图床 | ITBOB’S BLOG</a></p>
+<p>（注意，isDelivr容易出现不显示图片的情况，此时建议备份每一篇博客，比如导成pdf格式的）</p>
 <p>按照上面的博客，PicGo设置如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/ITRHX-PIC/image-20220501204637601.png" alt="image-20220501204637601"></p>
 <p>在设置完图床之后，为了方便起见最好把Typora编辑器和PicGo软件进行绑定，步骤如下：</p>
