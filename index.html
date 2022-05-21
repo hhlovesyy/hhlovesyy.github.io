@@ -167,6 +167,166 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/Unity-%E6%B8%B8%E6%88%8F%E5%B8%B8%E7%94%A8UI%E8%84%9A%E6%9C%AC%E8%AE%BE%E8%AE%A1-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/21/Unity-%E6%B8%B8%E6%88%8F%E5%B8%B8%E7%94%A8UI%E8%84%9A%E6%9C%AC%E8%AE%BE%E8%AE%A1-1/" class="post-title-link" itemprop="url">Unity-游戏常用UI脚本设计(1)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-21 21:15:15 / 修改时间：21:16:34" itemprop="dateCreated datePublished" datetime="2022-05-21T21:15:15+08:00">2022-05-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/UI/" itemprop="url" rel="index"><span itemprop="name">UI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="游戏常用UI及脚本设计"><a href="#游戏常用UI及脚本设计" class="headerlink" title="游戏常用UI及脚本设计"></a>游戏常用UI及脚本设计</h2><p>注:本文为每个功能单独设计脚本来处理,真正开发的过程当中可以根据实际需要来进行整合.同时为了方便起见我们没有考虑多线程的情况.</p>
+<ul>
+<li>如果UI选择图片的时候找不到,<strong>注意看一下图片是否已经设置成了Sprite(2D and UI)</strong></li>
+</ul>
+<h1 id="一-基础功能"><a href="#一-基础功能" class="headerlink" title="一.基础功能"></a>一.基础功能</h1><h2 id="1-开始游戏按钮"><a href="#1-开始游戏按钮" class="headerlink" title="1.开始游戏按钮"></a>1.开始游戏按钮</h2><p>界面如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220504095600525.png" alt="image-20220504095600525"></p>
+<p>其中按钮往往要绑定跳转下一个场景的监听事件,该监听事件代码如下:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.SceneManagement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">JumpToScene</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">JumpToAScene</span>(<span class="params"><span class="built_in">string</span> sceneName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        SceneManager.LoadScene(sceneName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在场景中新建一个空物体GameManager并挂载上述脚本,此时在按钮的绑定事件当中指定GameManager中的JumpToAScene函数,传入正式开始游戏的场景名即可.(这里也是可以用int作为参数的,传入数值是场景的index编号).</p>
+<ul>
+<li><strong>请注意,跳转场景之前需要在build settings当中把场景放进去</strong></li>
+</ul>
+<h2 id="2-简易音量调节和开关功能"><a href="#2-简易音量调节和开关功能" class="headerlink" title="2.简易音量调节和开关功能"></a>2.简易音量调节和开关功能</h2><p>首先是音量调节开关本身的UI设计.</p>
+<h3 id="1-UI设计"><a href="#1-UI设计" class="headerlink" title="(1)UI设计"></a>(1)UI设计</h3><p>其中,音量开关采用Toggle组件,而调节音量大小的滑动条则使用Slider来设计,另外最好显示一下当前音量的大小(以数值形式)</p>
+<p>示例界面如下:</p>
+<p><img src="D:/blog/source/_posts/Unity-%E6%B8%B8%E6%88%8F%E5%B8%B8%E7%94%A8UI%E8%84%9A%E6%9C%AC%E8%AE%BE%E8%AE%A1-1.assets/image-20220504101313080.png" alt="image-20220504101313080"></p>
+<p>在场景当中放置一个物体,然后为其绑定一段音频:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504103056183.png" alt="image-20220504103056183"></p>
+<p>确保其音频范围是可以听到的.</p>
+<h3 id="2-脚本编写"><a href="#2-脚本编写" class="headerlink" title="(2)脚本编写"></a>(2)脚本编写</h3><p>目前来说,需要有一个AudioManager类来管理音频播放的问题,脚本书写如下:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.UI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AudioManager</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> AudioSource bgmAudio; <span class="comment">//存储音频对象</span></span><br><span class="line">    <span class="keyword">public</span> Slider volumeSlider;</span><br><span class="line">    <span class="keyword">public</span> Text volumeText; <span class="comment">//显示音频大小</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        bgmAudio.volume = volumeSlider.<span class="keyword">value</span>;</span><br><span class="line">        <span class="built_in">int</span> volumeValue = (<span class="built_in">int</span>)(volumeSlider.<span class="keyword">value</span>*<span class="number">100</span>);</span><br><span class="line">        volumeText.text = volumeValue.ToString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为Slider的范围是0-1,而音量大小的范围也是0-1,因此两者可以直接进行赋值.而对于音量显示来说,其音量值大小为0-100,所以Text上显示的内容为音量大小×100的结果.(目前还没有对Toggle按钮进行处理)</p>
+<h4 id="利用监听事件来控制音量-采用这种"><a href="#利用监听事件来控制音量-采用这种" class="headerlink" title="利用监听事件来控制音量(采用这种)"></a>利用监听事件来控制音量(采用这种)</h4><p>另外,也可以通过监听事件来控制音量的调节,这种实现思路可能更加符合UI的使用习惯.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.UI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AudioManager</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> AudioSource bgmAudio; <span class="comment">//存储音频对象</span></span><br><span class="line">    <span class="keyword">public</span> Slider volumeSlider; <span class="comment">//存储音频滑块</span></span><br><span class="line">    <span class="keyword">public</span> Text volumeText; <span class="comment">//显示音频大小的文本</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">float</span> volumeValue; <span class="comment">//存储音频的音量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isAudioOpen; <span class="comment">//存储当前的音乐是否处于开启状态</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//设定游戏刚开始的音量与音频自身保持一致</span></span><br><span class="line">        volumeValue = bgmAudio.volume;</span><br><span class="line">        <span class="built_in">int</span> tempVolumeValue = (<span class="built_in">int</span>)(volumeSlider.<span class="keyword">value</span> * <span class="number">100</span>); <span class="comment">//让标签显示的值的大小</span></span><br><span class="line">        volumeText.text = tempVolumeValue.ToString();</span><br><span class="line">        volumeSlider.<span class="keyword">value</span>= bgmAudio.volume;</span><br><span class="line">        isAudioOpen = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChangeVolume</span>(<span class="params"><span class="built_in">float</span> volume</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        volumeValue = volume;</span><br><span class="line">        <span class="built_in">int</span> tempVolumeValue = (<span class="built_in">int</span>)(volumeSlider.<span class="keyword">value</span> * <span class="number">100</span>); <span class="comment">//让标签显示的值的大小</span></span><br><span class="line">        volumeText.text = tempVolumeValue.ToString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isAudioOpen == <span class="literal">false</span>) <span class="comment">//注意,这里要解决当玩家未勾选开启音乐,但是又拖动滑动条的问题</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        bgmAudio.volume = volume;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OpenOrCloseVolume</span>(<span class="params"><span class="built_in">bool</span> isopen</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        isAudioOpen = isopen;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isopen == <span class="literal">true</span>)</span><br><span class="line">            bgmAudio.volume = volumeValue;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            bgmAudio.volume = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里要给各个UI组件绑定监听函数,经过测试应该是可行的.</p>
+<h2 id="3-暂停-继续游戏和重新开始按钮"><a href="#3-暂停-继续游戏和重新开始按钮" class="headerlink" title="3.暂停,继续游戏和重新开始按钮"></a>3.暂停,继续游戏和重新开始按钮</h2><p>在制作游戏的时候,玩家往往希望有暂停和继续游戏的效果.即便是这款游戏是网络对战类游戏,玩家在未开始联网对战前也很大概率有暂停的需求.这里我们用按钮来模拟效果.</p>
+<p>首先搭建基础UI界面(<strong>这里偷懒用上锁图片表示暂停按钮,从左到右依次为暂停,继续和重新开始</strong>):</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504112610244.png" alt="image-20220504112610244"></p>
+<p>为图片添加一个Button组件.</p>
+<h3 id="1-脚本编写"><a href="#1-脚本编写" class="headerlink" title="(1)脚本编写"></a>(1)脚本编写</h3><p>我们希望能够点击该按钮实现暂停,再次点击实现播放功能,并且在暂停的时候可以更换图标的贴图.此时需要为暂停按钮绑定监听,所涉及到的脚本书写如下(注意此时场景中只需要保存暂停按钮就可以,继续游戏的按钮可以删掉了):</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.SceneManagement;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.UI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PauseContinueRestart</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> GameObject pausePanel;<span class="comment">//按下暂停键之后的弹出窗口,有需求再开启这段代码</span></span><br><span class="line">    <span class="built_in">bool</span> gameState; <span class="comment">//游戏状态,true表示进行中,false表示暂停</span></span><br><span class="line">    <span class="keyword">public</span> Sprite pauseIcon; <span class="comment">// 暂停按钮的图片</span></span><br><span class="line">    <span class="keyword">public</span> Sprite continueIcon; <span class="comment">// 继续游戏按钮的图片</span></span><br><span class="line">    <span class="keyword">public</span> GameObject pauseContinueButton;<span class="comment">//要更换材质的按钮</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gameState = <span class="literal">true</span>;</span><br><span class="line">        pauseContinueButton.gameObject.GetComponent&lt;Image&gt;().sprite = pauseIcon;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnPauseOrContinue</span>() <span class="comment">//按下暂停按钮的时候</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        gameState = !gameState;</span><br><span class="line">        <span class="keyword">if</span>(gameState==<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            pauseContinueButton.gameObject.GetComponent&lt;Image&gt;().sprite = pauseIcon;</span><br><span class="line">            Time.timeScale = <span class="number">1f</span>;</span><br><span class="line">            pausePanel.SetActive(<span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            pauseContinueButton.gameObject.GetComponent&lt;Image&gt;().sprite = continueIcon;</span><br><span class="line">            Time.timeScale = <span class="number">0</span>;</span><br><span class="line">            pausePanel.SetActive(<span class="literal">true</span>);</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnRestart</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        SceneManager.LoadScene(<span class="string">&quot;StartContent&quot;</span>); <span class="comment">//这里传入参数是场景名</span></span><br><span class="line">        pauseContinueButton.gameObject.GetComponent&lt;Image&gt;().sprite = pauseIcon;</span><br><span class="line">        Time.timeScale = <span class="number">1f</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意,暂时有几个问题未解决,后面有机会会进行补充:</p>
+<ul>
+<li>1.在暂停的时候,音乐是继续播放的,如果有需要可以让音乐也暂停播放(不过暂时没有相关需求)</li>
+<li>2.重新开始之后,原本场景中的物体的光照效果可能会出现一些问题(<strong>这个具体在应用中如果遇到再处理</strong>)</li>
+</ul>
+<h2 id="4-退出游戏"><a href="#4-退出游戏" class="headerlink" title="4.退出游戏"></a>4.退出游戏</h2><ul>
+<li>理论上,退出游戏需要有一个弹窗使玩家确定是否真的要退出游戏,在这里我们也封装了这个功能.</li>
+</ul>
+<p>(<strong>提示,由于退出按钮一般在游戏的左上角,因此最好重新设置一下锚点,使其锚点设置为左上角.</strong>)</p>
+<p>关于询问是否退出的界面如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504122333586.png" alt="image-20220504122333586"></p>
+<p>这里有一个技巧,关于右上角的X,<strong>在某些时候可以直接绑定一个现有的监听事件,而不需要自己写一个</strong>,绑定的监听事件如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504122505389.png" alt="image-20220504122505389"></p>
+<p>不过在本项目当中,我们还是使用手写函数监听的方式来解决关闭窗口问题(因为我们需要保存窗口的开启状态)</p>
+<h3 id="1-脚本编写-1"><a href="#1-脚本编写-1" class="headerlink" title="(1)脚本编写"></a>(1)脚本编写</h3><p>在GameManager节点下新建一个脚本,用来处理点击退出按钮等事件:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ExitGame</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isOpenExitPanel; <span class="comment">//关闭确认界面是否开启</span></span><br><span class="line">    <span class="keyword">public</span> GameObject exitPanel;  <span class="comment">//关闭确认界面,如果玩家点击退出游戏会弹出这个窗口</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        isOpenExitPanel = <span class="literal">false</span>;</span><br><span class="line">        exitPanel.gameObject.SetActive(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(Input.GetKeyDown(KeyCode.Escape)) <span class="comment">//如果玩家按下ESC弹出确认退出界面(当然可以修改,比如弹出别的菜单)</span></span><br><span class="line">        &#123;</span><br><span class="line">            exitPanel.gameObject.SetActive(<span class="literal">true</span>);</span><br><span class="line">            <span class="keyword">if</span> (isOpenExitPanel == <span class="literal">true</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                ClosePanel();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">                </span><br><span class="line">            isOpenExitPanel = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PressQuitGame</span>() <span class="comment">//这个与退出按钮绑定,按下按钮触发这个</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        isOpenExitPanel = <span class="literal">true</span>;</span><br><span class="line">        exitPanel.gameObject.SetActive(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ClosePanel</span>() <span class="comment">//这个是点击右上角的×号</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        isOpenExitPanel = <span class="literal">false</span>;</span><br><span class="line">        exitPanel.gameObject.SetActive(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChooseYes</span>() <span class="comment">//这个是玩家真的确认退出了,ChooseNo的情况与ClosePanel一致,就不再写了</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//预处理</span></span><br><span class="line">        <span class="meta">#<span class="keyword">if</span> UNITY_EDITOR    //在编辑器模式下</span></span><br><span class="line">            EditorApplication.isPlaying = <span class="literal">false</span>;</span><br><span class="line">        <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">            Application.Quit();</span><br><span class="line">        <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-游戏倍速调整"><a href="#5-游戏倍速调整" class="headerlink" title="5.游戏倍速调整"></a>5.游戏倍速调整</h2><p>暂无需求,后续项目有需要或者时间允许的条件下会更新.</p>
+<h2 id="6-关于游戏"><a href="#6-关于游戏" class="headerlink" title="6.关于游戏"></a>6.关于游戏</h2><p>这里有一些常用的小游戏的表现方式,比如放在主菜单中的”关于我们”,或者是显示制作团队,游戏玩法之类的按钮,</p>
+<h1 id="二-复合功能"><a href="#二-复合功能" class="headerlink" title="二.复合功能"></a>二.复合功能</h1><h2 id="1-登陆注册界面"><a href="#1-登陆注册界面" class="headerlink" title="1.登陆注册界面"></a>1.登陆注册界面</h2><h2 id="2-游戏房间大厅设计"><a href="#2-游戏房间大厅设计" class="headerlink" title="2.游戏房间大厅设计"></a>2.游戏房间大厅设计</h2><p>最终设计结果如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504223219111.png" alt="image-20220504223219111"></p>
+<p>以及当玩家点击创建房间和加入房间的时候,会邀请其输入一个房间号(如果是创建房间,则由服务器生成一个房间号(这样做的目的是为了不冲突)).同时,左下角要给出加入&#x2F;创建按钮,右下角要给出退出按钮:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504224435011.png" alt="image-20220504224435011"></p>
+<p>具体对应创建还是加入房间,可以生成不同的UI,但整体的结构应该不会有较大变化.</p>
+<p>注:<strong>由于这是一个网络联机的项目,因此这里只给出函数接口,在接口当中的内容要根据游戏的实际需求来进行调整</strong>.</p>
+<h3 id="1-房间列表面板"><a href="#1-房间列表面板" class="headerlink" title="(1)房间列表面板"></a>(1)房间列表面板</h3><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504211134096.png" alt="image-20220504211134096"></p>
+<p>其中每一个块都是一个Panel,可以通过设置文本,按钮为各个Panel的子节点来制作上述的面板.</p>
+<p>对于房间列表当中的房间,要单独进行设计,<strong>这里就要用到Scroll View</strong>组件.</p>
+<h4 id="a-Scroll-View-UI组件"><a href="#a-Scroll-View-UI组件" class="headerlink" title="(a)Scroll View UI组件"></a>(a)Scroll View UI组件</h4><p>Scroll View是实现列表的最重要部件.**包含了名为Scroll Rect的组件,能够实现区域的滑动,还可以设置滑动的方向,绑定滑动条.**这里可以参考前面的博客对该组件的介绍.</p>
+<p>对于房间列表,其Scroll Rect组件的个属性设置如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504212301818.png" alt="image-20220504212301818"></p>
+<p>注意,这里面的Content中的Room是后面我们会填充到列表项中的内容,目前暂时先将其设定成空物体或者Panel即可.<strong>同时,如果新建Scroll View的话会自动为我们创建水平和垂直滚动条,如果没有特别修改的话应该是自动绑定好的</strong>,只需要修改Visibility的属性即可.</p>
+<h4 id="b-为Scroll-View的Content添加GridLayoutGroup组件和Content-Size-Filter组件"><a href="#b-为Scroll-View的Content添加GridLayoutGroup组件和Content-Size-Filter组件" class="headerlink" title="(b) 为Scroll View的Content添加GridLayoutGroup组件和Content Size Filter组件"></a>(b) 为Scroll View的Content添加GridLayoutGroup组件和Content Size Filter组件</h4><ul>
+<li>GridLayoutGroup会自动地去排列Content的子物体(也就是我们的room),其中Cell Size指定列表项尺寸;padding是与边框的间距,Spacing是列表项之间的间隔;</li>
+<li>Content Size Filter会自动调节Content尺寸;当列表项增多时,会自动增大Content,反之亦然.</li>
+</ul>
+<p>两个组件的设置如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504213205043.png" alt="image-20220504213205043"></p>
+<p>其中的一些参数可以在后续根据效果再进行调整.</p>
+<h4 id="c-列表项Room"><a href="#c-列表项Room" class="headerlink" title="(c)列表项Room"></a>(c)列表项Room</h4><p>只需要对每个列表项Room进行基本的布局就可以了:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504214248785.png" alt="image-20220504214248785"></p>
+<p>此时多复制一些Room列表项,会发现GridLayoutGroup会自动帮我们调节Content的子物体的位置和大小.</p>
+<p>可以看到自动排布的结果还是比较理想的:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504214655917.png" alt="image-20220504214655917"></p>
+<p><strong>将整个UI保存为预制体,以方便后续使用.</strong></p>
+<h3 id="2-房间面板预设"><a href="#2-房间面板预设" class="headerlink" title="(2)房间面板预设"></a>(2)房间面板预设</h3><p>玩家创建房间或者加入房间之后,会通过房间面板看到房间的详细信息.当然,面板还要包括”退出房间”和”开始战斗”两个按钮,同时我们希望能够看到一些基本的信息,<strong>比如当前房间里有哪些玩家,哪些玩家已经准备就绪等</strong>,如果是创建房间的房主玩家,则左下角会出现一个开战按钮,而对于加入其他房间的玩家来说,这个按钮可以是”准备”.(这个按钮的内容需要发生变化,比如玩家点击准备之后这个按钮应该变为”取消准备”,有一些细节后续要进行处理)</p>
+<ul>
+<li>同样,房间中的玩家列表要采用Scroll View,同时Content搭配GridLayoutGroup和Content Size Filter,最终展示界面如下:</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504222453403.png" alt="image-20220504222453403"></p>
+<h3 id="3-一个注意事项-关于Content无法水平扩展"><a href="#3-一个注意事项-关于Content无法水平扩展" class="headerlink" title="(3)一个注意事项(关于Content无法水平扩展)!"></a>(3)一个注意事项(关于Content无法水平扩展)!</h3><p>如果发现步骤与之前一样,但是Content无法完成很好地横向扩展(或者是竖向扩展),那么注意检查一下Content的Rect Transform当中的Left和Right数值是否是0(<strong>可能会由于不小心拖动或修改参数而导致问题,此时可以尝试这种解决方案</strong>)</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220504222632735.png" alt="image-20220504222632735"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/21/FCN%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -221,29 +381,35 @@
 <p>对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等.</p>
 <p>而FCN的好处就在于<strong>其可以让一个已经设计好的网络输入任意大小的图片</strong>.</p>
 </blockquote>
-<p><br/></p>
-<h2 id="1-CNN-和-FCN网络结构对比"><a href="#1-CNN-和-FCN网络结构对比" class="headerlink" title="1.CNN 和 FCN网络结构对比"></a>1.CNN 和 FCN网络结构对比</h2><h3 id="1-CNN"><a href="#1-CNN" class="headerlink" title="(1)CNN"></a>(1)CNN</h3><p>加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话架构应该如下:<br><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-d6573d143ccd7eac976605f6519f255b_r.jpg" alt="preview"></p>
+<br/>
+
+<h2 id="1-CNN-和-FCN网络结构对比"><a href="#1-CNN-和-FCN网络结构对比" class="headerlink" title="1.CNN 和 FCN网络结构对比"></a>1.CNN 和 FCN网络结构对比</h2><h3 id="1-CNN"><a href="#1-CNN" class="headerlink" title="(1)CNN"></a>(1)CNN</h3><p>加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话架构应该如下:
+<img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-d6573d143ccd7eac976605f6519f255b_r.jpg" alt="preview"></p>
 <blockquote>
 <p>假如输入的图像是14×14×3的彩色图像,则首先会经过5×5的卷积层,卷积层的输出通道数为16,于是可以得到10×10×16的一组特征图,接下来经过2×2的池化层,<strong>得到5×5×16的特征图</strong>,进行flatten展平操作后进入到两个50个神经元的全连接层,最后输出分类结果.</p>
 <p><strong>因为全连接层中输入层神经元数量固定,因此反推后卷积层的输入大小也要固定,这就不利于对不同尺寸的图片进行训练.</strong></p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="2-FCN"><a href="#2-FCN" class="headerlink" title="(2)FCN"></a>(2)FCN</h3><p>全卷积神经网络,<strong>也就是说该网络中全是卷积层连接,如下图:</strong></p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9c01766a9e070839ac10ff7bfdc083b1_r.jpg" alt="preview"></p>
 <p>前面的卷积,池化步骤与之前的CNN是相同的,但是FNN在flatten的时候,FCN将其换成了一个卷积核大小为5×5,输出通道为50的卷积层,之后的全连接层都换成了1×1的卷积层(<strong>1×1的卷积其实相当于全连接操作</strong>)</p>
-<p><br/></p>
+<br/>
+
 <h4 id="为什么1×1的卷积相当于全连接"><a href="#为什么1×1的卷积相当于全连接" class="headerlink" title="为什么1×1的卷积相当于全连接?"></a>为什么1×1的卷积相当于全连接?</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DKR6gyXmL6qAtRL9IQRlvg">CNN中神奇的1x1卷积 (qq.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/renhaofan/article/details/82721868">(12条消息) 1×1卷积_霜桥月馆的博客-CSDN博客_1×1卷积</a></p>
 <blockquote>
 <p>可以看到,FCN与CNN的区别在于FCN将CNN中的全连接层换成了卷积操作.换成全卷积操作后,由于没有了全连接层神经元数的限制,因此卷积层的输入可以接收不同尺寸的图像.</p>
 <p><strong>接下来的问题是,既然输入尺寸不一样,那么输出尺寸也不一样,如何理解?</strong></p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="2-FCN如何理解网络的输出"><a href="#2-FCN如何理解网络的输出" class="headerlink" title="2.FCN如何理解网络的输出?"></a>2.FCN如何理解网络的输出?</h2><h3 id="1-特征图尺寸变化"><a href="#1-特征图尺寸变化" class="headerlink" title="(1)特征图尺寸变化"></a>(1)特征图尺寸变化</h3><p>现在我们不考虑通道数,仅考虑上面网络中的特征图尺寸的变化,如下图(绿色为卷积核,橙色为特征图)</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9cc2766e812d23a24d58a7bbf84b277a_r.jpg" alt="preview"></p>
 <p>可以看到,输入是一张14×14大小的图片,经过5×5的卷积后(不做padding操作),得到10×10的特征图,然后进行2×2的池化后,尺寸缩小一半变为5×5的特征图,再经过5×5的卷积,特征图变为1×1,接下来就是进行两次1×1的卷积(<strong>也就是类似全连接操作</strong>),最终会得到一个1×1的输出结果.</p>
 <p>这个1×1的输出结果,就代表最前面14×14的图像区域的分类情况.如果对应到最开始的猫狗和背景的分类任务,则最后输出的结果应该是<strong>1×3的矩阵</strong>,其中每个值表示14×14的输入图片中对应类别的分类得分.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-不同尺寸的输入图片"><a href="#2-不同尺寸的输入图片" class="headerlink" title="(2)不同尺寸的输入图片"></a>(2)不同尺寸的输入图片</h3><p>现在假设我们输入了一张比较大的图片,则效果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9b31bf337601c58e4e26d213dc40fc69_r.jpg" alt="preview"></p>
 <p>可以看到,现在的输入尺寸是16×16,此时经过5×5卷积(不做padding操作),得到12×12的特征图,然后进入2×2池化,尺寸缩小为6×6的特征图,再通过5×5的卷积层,特征图大小变为2×2,接下来进行两次1×1的卷积(类似于全连接操作)后,最终得到2×2的输出结果.</p>
@@ -255,7 +421,8 @@
 <blockquote>
 <p>上图中最后输出2x2中左上角的橙色输出就代表了16x16中的橙色区域（红色框），依次类推，输出2x2中右上角的蓝色输出就代表了16x16中的黄色框区域，输出2x2中左下角的蓝色输出就代表了16x16中的黑色框区域，输出2x2中右下角的蓝色输出就代表了16x16中的紫色框区域，其中每个框的大小都是14x14.也就是说输出的每个值代表了输入图像中的一个区域的分类情况。</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="3-FCN如何对目标检测进行加速"><a href="#3-FCN如何对目标检测进行加速" class="headerlink" title="3.FCN如何对目标检测进行加速?"></a>3.FCN如何对目标检测进行加速?</h2><p>根据上面的图,我们可以看到FCN输出的每个值都对应输入图像的一个检测区域,也就是说FCN的输出直接反映出了对应输入图像检测区域的分类情况.</p>
 <p><strong>在之前的讨论中,我们没有讨论通道情况,如果将网络放到正常包含通道的28×28×3的图像上,考虑特征图的通道数,此时输出值的对应情况如下:</strong></p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9286164a9e70f3f9b2474676b78e2208_r.jpg" alt="preview"></p>
@@ -263,7 +430,8 @@
 <p>上图中绿色区域表现了依次通过网络后的特征图尺寸变化情况。跟2(2)的图类似，因为这是一个猫狗和背景的三分类任务，所以最后输出的图像大小为8x8x3，以输出图像左上角绿色点为例，该点深度为3，对应输入图像的绿色区域，该点的3个值反应了输入图的绿色区域是分类为猫狗还是背景的得分情况。(<strong>可以看到,最后的1×1卷积操作可以很好地控制通道数,简化运算</strong>)</p>
 </blockquote>
 <p>总的来说，FCN利用了输出结果和输入图像的对应关系，直接给出了输入图像相应区域的分类情况，取消了传统目标检测中的滑动窗口选取候选框。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="4-FCN的优缺点"><a href="#4-FCN的优缺点" class="headerlink" title="4.FCN的优缺点"></a>4.FCN的优缺点</h2><blockquote>
 <p>由于输出结果的每个值映射到输入图像上的感受野的窗口是固定的，也就是检测窗口是固定的，导致检测效果没那么好，但是速度却得到了很大的提升，而且可以输入任意尺寸的图片，为目标检测提供了一种新思路。</p>
 </blockquote>
@@ -353,7 +521,8 @@
 <p>当我们提到Apple的时候,有的时候是说苹果这种水果,有的时候则是指苹果公司;具体如何识别<strong>要结合具体的语义</strong>。</p>
 </blockquote>
 <p><strong>这种需要处理「序列数据 – 一串相互依赖的数据流」的场景就需要使用 RNN 来解决了。</strong>类似的还有比如音频处理，语言翻译，股票市场中的价格走势等领域。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="二、RNN的基本原理"><a href="#二、RNN的基本原理" class="headerlink" title="二、RNN的基本原理"></a>二、RNN的基本原理</h2><p>首先，以我们所熟悉的全连接神经网络为例：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515210543488.png" alt="image-20220515210543488"></p>
 <p>这个全连接网络由输入层-隐藏层-输出层所组成，如上图所示；</p>
@@ -363,34 +532,40 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Recurrent_neural_network_unfold.svg.png" alt="img"></p>
 <p>在上面的图当中，<strong>V指的是每个时间点之间的权重矩阵，可以看到，隐藏层h的值同时由上一时刻的隐藏层所决定。</strong></p>
 <p><strong>值得注意的是，在整个神经网络的训练过程中，每一时刻的V是一样的。</strong></p>
-<p><br/></p>
+<br/>
+
 <p>再以一个有一定历史的Elman network为例：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/Elman_srnn.png" alt="img"></p>
-<p>用公式表示类似如下（以下为Elman network的相关公式，仅为了方便说明）：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}h_t=\sigma_h(W_hx_t+U_hh_{t-1}+b_h) \\\\
-y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解方式，下图就可以体现出RNN的特点（图源在文章末尾链接中）</p>
+<p>用公式表示类似如下（以下为Elman network的相关公式，仅为了方便说明）：
+$$
+\begin{aligned}h_t&#x3D;\sigma_h(W_hx_t+U_hh_{t-1}+b_h) \\
+y_t&#x3D;\sigma_y(W_yh_t+b_y)\end{aligned}
+$$</p>
+<p>引用知乎上的一个理解方式，下图就可以体现出RNN的特点（图源在文章末尾链接中）</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-b45f69904d546edde41d9539e4c5548c_r.jpg" alt="preview"></p>
 <h3 id="（1）激活函数"><a href="#（1）激活函数" class="headerlink" title="（1）激活函数"></a>（1）激活函数</h3><p>采用tanh作为激活函数，这种函数的特点如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161027871-165269730228219.png" alt="image-20220516161027871"></p>
 <p>使用tanh作为激活函数可以有效避免某些参数呈现爆炸式的增长（因为再大的数经过激活函数之后都会被限制在-1到1之间）。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="三、一个直观理解的实例"><a href="#三、一个直观理解的实例" class="headerlink" title="三、一个直观理解的实例"></a>三、一个直观理解的实例</h2><p>假如现在我们想要判断用户的想法，则首先获取用户的输入并将其进行分词处理：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-fenci.gif" alt="对输入进行分词"></p>
 <p>接下来，按照序列顺序输入到RNN网络当中，可以看到前面的输出确实会对后面的输入有所影响：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-input-time.gif" alt="img"></p>
 <p>此时我们可以看到，当判断到最后一个序列的时候，前面的序列均对其产生了影响。</p>
-<p><br/></p>
+<br/>
+
 <h3 id="（1）RNN的问题"><a href="#（1）RNN的问题" class="headerlink" title="（1）RNN的问题"></a>（1）RNN的问题</h3><p>如果我们观察最后一个节点的颜色，会发现RNN存在短期记忆问题：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515212701880.png" alt="image-20220515212701880"></p>
 <p>不难发现，短期记忆的影响比较大，而随着输入序列的增长，前面处理的数据所占据的比例越来越小，可能会造成关键信息的缺失（比如这个案例当中的time可能就无法很好识别）</p>
 <p><strong>这就是在反向传播的过程当中梯度消失和梯度爆炸的情况(此时这部分权重就很少得到训练)，具体地推导过程可以参考如下博客：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
-<p><br/></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN&#x2F;LSTM&#x2F;GRU） - 知乎 (zhihu.com)</a></p>
+<br/>
+
 <h2 id="四、LSTM（长短期记忆）"><a href="#四、LSTM（长短期记忆）" class="headerlink" title="四、LSTM（长短期记忆）"></a>四、LSTM（长短期记忆）</h2><p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation | by Michael Phi | Towards Data Science</a></p>
-<p><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks — colah’s blog</a></p>
+<p><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks – colah’s blog</a></p>
 <p>在普通的RNN当中，越晚的输入影响越大，而越早地输入影响则越小，并且无法更改这个逻辑。</p>
 <p>而相对的，<strong>LSTM改变了这个逻辑，使用一套灵活的方案——只保留重要的信息。</strong></p>
 <p>首先来看一下LSTM的结构：</p>
@@ -410,7 +585,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li><p>门控系统是不同的神经网络，作用是决定哪些信息可以呈现在cell state当中。门控系统可以学习哪些知识是相关知识，从而学习如何保持或遗忘。</p>
 </li>
 </ul>
-<p><br/></p>
+<br/>
+
 <h3 id="（2）Sigmoid"><a href="#（2）Sigmoid" class="headerlink" title="（2）Sigmoid"></a>（2）Sigmoid</h3><p>门控系统以sigmoid作为激活函数。sigmoid函数类似于tanh，但其会限制输出范围为0到1。</p>
 <p>这样做的好处在于，<strong>可以很好地更新或者遗忘数据</strong>，这是因为：</p>
 <ul>
@@ -428,12 +604,14 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>output gate</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="（3）forget-gate"><a href="#（3）forget-gate" class="headerlink" title="（3）forget gate"></a>（3）forget gate</h3><blockquote>
 <p>这扇门决定了哪些信息应该丢弃，哪些信息应该保留。来自前一个隐藏状态(hidden state)的信息和来自当前输入的信息通过sigmoid函数传递。值在0和1之间。越接近0表示忘记，越接近1表示保留。</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163413093.png" alt="image-20220516163413093"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（4）input-gate"><a href="#（4）input-gate" class="headerlink" title="（4）input gate"></a>（4）input gate</h3><blockquote>
 <p>以下图为例，进行说明：</p>
 <ul>
@@ -443,12 +621,14 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </ul>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163708653.png" alt="image-20220516163708653"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（5）cell-state"><a href="#（5）cell-state" class="headerlink" title="（5）cell state"></a>（5）cell state</h3><blockquote>
 <p>到目前为止，已经有足够的信息去计算cell state了。首先，cell state会与forget vector逐点相乘。如果相乘的值接近于0则会被遗忘。接下来会把input gate出来的值与刚才的值进行一个相加处理，<strong>从而更新cell state到新的值</strong>。</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1.gif" alt="1"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（6）output-gate"><a href="#（6）output-gate" class="headerlink" title="（6）output gate"></a>（6）output gate</h3><blockquote>
 <p>这个output gate会决定下一个hidden state是什么样的。首先，我们把之前的hidden state和现在的输入放入一个sigmoid激活函数，然后会把新的cell state放入一个tanh函数（<strong>当然这里是复制一份，见下面的动图</strong>）。接下来我们会把tanh的输出结果与sigmoid的输出结果相乘，<strong>来决定hidden state应该保存什么内容</strong>。此时的输出就是hidden state的状态，走下面的那条管道，用来对下个步骤做出贡献。</p>
 </blockquote>
@@ -463,8 +643,10 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>The output gate determines what the next hidden state should be.</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="五、LSTM的伪代码"><a href="#五、LSTM的伪代码" class="headerlink" title="五、LSTM的伪代码"></a>五、LSTM的伪代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSTMCELL</span>(<span class="params">prev_ct, prev_ht, <span class="built_in">input</span></span>):</span><br><span class="line">    combine = prev_ht + <span class="built_in">input</span></span><br><span class="line">    ft = forget_layer(combine)</span><br><span class="line">    candidate = candidate_layer(combine)</span><br><span class="line">    it = input_layer(combine)</span><br><span class="line">    Ct = prev_ht * ft + candidate * it</span><br><span class="line">    ot = output_layer(combine)</span><br><span class="line">    ht = ot * tanh(Ct)</span><br><span class="line">    <span class="keyword">return</span> ht, Ct</span><br><span class="line"></span><br><span class="line">ct = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">ht = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">input</span> <span class="keyword">in</span> inputs:</span><br><span class="line">    ct, ht = LSTMCELL(ct, ht, <span class="built_in">input</span>)</span><br></pre></td></tr></table></figure>
+
 <p>总的过程如下：</p>
 <blockquote>
 <p>1.首先，之前的hidden state会与现在的输入串联在一起，将其命名为combine；</p>
@@ -476,10 +658,12 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>7.output和新的cell state逐点相乘，可以给出最新的hidden state的状态。</p>
 </blockquote>
 <p>综上，LSTM可以使用隐藏状态进行预测。结合所有这些机制，LSTM可以在序列处理过程中选择要记住或忘记的相关信息。</p>
-<p><br/></p>
+<br/>
+
 <p>可以结合下图，对上图的过程进行理解和复习：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180115451.png" alt="image-20220516180115451"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="六、GRU"><a href="#六、GRU" class="headerlink" title="六、GRU"></a>六、GRU</h2><p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">https://en.wikipedia.org/wiki/Gated_recurrent_unit</a></p>
 <blockquote>
@@ -499,13 +683,15 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>这个门用来决定有多少过去的信息要被遗忘掉。</p>
 </blockquote>
 <p>首先，reset gate起作用，它将过去时间步的相关信息存储到新的记忆模块（memory content）中。 然后将输入向量和hidden state与它们的权值相乘。 接下来，它计算reset gate与先前hidden state倍数之间的元素级乘法。 总结以上步骤后，应用非线性激活函数，生成下一个序列。  </p>
-<p><br/></p>
+<br/>
+
 <h2 id="七、GRU和LSTM"><a href="#七、GRU和LSTM" class="headerlink" title="七、GRU和LSTM"></a>七、GRU和LSTM</h2><p>GRU的张量运算较少;因此，他比LSTM训练得更快。不过对于两者来说，<strong>目前还没有明确的赢家</strong>。研究人员和工程师通常会同时尝试两种方法，以确定哪种方法更适合他们的用例。</p>
 <p>关于两者的更详细介绍，可以参考下面的博客：</p>
 <p><a target="_blank" rel="noopener" href="https://analyticsindiamag.com/lstm-vs-gru-in-recurrent-neural-network-a-comparative-study/">LSTM Vs GRU in Recurrent Neural Network: A Comparative Study (analyticsindiamag.com)</a></p>
-<p><br/></p>
-<h2 id="八、其他参考文章"><a href="#八、其他参考文章" class="headerlink" title="八、其他参考文章"></a>八、其他参考文章</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/68552209/answer/329359882">(5 封私信 / 30 条消息) (新手向)能否简单易懂的介绍一下RNN(循环神经网络)？ - 知乎 (zhihu.com)</a></p>
+<br/>
+
+<h2 id="八、其他参考文章"><a href="#八、其他参考文章" class="headerlink" title="八、其他参考文章"></a>八、其他参考文章</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN&#x2F;LSTM&#x2F;GRU） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/68552209/answer/329359882">(5 封私信 &#x2F; 30 条消息) (新手向)能否简单易懂的介绍一下RNN(循环神经网络)？ - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/45289691">如何深度理解RNN？——看图就好！ - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76772734">从反向传播推导到梯度消失and爆炸的原因及解决方案（从DNN到RNN，内附详细反向传播公式推导） - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30844905">一文搞懂RNN（循环神经网络）基础篇 - 知乎 (zhihu.com)</a></p>
@@ -595,28 +781,35 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git">https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</a></p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="2-把本地仓库上传到远程仓库"><a href="#2-把本地仓库上传到远程仓库" class="headerlink" title="2.把本地仓库上传到远程仓库"></a>2.把本地仓库上传到远程仓库</h3><ul>
 <li>在这之前,请确保本地的仓库已经git init,git add,git commit完成了.</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;this is the origin client of our game&quot;</span></span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <h4 id="1-git-remote-add"><a href="#1-git-remote-add" class="headerlink" title="(1)git remote add"></a>(1)git remote add</h4><p>接下来,找到含有.git隐藏文件的文件夹,在git bash中输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/hhlovesyy/Chinese-zodiac-withNetwork.git</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p><code>git remote add origin *URL*</code> specifies that you are adding a remote repository, with the specified <code>URL</code>, as an <code>origin</code> to your local Git repo.</p>
 </blockquote>
 <p><strong>如果这里的显示信息为已经有了一个git remote,则说明已经绑定了远端的仓库,如果还想要将文件上传的新的仓库则此时可以选择把.git文件删掉再重新输入上面的指令.</strong></p>
 <p>接下来,就可以使用push操作了.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-git-push"><a href="#2-git-push" class="headerlink" title="(2)git push"></a>(2)git push</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
+
 <p>这样就把我们的本地仓库push到远程的origin显示的仓库,同时push到的分支是显示的master分支.</p>
 <p>成功之后会这样显示:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220628900.png" alt="image-20220512220628900"></p>
 <p>此时去Github上刷新一下自己的远程仓库,看到结果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220801392.png" alt="image-20220512220801392"></p>
 <p>可以看到,本地仓库已经上传到了远端的仓库上了.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="报错1-远端仓库有内容没有pull"><a href="#报错1-远端仓库有内容没有pull" class="headerlink" title="报错1:远端仓库有内容没有pull"></a>报错1:远端仓库有内容没有pull</h4><p>假如出现了下面的信息:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512214852845.png" alt="image-20220512214852845"></p>
 <p><strong>则说明此时的远端仓库并不是最新的版本,因此需要先pull下来,这个后续会再进行总结</strong>.</p>
@@ -625,7 +818,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>修改完内容之后可以直接在下方commit提交:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512221208945.png" alt="image-20220512221208945"></p>
 <p>此时刷新一下,就可以看到Github的内容得到了更新.</p>
-<p><br/></p>
+<br/>
+
 <h2 id="三-Git-pull"><a href="#三-Git-pull" class="headerlink" title="三.Git pull"></a>三.Git pull</h2><blockquote>
 <p>在团队合作的过程当中,所有参与者都能获取到仓库的最新状态是十分重要的.此时<code>git pull</code>指令就是一个很常见的指令.  </p>
 </blockquote>
@@ -635,7 +829,7 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>merge</li>
 </ul>
 <h3 id="1-fetch"><a href="#1-fetch" class="headerlink" title="1.fetch"></a>1.fetch</h3><blockquote>
-<p><code>fetch</code> gets all the change history of a tracked branch/repo.</p>
+<p><code>fetch</code> gets all the change history of a tracked branch&#x2F;repo.</p>
 <p>So, on your local Git, <code>fetch</code> updates to see what has changed on GitHub:</p>
 </blockquote>
 <p>也就是说,<code>git fetch</code>可以看到远程仓库当中出现了哪些内容的修改,对于我们此时的情况,结果如下:</p>
@@ -645,58 +839,71 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>也就是说,远端仓库有一个新的commit提交,当然这个应该是我们刚才修改的readme.md文件,此时可以通过log指令来查看日志:</p>
 <h4 id="1-git-log-xxx-branch"><a href="#1-git-log-xxx-branch" class="headerlink" title="(1)git log xxx(branch)"></a>(1)git log xxx(branch)</h4><p>在这里,我们输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log origin/master</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222205042.png" alt="image-20220512222205042"></p>
 <p>可以看到这条最近的commit记录.</p>
 <h4 id="2-git-diff-xxx-branch"><a href="#2-git-diff-xxx-branch" class="headerlink" title="(2)git diff xxx(branch)"></a>(2)git diff xxx(branch)</h4><p>虽然刚才的指令可以看到冲突的来源,但有的时候仍不够直观.这个时候可以采用git diff指令查看本地仓库和远程仓库的区别:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff origin/master</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222510351.png" alt="image-20220512222510351"></p>
 <p>可以看到,冲突与我们的预期相符,接下来就是merge了.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-merge"><a href="#2-merge" class="headerlink" title="2.merge"></a>2.merge</h3><p><code>git merge current specified</code></p>
 <p>表示合并specified分支到current分支,对于现在的情况来说,指令如下:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222814887.png" alt="image-20220512222814887"></p>
 <p>此时用git status进行查看:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512222855840.png" alt="image-20220512222855840"></p>
 <p>这表示本地仓库已经和远端仓库同步了.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="3-git-pull"><a href="#3-git-pull" class="headerlink" title="3.git pull"></a>3.git pull</h3><blockquote>
 <p>将fetch与merge操作进行合并就是pull操作了.</p>
 </blockquote>
 <p>比如这里我们又修改了远程仓库的README.md的内容,然后直接git pull origin</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223328289.png" alt="image-20220512223328289"></p>
 <p>在团队合作项目当中,<strong>git pull是一个十分实用的技巧,需要经常使用</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="报错2"><a href="#报错2" class="headerlink" title="报错2"></a>报错2</h4><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512215345450.png" alt="image-20220512215345450"></p>
 <p>对于上面那个错误,问题出在没有pull下来最新的仓库版本.采用git pull即可.</p>
 <p>对于下面那个错误,则可以参考下述网站解决(<strong>可能是因为pull下来的仓库和本地的没什么关系,可以通过链接里的解决办法解决</strong>):</p>
 <p><a target="_blank" rel="noopener" href="https://komodor.com/learn/how-to-fix-fatal-refusing-to-merge-unrelated-histories-error/">How to fix ‘fatal: refusing to merge unrelated histories’ Git error | Komodor</a></p>
-<p><br/></p>
+<br/>
+
 <h4 id="报错3"><a href="#报错3" class="headerlink" title="报错3"></a>报错3</h4><blockquote>
 <p>关于pull的时候报conflict错误,冲突的地方会被git标注下来,进入文件夹当中修改即可.然后不要忘记git add 改过之后的文件和git commit两个步骤.(参考前一节解决冲突)</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="四-Git-push"><a href="#四-Git-push" class="headerlink" title="四.Git push"></a>四.Git push</h2><h3 id="1-将本地的修改push到Github"><a href="#1-将本地的修改push到Github" class="headerlink" title="1.将本地的修改push到Github"></a>1.将本地的修改push到Github</h3><p>假设我们在本地修改了README.md文件:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223653746.png" alt="image-20220512223653746"></p>
 <p>(最后一行为新增加的内容)</p>
 <p>接下来输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;add something in readme.md&quot;</span></span><br><span class="line">git status</span><br><span class="line">git push --<span class="keyword">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512223920465.png" alt="image-20220512223920465"></p>
 <p>此时去Github当中查看新的commit,方法如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224048995.png" alt="image-20220512224048995"></p>
 <p>点击链接,查看具体详情:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512224144077.png" alt="image-20220512224144077"></p>
 <p>可以看到这次commit当中新增的内容.</p>
-<p><br/></p>
+<br/>
+
 <h2 id="五-Git-amp-Github分支管理"><a href="#五-Git-amp-Github分支管理" class="headerlink" title="五.Git&amp;Github分支管理"></a>五.Git&amp;Github分支管理</h2><h3 id="1-Github分支创建"><a href="#1-Github分支创建" class="headerlink" title="1.Github分支创建"></a>1.Github分支创建</h3><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100149817.png" alt="image-20220513100149817"></p>
 <p>在上面直接输入一个没有的分支,下面就会出现创建这个分支的信息.</p>
 <p>现在我们切换到了dev分支,接下来对文件进行一些修改:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513100609649.png" alt="image-20220513100609649"></p>
 <p><strong>经过观察,此时master分支和dev分支当中的README.md文件中的内容有所不同.</strong></p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-pull-branch-from-github"><a href="#2-pull-branch-from-github" class="headerlink" title="2.pull branch from github"></a>2.pull branch from github</h3><p>使用git pull指令拉取远端仓库的最新版本:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101216770.png" alt="image-20220513101216770"></p>
 <p>接下来用git status查看状态:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101256422.png" alt="image-20220513101256422"></p>
@@ -708,6 +915,7 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </blockquote>
 <p>这表示我们本地这边现在只有master分支.<strong>使用git branch -a可以查看所有本地和远程的分支</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
+
 <p>结果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101617065.png" alt="image-20220513101617065"></p>
 <blockquote>
@@ -715,13 +923,16 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </blockquote>
 <h4 id="a-通过git-checkout切换分支"><a href="#a-通过git-checkout切换分支" class="headerlink" title="(a)通过git checkout切换分支"></a>(a)通过git checkout切换分支</h4><p>此时输入:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line"><span class="comment"># 可以验证是否是最新的分支</span></span><br><span class="line">git pull</span><br><span class="line"><span class="comment"># 接下来,用git branch来查看本地有的分支</span></span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513101933087.png" alt="image-20220513101933087"></p>
 <h3 id="3-push-branch-to-github"><a href="#3-push-branch-to-github" class="headerlink" title="3.push branch to github"></a>3.push branch to github</h3><p>在本地新建一个分支dev-windows,然后修改readme.md当中的内容,接下来push到github上</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev-windows</span><br><span class="line"><span class="comment"># 修改文件的内容之后</span></span><br><span class="line">git status</span><br><span class="line">git add </span><br><span class="line">git commit -m <span class="string">&quot;modify README.md&quot;</span></span><br><span class="line"><span class="comment"># 核心:push到远程分支上</span></span><br><span class="line">git push origin dev-windows</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102623371.png" alt="image-20220513102623371"></p>
 <p>此时到远程的仓库当中去查看结果,发现已经有一个新的分支了:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102705015.png" alt="image-20220513102705015"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="4-Compare-amp-pull-requests"><a href="#4-Compare-amp-pull-requests" class="headerlink" title="4.Compare&amp;pull requests"></a>4.Compare&amp;pull requests</h3><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513102918898.png" alt="image-20220513102918898"></p>
 <p>可以点击框中的部分,查看如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103029071.png" alt="image-20220513103029071"></p>
@@ -735,7 +946,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>如上图,Github没有检测到可能的冲突,因此可以merge pull request.在点击合并pull request之后出现如下信息:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220513103532387.png" alt="image-20220513103532387"></p>
 <p>因为已经合并分支了,因此刚才的分支可以删掉了,点击Delete branch删除分支.</p>
-<p><br/></p>
+<br/>
+
 <h2 id="六-Github工作流"><a href="#六-Github工作流" class="headerlink" title="六.Github工作流"></a>六.Github工作流</h2><p>Github的工作流可以总结如下:</p>
 <ul>
 <li>Create a new Branch:创建新的分支</li>
@@ -754,18 +966,21 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>在团队合作的时候,新的分支起的名字要更好理解,方便团队更好的合作.</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="2-做出改变并commit"><a href="#2-做出改变并commit" class="headerlink" title="2.做出改变并commit"></a>2.做出改变并commit</h3><blockquote>
 <p>在创建一个新的分支之后,就可以修改里面的内容了.每当完成一件事的时候,可以add+commit.</p>
 <ul>
 <li>每个commit应该包括有用的信息,因为commit可以提供结点,使得出现问题的时候可以回滚,同时也方便其他合作者看到仓库的变化.</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="3-Open-a-pull-request"><a href="#3-Open-a-pull-request" class="headerlink" title="3.Open a pull request"></a>3.Open a pull request</h3><blockquote>
 <p>这部分是Github的核心.一个pull request表示你改变了某些内容,方便其他人查看,并且选择是否要merge你的代码到他们的分支上.</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="4-review-amp-deploy-amp-merge"><a href="#4-review-amp-deploy-amp-merge" class="headerlink" title="4.review&amp;deploy&amp;merge"></a>4.review&amp;deploy&amp;merge</h3><blockquote>
 <p>当一个Pull Request被发出时，它可以被任何对分支有适当访问权限的人审查。 这是对更改进行良好讨论和审查的地方。  </p>
 <p>如果您收到反馈可以继续改进您的更改，可以使用新的commit来添加更改，使进一步的审查成为可能.</p>
@@ -880,28 +1095,37 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>You can revert back to any previous commit.</li>
 <li>Git does not store a separate copy of every file in every commit, but keeps track of changes made in each commit!</li>
 </ul>
-<p><br/></p>
+<br/>
+
 <h2 id="二-最基础Git指令"><a href="#二-最基础Git指令" class="headerlink" title="二.最基础Git指令"></a>二.最基础Git指令</h2><h3 id="1-查看git版本"><a href="#1-查看git版本" class="headerlink" title="1.查看git版本"></a>1.查看git版本</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152146419.png" alt="image-20220512152146419"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-配置git"><a href="#2-配置git" class="headerlink" title="2.配置git"></a>2.配置git</h3><p>配置git信息对版本管理非常重要,因为每次commit都需要用到对应的信息.</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;ChrisZhang&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;1596944152@qq.com&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512152825629.png" alt="image-20220512152825629"></p>
 <blockquote>
-<p>注:这里使用—global是指对所有的仓库都有效,如果只想对当前仓库起效的话只需要移除global信息即可.</p>
+<p>注:这里使用–global是指对所有的仓库都有效,如果只想对当前仓库起效的话只需要移除global信息即可.</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="3-创建新的git文件"><a href="#3-创建新的git文件" class="headerlink" title="3.创建新的git文件"></a>3.创建新的git文件</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir myProject</span><br><span class="line">cd myProject</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512153111267.png" alt="image-20220512153111267"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="4-创建仓库git-init"><a href="#4-创建仓库git-init" class="headerlink" title="4.创建仓库git init"></a>4.创建仓库git init</h3><p>将一个文件变成git 项目工程.</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
 <p>此时可以看到输出的结果如下:</p>
 <blockquote>
-<p>Initialized empty Git repository in xxxx/.git/(其中这个.git是一个隐藏文件)</p>
+<p>Initialized empty Git repository in xxxx&#x2F;.git&#x2F;(其中这个.git是一个隐藏文件)</p>
 </blockquote>
 <p>说明git仓库已经创建完成了.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="5-git-help"><a href="#5-git-help" class="headerlink" title="5.git help"></a>5.git help</h3><blockquote>
 <ul>
 <li><code>git command -help</code> - See all the available options for the specific command(<strong>这里的command是具体的指令,比如git commit -help</strong>)</li>
@@ -910,7 +1134,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </blockquote>
 <p>举例:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161741954.png" alt="image-20220512161741954"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="三-Git工作流"><a href="#三-Git工作流" class="headerlink" title="三.Git工作流"></a>三.Git工作流</h2><h3 id="1-Git工作流"><a href="#1-Git工作流" class="headerlink" title="1.Git工作流"></a>1.Git工作流</h3><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512151101176.png" alt="image-20220512151101176"></p>
 <p>说明如下:</p>
 <ul>
@@ -929,9 +1154,11 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>tracked:Git了解并且已经加入到仓库当中</li>
 <li>untracked:在工作目录当中,但还没有加入仓库当中.</li>
 </ul>
-<p><br/></p>
-<h5 id="git-status-—short"><a href="#git-status-—short" class="headerlink" title="git status —short"></a>git status —short</h5><p>有的时候可以用这个指令来缩减显示的信息(<strong>注意这个指令有俩横线不要忘了输入</strong>):</p>
+<br/>
+
+<h5 id="git-status-–short"><a href="#git-status-–short" class="headerlink" title="git status –short"></a>git status –short</h5><p>有的时候可以用这个指令来缩减显示的信息(<strong>注意这个指令有俩横线不要忘了输入</strong>):</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status --short</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160011729.png" alt="image-20220512160011729"></p>
 <p>介绍如下:</p>
 <blockquote>
@@ -942,23 +1169,29 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>D - Deleted files</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h4 id="2-git-add-1"><a href="#2-git-add-1" class="headerlink" title="(2)git add"></a>(2)git add</h4><p>输入以下指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add Hello.txt</span><br></pre></td></tr></table></figure>
+
 <p>此时就可以查看<code>git status</code>:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154046848.png" alt="image-20220512154046848"></p>
 <p><strong>注:请注意文件名不要输入错误,否则git不会报错,但是不会add成功(因为文件不存在,所以肯定加不进去)</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="3-如果一次add比较多-用-all"><a href="#3-如果一次add比较多-用-all" class="headerlink" title="(3)如果一次add比较多,用-all"></a>(3)如果一次add比较多,用-all</h4><p>比如,现在我们有四个文件:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154224652.png" alt="image-20220512154224652"></p>
 <p>则可以使用指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line"><span class="comment"># 这个指令的缩写为git add -A</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154344743.png" alt="image-20220512154344743"></p>
 <p>(<strong>注:如果这个文件已经add 过了,再add也是不影响的,所以可以放心使用git add</strong>)</p>
-<p><br/></p>
+<br/>
+
 <h3 id="3-git-commit"><a href="#3-git-commit" class="headerlink" title="3.git commit"></a>3.git commit</h3><p>从之前的图我们可以看到,此时的修改都已经保存在了staging area,接下来就是commit操作了.</p>
 <p><strong>在我们commit的时候,往往要包括一些commit的信息:</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;First commit!&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512154811993.png" alt="image-20220512154811993"></p>
 <p>此时staging area中的内容就被commit到了仓库当中,并且附加了一条信息.</p>
 <h4 id="1-直接commit-不用stage-area-不推荐"><a href="#1-直接commit-不用stage-area-不推荐" class="headerlink" title="(1)直接commit(不用stage area,不推荐)"></a>(1)直接commit(不用stage area,不推荐)</h4><p>首先修改某一个文件的内容:(比如Hello.txt)(<strong>如果添加了一个文件这个可能没什么效果</strong>)</p>
@@ -966,29 +1199,38 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512160917808.png" alt="image-20220512160917808"></p>
 <p>此时输入指令:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m <span class="string">&quot;update 2022_05_12&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161053951.png" alt="image-20220512161053951"></p>
 <p>可以看到,成功了.<strong>实际上,这种方式并不推荐,可能会导致commit了自己不需要的文件</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-git-log"><a href="#2-git-log" class="headerlink" title="(2)git log"></a>(2)git log</h4><p>这条指令可以看到commit的日志消息:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512161310440.png" alt="image-20220512161310440"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="四-Git-branch"><a href="#四-Git-branch" class="headerlink" title="四.Git branch"></a>四.Git branch</h2><h3 id="1-branch介绍"><a href="#1-branch介绍" class="headerlink" title="1.branch介绍"></a>1.branch介绍</h3><blockquote>
-<p>In Git, a <code>branch</code> is a new/separate version of the main repository.</p>
+<p>In Git, a <code>branch</code> is a new&#x2F;separate version of the main repository.</p>
 <p>Branches allow you to work on different parts of a project without impacting the main branch.</p>
 <p><strong>When the work is complete, a branch can be merged with the main project.</strong></p>
 <p>You can even switch between branches and work on different projects without them interfering with each other.</p>
 <p>Branching in Git is very lightweight and fastly!</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h4 id="1-新建一个分支"><a href="#1-新建一个分支" class="headerlink" title="(1)新建一个分支"></a>(1)新建一个分支</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch hello-world</span><br></pre></td></tr></table></figure>
+
 <p>此时就新建了一个分支hello-world.</p>
 <h5 id="a-查看分支"><a href="#a-查看分支" class="headerlink" title="(a)查看分支"></a>(a)查看分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512192457308.png" alt="image-20220512192457308"></p>
 <p>此时可以看到,新的分支已经创建完成了.</p>
 <p><strong>master分支前面那个星号(*)表明我们现在正处于master分支</strong></p>
-<p><br/></p>
+<br/>
+
 <h5 id="b-切换分支"><a href="#b-切换分支" class="headerlink" title="(b)切换分支"></a>(b)切换分支</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>Using the <code>-b</code> option on <code>checkout</code> will create a new branch, and move to it, if it does not exist</p>
 </blockquote>
@@ -1006,15 +1248,19 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li><p>有一个untracked文件(也就是我们新建的文件)</p>
 </li>
 </ul>
-<p><strong>接下来,我们用git add —all和git commit来提交文件</strong>:</p>
+<p><strong>接下来,我们用git add –all和git commit来提交文件</strong>:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m <span class="string">&quot;new changes in hello-world branch&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512193616679.png" alt="image-20220512193616679"></p>
 <p><strong>此时我们的新分支就与master分支具有不一样的内容了</strong>.</p>
-<p><br/></p>
+<br/>
+
 <h5 id="c-检查不同的分支中的内容"><a href="#c-检查不同的分支中的内容" class="headerlink" title="(c)检查不同的分支中的内容"></a>(c)检查不同的分支中的内容</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看新的分支中的内容</span></span><br><span class="line">ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到master分支</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看master分支中的内容</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512194041653.png" alt="image-20220512194041653"></p>
 <p>可以明显地看到,两个分支当中的内容是不同的.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-分支的使用场景"><a href="#2-分支的使用场景" class="headerlink" title="(2)分支的使用场景"></a>(2)分支的使用场景</h4><blockquote>
 <p>设想一个场景,就是我们的hello-world分支目前正在开发一个新功能,但master分支有人提出了bug.</p>
 <p>此时的正确做法应该如下:</p>
@@ -1025,14 +1271,17 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </blockquote>
 <p>首先,新建一个分支:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p>然后,修改文件中的内容以演示修复bug的过程:</p>
 <p>然后,使用<code>git status</code>查看状态:</p>
-<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195724505.png" alt="image-20220512195724505">    </p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195724505.png" alt="image-20220512195724505">	</p>
 <p>使用以下命令提交commit给emergency-fix分支</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;bug-fixed&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512195936658.png" alt="image-20220512195936658"></p>
 <p><strong>接下来,就是合并这个分支和master分支</strong></p>
-<p><br/></p>
+<br/>
+
 <h4 id="3-分支合并"><a href="#3-分支合并" class="headerlink" title="(3)分支合并"></a>(3)分支合并</h4><blockquote>
 <p>现在我们的需求是,将emergency-fix分支的内容合并到master分支上</p>
 </blockquote>
@@ -1040,25 +1289,33 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>a.进入到master分支</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>b.合并当前分支与emergency-fix分支:</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200524220.png" alt="image-20220512200524220"></p>
-<p><strong>由于emergency-fix分支是直接从master分支来的,并且在我们处理emergency-fix分支的时候没有人动master分支,因此Git认为这个可以直接合并,表示”fastly-forward”.</strong>直接把两者合并.</p>
+<p>**由于emergency-fix分支是直接从master分支来的,并且在我们处理emergency-fix分支的时候没有人动master分支,因此Git认为这个可以直接合并,表示”fastly-forward”.**直接把两者合并.</p>
 <p>此时emergency-fix和master分支的内容是一样的,可以将emergency-fix分支删掉.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="4-删除分支"><a href="#4-删除分支" class="headerlink" title="(4)删除分支"></a>(4)删除分支</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d emergency-fix</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512200909907.png" alt="image-20220512200909907"></p>
-<p><br/></p>
+<br/>
+
 <h4 id="5-在merge的时候出现冲突"><a href="#5-在merge的时候出现冲突" class="headerlink" title="(5)在merge的时候出现冲突"></a>(5)在merge的时候出现冲突</h4><p>在之前,我们在emergency-fix分支中修改了Hello1.txt,现在我们进入到hello-world分支,然后同样修改Hello1.txt:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout hello-world</span><br><span class="line"><span class="comment"># 接下来,修改Hello1.txt,然后输入</span></span><br><span class="line">git status</span><br><span class="line">git add Hello1.txt</span><br><span class="line">git commit -m <span class="string">&quot;change Hello1.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202218893.png" alt="image-20220512202218893"></p>
 <p>接下来,<strong>进入到master分支并merge hello-world分支</strong></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge hello-world</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202352704.png" alt="image-20220512202352704"></p>
 <p>从显示的结果来看,<strong>这里出现了一个冲突</strong>.</p>
-<p><br/></p>
+<br/>
+
 <h5 id="a-解决冲突问题"><a href="#a-解决冲突问题" class="headerlink" title="(a)解决冲突问题"></a>(a)解决冲突问题</h5><p>首先,利用<code>git status</code>查看状态:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202519911.png" alt="image-20220512202519911"></p>
 <p>从红色字体中可以看到,两者都修改了Hello1.txt,<strong>因此我们需要解决这部分的冲突.</strong></p>
@@ -1070,9 +1327,11 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512202929660.png" alt="image-20220512202929660"></p>
 <p>此时就可以使用git add指令了:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add Hello1.txt</span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203113207.png" alt="image-20220512203113207"></p>
 <p>这个时候已经解决了冲突问题,接下来就是git commit和删除已经合并的分支了:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;solve merge conflicts!&quot;</span></span><br><span class="line">git branch -d hello-world</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512203450856-16523589320227.png" alt="image-20220512203450856"></p>
 <h5 id="b-在merge的时候出现了冲突-想退出怎么办"><a href="#b-在merge的时候出现了冲突-想退出怎么办" class="headerlink" title="(b)在merge的时候出现了冲突,想退出怎么办"></a>(b)在merge的时候出现了冲突,想退出怎么办</h5><p>如果出现了下面的情况:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220512220053187.png" alt="image-20220512220053187"></p>
@@ -1164,9 +1423,11 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/212598.htm">Python如何配置环境变量详解_python_脚本之家 (jb51.net)</a></p>
 <p>首先,在pycharm当中新建python程序,输入以下代码:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># python.exe 和 lib 位于同一目录</span></span><br><span class="line"><span class="built_in">print</span>(os.path.dirname(os.path.__file__))</span><br></pre></td></tr></table></figure>
+
 <p>查看运行结果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510160139657.png" alt="image-20220510160139657"></p>
-<p><br/></p>
+<br/>
+
 <h4 id="配置环境变量-如果需要"><a href="#配置环境变量-如果需要" class="headerlink" title="配置环境变量(如果需要)"></a>配置环境变量(如果需要)</h4><p>以上显示的python.exe就是需要配置的环境变量,进入到这个文件夹里面:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510160325828.png" alt="image-20220510160325828"></p>
 <p>接下来,打开系统环境变量,设置环境变量(老操作了,<strong>注意要加入到系统环境变量里面</strong>)</p>
@@ -1174,7 +1435,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>保存所有的环境变量设置,然后退出环境变量设置的界面.</p>
 <p>最后,验证一下Python的环境变量是否已经配置完毕(之前为了稳妥可以激活一下conda的虚拟环境,不过不激活也不影响,只是会有一个警告):</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510161455538.png" alt="image-20220510161455538"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-下载OpenCV-这里有普适性"><a href="#2-下载OpenCV-这里有普适性" class="headerlink" title="2.下载OpenCV(这里有普适性)"></a>2.下载OpenCV(这里有普适性)</h3><p><a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">Python Extension Packages for Windows - Christoph Gohlke (uci.edu)</a></p>
 <p>进入上面的官网,查找OpenCV字样(可以用Ctrl+F加快查找速度)</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510153338429.png" alt="image-20220510153338429"></p>
@@ -1188,7 +1450,7 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510155419396.png" alt="image-20220510155419396"></p>
 <h3 id="2-pip-Install"><a href="#2-pip-Install" class="headerlink" title="2.pip Install"></a>2.pip Install</h3><p>接下来,使用Windows的CMD,<strong>通过cd命令进入到放置opencv包的文件夹下</strong>,然后pip install xxx(xxx是包的名字)</p>
 <p>比如对于我的机器来说,指令就是:</p>
-<p><code>pip install opencv_python-4.4.0-cp36-cp36m-win_amd64.whl</code></p>
+<p><code>pip install opencv_python-4.4.0-cp36-cp36m-win_amd64.whl </code></p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510161858214.png" alt="image-20220510161858214"></p>
 <p><strong>如果有报错信:息的话注意看一下是不是python的环境变量没有设置好或者是没有开启虚拟环境</strong></p>
 <p>如果还是报错:</p>
@@ -1196,15 +1458,20 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><strong>则可能的原因是下载的包的版本和python的版本不一样,具体在上述网站中按照python的版本进行下载.</strong></p>
 <p>参考链接:</p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28568070/error-filename-whl-is-not-a-supported-wheel-on-this-platform">python - Error “filename.whl is not a supported wheel on this platform” - Stack Overflow</a></p>
-<p><br/></p>
+<br/>
+
 <h2 id="三-测试"><a href="#三-测试" class="headerlink" title="三.测试"></a>三.测试</h2><h3 id="1-直接命令行测试"><a href="#1-直接命令行测试" class="headerlink" title="1.直接命令行测试"></a>1.直接命令行测试</h3><p>使用如下命令测试(<strong>同样,应该需要切换到正确的虚拟环境并activate,这样才可以正确地验证</strong>):</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"><span class="keyword">import</span> cv2</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510162238095.png" alt="image-20220510162238095"></p>
 <h3 id="2-Pycharm验证"><a href="#2-Pycharm验证" class="headerlink" title="2.Pycharm验证"></a>2.Pycharm验证</h3><p>此时进入到Pycharm当中,通过File-&gt;Settings找到此时已经安装了python-opencv包:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220510162435749.png" alt="image-20220510162435749"></p>
 <h2 id="四-总结Python的包的安装"><a href="#四-总结Python的包的安装" class="headerlink" title="四.总结Python的包的安装"></a>四.总结Python的包的安装</h2><h3 id="1-使用pip-install"><a href="#1-使用pip-install" class="headerlink" title="1.使用pip install"></a>1.使用pip install</h3><p>可以直接使用Pycharm的terminal,输入指令来安装包:</p>
 <p>例:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="2-使用conda-install"><a href="#2-使用conda-install" class="headerlink" title="2.使用conda install"></a>2.使用conda install</h3><p>进入到虚拟环境当中,使用<code>conda install xxx</code>进行安装,举例如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Gitlearn/image-20220510170136200.png" alt="image-20220510170136200"></p>
 <p>接下来类似输入<code>conda install tensorflow-estimatior==2.0.0</code>这样的指令即可.</p>
@@ -1298,15 +1565,18 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><strong>在这里由于我已经使用完了,所以这里以付费版本为例(正常应该是可以免费试用的)</strong>,接下来点击”立即购买”,即可进入环境配置界面.</p>
 <h3 id="2-环境配置"><a href="#2-环境配置" class="headerlink" title="2.环境配置"></a>2.环境配置</h3><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210145301.png" alt="image-20220507210145301"></p>
 <p>接下来,只需要选择立即购买即拥有一台属于自己的云服务器了.(<strong>对于学生来讲,也可以使用学生试用,不过似乎要完成一些任务</strong>)</p>
-<p><br/></p>
+<br/>
+
 <p>此时就可以跳转至控制台看到我们刚购买的云服务器了,控制台点击云服务详情可以查看服务器的详细情况:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507210737960.png" alt="image-20220507210737960"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="3-启动服务器"><a href="#3-启动服务器" class="headerlink" title="3.启动服务器"></a>3.启动服务器</h3><p>这里推荐使用XShell来远程登录服务器,不过在一开始的时候我们要为服务器设置账号和密码,这里方便起见以root为例.</p>
 <h4 id="1-设置账号密码"><a href="#1-设置账号密码" class="headerlink" title="(1)设置账号密码"></a>(1)设置账号密码</h4><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507211032523.png" alt="image-20220507211032523"></p>
 <p>在这里修改为自己的密码即可.(<strong>账号为了方便保持root不变</strong>)</p>
 <p>设置完密码之后,只需要重启ECS云服务器即可.</p>
-<p><br/></p>
+<br/>
+
 <h4 id="2-XShell远程登录云服务器"><a href="#2-XShell远程登录云服务器" class="headerlink" title="(2)XShell远程登录云服务器"></a>(2)XShell远程登录云服务器</h4><p>通过上图我们可以看到云服务器的公网和私网IP,如果想要远程登录云服务器则需要通过公网IP来登录:</p>
 <p>打开XShell,新建连接,输入正确的IP地址,端口号采用默认即可:</p>
 <p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211353271.png" alt="image-20220507211353271"></p>
@@ -1314,17 +1584,20 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>如果登录成功应该会出现如下信息:</p>
 <p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507211609371.png" alt="image-20220507211609371"></p>
 <p>这样以后我们每次就可以使用这种方式来登录阿里云服务器了.</p>
-<p><br/></p>
+<br/>
+
 <h2 id="二-部署C-编译运行环境"><a href="#二-部署C-编译运行环境" class="headerlink" title="二.部署C#编译运行环境"></a>二.部署C#编译运行环境</h2><p>这里假设我们已经写好了服务端的程序(C#版本),并且该服务端程序还会涉及到MySQL数据库的连接,那么我们就需要配置C#的编译运行环境,以及MySQL的生产环境.</p>
 <h3 id="1-将C-程序-cs文件导入Linux"><a href="#1-将C-程序-cs文件导入Linux" class="headerlink" title="1.将C#程序.cs文件导入Linux"></a>1.将C#程序.cs文件导入Linux</h3><p>这里使用XFTP程序将Windows操作系统的.cs文件导入Linux操作系统即可.同样这里的主机名采用远端服务器的公网IP地址.将服务器的C#程序利用XFTP上传到Linux操作系统,具体如下:</p>
 <p><img src="D:/blog/source/_posts/Linux%E9%83%A8%E7%BD%B2C-%E5%92%8CMySQL%E7%8E%AF%E5%A2%83.assets/image-20220507212346315.png" alt="image-20220507212346315"></p>
-<p>这里我上传到了远端Linux服务器下的/opt文件夹当中.</p>
+<p>这里我上传到了远端Linux服务器下的&#x2F;opt文件夹当中.</p>
 <p>可以利用XShell进行验证查看:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220507212501350.png" alt="image-20220507212501350"></p>
 <p>可以看到,我们的Game文件夹以及上传到Linux服务器上了.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-Linux操作系统下载Mono"><a href="#2-Linux操作系统下载Mono" class="headerlink" title="2.Linux操作系统下载Mono"></a>2.Linux操作系统下载Mono</h3><p>执行下面的四条指令以完成安装:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rpm --import <span class="string">&quot;https://keyserver.ubuntu.com/pks/lookup?op=get&amp;search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta"># create a yum repository file for mono</span></span><br><span class="line">su -c <span class="string">&#x27;curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta"># install mono</span></span><br><span class="line">yum install mono-devel</span><br><span class="line"> </span><br><span class="line"><span class="meta"># check mono version</span></span><br><span class="line">mono --version</span><br></pre></td></tr></table></figure>
+
 <p>测试成功之后的提示信息应该如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508125914478.png" alt="image-20220508125914478"></p>
 <p>如果下载过程当中出现了一些问题(比如下载速度太慢了之类的),可以尝试使用镜像.如果还是不能解决问题试试下面的解决方案:(建议直接使用VPN下载,<strong>经过尝试,也可以直接使用阿里云的控制台登录服务器进行指令书写,竟然会比XShell下载更快一些</strong>):</p>
@@ -1340,83 +1613,118 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p><a target="_blank" rel="noopener" href="https://blog.eldernode.com/setup-and-run-monodevelop-on-centos/">https://blog.eldernode.com/setup-and-run-monodevelop-on-centos/</a></p>
 <h3 id="3-运行C-程序-测试"><a href="#3-运行C-程序-测试" class="headerlink" title="3.运行C#程序-测试"></a>3.运行C#程序-测试</h3><h4 id="1-普通的C-程序"><a href="#1-普通的C-程序" class="headerlink" title="(1)普通的C#程序"></a>(1)普通的C#程序</h4><p>如果这个C#程序只有一个.cs文件,则按照下面的方式进行编译运行即可.这里我们以C#的<code>Helloworld.cs</code>为例:</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">   &#123;</span><br><span class="line">       Console.WriteLine(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>将这个文件上传到Linux服务器上(采用与上文相同的方式)</p>
-<p><br/></p>
+<br/>
+
 <ul>
 <li>编译C#程序</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcs hello.cs</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>运行C#程序(编译后的.exe程序)</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mono hello.exe</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>停止运行某程序:直接输入Ctrl+C即可(<strong>比如说想要关闭服务器</strong>)</li>
 </ul>
 <p>最终效果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508130154061.png" alt="image-20220508130154061"></p>
-<p><br/></p>
+<br/>
+
+
+
 <h4 id="2-复杂一些的C-程序"><a href="#2-复杂一些的C-程序" class="headerlink" title="(2)复杂一些的C#程序"></a>(2)复杂一些的C#程序</h4><p>比如我们想要运行的游戏服务端,是一个庞大的工程,此时我们需要关注的就是其中的.csproj文件,这就是我们想要编译的文件.指令如下:</p>
-<p><br/></p>
+<br/>
+
 <h2 id="三-一些注意事项"><a href="#三-一些注意事项" class="headerlink" title="三.一些注意事项"></a>三.一些注意事项</h2><h3 id="1-关于服务端和客户端的Socket连接的IP"><a href="#1-关于服务端和客户端的Socket连接的IP" class="headerlink" title="1.关于服务端和客户端的Socket连接的IP"></a>1.关于服务端和客户端的Socket连接的IP</h3><p>首先,我们要明确的是,客户端连接服务端的Socket当中要写明其公网IP,所以客户端的程序结构示例如下:</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接服务器</span></span><br><span class="line">NetManager.Connect(<span class="string">&quot;47.111.176.71&quot;</span>, <span class="number">8888</span>); <span class="comment">// 这里是服务器的公网IP</span></span><br></pre></td></tr></table></figure>
+
 <p>而对于服务端来说,其Socket绑定的需要是自己的私网IP,这也可以在阿里云的实例界面中进行查看.所以服务端的程序结构如下:</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> listenPort=<span class="number">8888</span>; <span class="comment">//设置监听端口号</span></span><br><span class="line">IPAddress ipAdr = IPAddress.Parse(<span class="string">&quot;172.20.25.4&quot;</span>); <span class="comment">// 绑定服务器的私有地址</span></span><br><span class="line">IPEndPoint ipEp = <span class="keyword">new</span> IPEndPoint(ipAdr, listenPort);</span><br><span class="line">listenfd.Bind(ipEp);</span><br></pre></td></tr></table></figure>
+
+
+
 <p>在做完以上配置之后,如果客户端无法连接上服务端,则可能是由于服务端网络端口没有打开.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-Linux打开网络某个端口"><a href="#2-Linux打开网络某个端口" class="headerlink" title="2.Linux打开网络某个端口"></a>2.Linux打开网络某个端口</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lirhbky/p/15182657.html">linux服务器开放端口号（6379） - 正经boy - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.xinshouzhanzhang.com/aliyunipfangwen.html">阿里云服务器公网IP无法访问的解决方法 - 新手站长网 (xinshouzhanzhang.com)</a></p>
 <p>请注意,需要把阿里云的公网IP打开,具体看上面的教程.同时服务器需要开放相关的端口.</p>
-<p><br/></p>
+<br/>
+
 <h2 id="四-部署MySQL-mariadb-生产环境"><a href="#四-部署MySQL-mariadb-生产环境" class="headerlink" title="四.部署MySQL(mariadb)生产环境"></a>四.部署MySQL(mariadb)生产环境</h2><p>参考教程:</p>
 <h3 id="1-清除旧的MySQL环境"><a href="#1-清除旧的MySQL环境" class="headerlink" title="1.清除旧的MySQL环境"></a>1.清除旧的MySQL环境</h3><p>首先查看云服务器上是否已经部署了MySQL:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+
 <p>如果没有出现任何信息,则说明没有部署MySQL,否则可以把原来的删掉.</p>
 <p>比如出现了下述情况,则可以将原来的MySQL删掉:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508143542196.png" alt="image-20220508143542196"></p>
 <p>指令为:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove xxx(以mysql开头的包)</span><br></pre></td></tr></table></figure>
+
 <p>删完之后可以重新查看一下是否已经删除成功了(使用rpm -qa | grep mysql).</p>
-<p><br/></p>
+<br/>
+
 <p>接下来,还需要删除对应MySQL的相关目录,否则可能无法产生新的密码:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysql</span><br><span class="line"><span class="comment"># 接下来会显示相关的路径,将其删掉</span></span><br><span class="line">rm -rf /usr/share/mysql</span><br><span class="line">rm -rf /etc/my.cnf</span><br><span class="line">rm -rf /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <h3 id="2-安装MySQL-如果是CenOS7版本以上忽略这部分"><a href="#2-安装MySQL-如果是CenOS7版本以上忽略这部分" class="headerlink" title="2.安装MySQL(如果是CenOS7版本以上忽略这部分)"></a>2.安装MySQL(如果是CenOS7版本以上忽略这部分)</h3><p>低版本的话可以参考文章:</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/404076008">Linux 安装Mysql（图文教程） - 知乎 (zhihu.com)</a></p>
 <p>接下来,下载官方的MySQL包:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-<span class="number">10</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
+
 <p>先安装MySQL包:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> mysql57-community-release-el7-<span class="number">10</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
+
 <p>然后再安装MySQL:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql-community-server</span><br></pre></td></tr></table></figure>
+
 <p>同样,出现问题可以参考上述博客解决.</p>
-<p><br/></p>
+<br/>
+
 <p>接下来,启动MySQL服务:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service</span><br></pre></td></tr></table></figure>
+
 <p>这时可能会提示:Unit Not found</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508141147940.png" alt="image-20220508141147940"></p>
 <p>则可以参考下述文章的解决方案:</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miaodichiyou/article/details/99289160">(11条消息) Failed to start mysqld.service: Unit not found_赵健乔的博客-CSDN博客</a></p>
-<p><br/></p>
+<br/>
+
 <h3 id="3-启用MySQL服务"><a href="#3-启用MySQL服务" class="headerlink" title="3.启用MySQL服务"></a>3.启用MySQL服务</h3><p>参考文章:</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ricklz/p/12269102.html">centos7安装MariaDB以及Failed to start mariadb.service: Unit not found的错误解决 - ZhanLi - 博客园 (cnblogs.com)</a></p>
 <p>(1)首先安装mariadb和mariadb-server</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mariadb mariadb-server</span><br></pre></td></tr></table></figure>
+
 <p>如果出现了以下的问题:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/Unity/GameUI/image-20220508142447775.png" alt="image-20220508142447775"></p>
 <p>则表示GPG key的验证出现了错误,此时一个不严谨的做法是直接绕过GPG key的验证,重新输入(<strong>经过实际测试造成这种现象的原因可能是原来的MySQL没有删除干净,可以重新验证一下</strong>):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mariadb mariadb-server --nogpgcheck</span><br></pre></td></tr></table></figure>
-<p><br/></p>
+
+<br/>
+
 <p>(2)启动MariaDB</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mariadb</span><br></pre></td></tr></table></figure>
+
 <p>关于MariaDB的一些指令如下:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> mariadb mariadb-server</span><br><span class="line">systemctl start mariadb   <span class="comment">#启动mariadb</span></span><br><span class="line">systemctl enable mariadb  <span class="comment">#设置开机自启动</span></span><br><span class="line">systemctl stop mariadb    <span class="comment">#停止MariaDB</span></span><br><span class="line">systemctl restart mariadb <span class="comment">#重启MariaDB</span></span><br><span class="line">mysql_secure_installation <span class="comment">#设置root密码等相关</span></span><br><span class="line">mysql -uroot -p           <span class="comment">#测试登录 </span></span><br></pre></td></tr></table></figure>
+
 <p>因此我们需要首先设置一下开机自启动,然后设置root密码等相关:</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mariadb  <span class="comment">#设置开机自启动</span></span><br><span class="line">update mysql.user <span class="keyword">set</span> password=PASSWORD(&#x27;xxxxx&#x27;) where user=&#x27;root&#x27;;</span><br></pre></td></tr></table></figure>
+
 <p>接下来,需要初始化数据库的密码等信息,可以参考如下博客:</p>
 <p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000039132059">LInux中如何安装MySql和MariaDB以及配置 - SegmentFault 思否</a></p>
-<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/connector-net/en/connector-net-installation-unix.html">MySQL :: MySQL Connector/NET Developer Guide :: 3.2 Installing Connector/NET on Unix with Mono</a></p>
-<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/net/">MySQL :: Download Connector/NET</a></p>
-<p>如果没有unzip和zip,尝试以下解决方案:<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuxiaoshuangshuang/article/details/80625276">(11条消息) linux环境-bash: unzip: command not found_双鱼座girl的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/connector-net/en/connector-net-installation-unix.html">MySQL :: MySQL Connector&#x2F;NET Developer Guide :: 3.2 Installing Connector&#x2F;NET on Unix with Mono</a></p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/net/">MySQL :: Download Connector&#x2F;NET</a></p>
+<p>如果没有unzip和zip,尝试以下解决方案:
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/yuxiaoshuangshuang/article/details/80625276">(11条消息) linux环境-bash: unzip: command not found_双鱼座girl的博客-CSDN博客</a></p>
 
       
     </div>
@@ -2404,286 +2712,6 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="ChrisZhang">
-      <meta itemprop="description" content="我的技美学习之路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ChrisZhang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/03/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F%E5%90%8C%E6%AD%A5%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">网络游戏同步技术概述</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-03 23:51:28" itemprop="dateCreated datePublished" datetime="2022-05-03T23:51:28+08:00">2022-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-06 22:02:09" itemprop="dateModified" datetime="2022-05-06T22:02:09+08:00">2022-05-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">游戏基础概念</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%B8%E6%88%8F%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">网络游戏</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="网络游戏同步技术概述"><a href="#网络游戏同步技术概述" class="headerlink" title="网络游戏同步技术概述"></a>网络游戏同步技术概述</h3><p>参考文章:<a target="_blank" rel="noopener" href="https://www.zhihu.com/collection/703766200">https://www.zhihu.com/collection/703766200</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36884005">https://zhuanlan.zhihu.com/p/36884005</a></p>
-<h3 id="一-著名游戏的同步方案"><a href="#一-著名游戏的同步方案" class="headerlink" title="一.著名游戏的同步方案"></a>一.著名游戏的同步方案</h3><p><img src="https://pic2.zhimg.com/v2-14f08834e488ede01544cc77ad1e3619_r.jpg" alt="preview"></p>
-<p>其中有几点说明:</p>
-<blockquote>
-<p>1.Lockstep特指<strong>只同步操作的确定性锁步同步</strong>（lockstep就是大家说的帧同步）。</p>
-<p>2.这里不讨论快照同步，认为其等同于状态同步（也就是上图的State Synchronization）</p>
-</blockquote>
-<h3 id="二-网络传输协议"><a href="#二-网络传输协议" class="headerlink" title="二.网络传输协议"></a>二.网络传输协议</h3><blockquote>
-<p>本文中的<strong>网络传输协议</strong>（Network Transport Protocol），主要是指UDP协议和TCP协议。
-在TCP&#x2F;IP协议族（互联网协议套件，Internet Protocol Suite）中，UDP和TCP位于传输层（Transport Layer），它俩都独立依赖于更底一层网络互连层（Internet Layer）中的IP协议（网际协议，Internet Protocol）。</p>
-</blockquote>
-<p>复习一下互联网的体系结构：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320163835295.png" alt="image-20220320163835295"></p>
-<h4 id="（1）Socket是什么？"><a href="#（1）Socket是什么？" class="headerlink" title="（1）Socket是什么？"></a>（1）Socket是什么？</h4><blockquote>
-<p><strong>Berkeley套接字（Berkeley Sockets）是进行UDP或TCP通信的标准API</strong>，属于POSIX标准，所以Socket、Berkeley Socket、POSIX Socket、BSD Socket，都指同一个东西。
-通过Socket这个类及其方法，很简单就能进行UDP或TCP通信。</p>
-</blockquote>
-<h4 id="（2）UDP报文结构"><a href="#（2）UDP报文结构" class="headerlink" title="（2）UDP报文结构"></a>（2）UDP报文结构</h4><p>这一部分可以参考的文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/aa1928992772/article/details/85240358">(7条消息) UDP协议的详细解析_李大坝超欧的的博客-CSDN博客_udp</a></p>
-<ul>
-<li>UDP数据报分为<strong>首部</strong>和<strong>用户数据部分</strong>，整个UDP数据报作为IP数据报的数据部分封装在IP数据报中：</li>
-</ul>
-<p>对于UDP协议来说，其首部的结构如下：</p>
-<img src="https://img-blog.csdnimg.cn/20181226160325166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FhMTkyODk5Mjc3Mg==,size_16,color_FFFFFF,t_70" alt="img" style="zoom:80%;" />
-
-<p>其中，涉及到的字段的解释如下：</p>
-<ul>
-<li><strong>源端口</strong>： 源端口号，需要对方回信时选用，不需要时全部置0。</li>
-<li><strong>目的端口：</strong>目的端口号，在终点交付报文的时候需要用到。</li>
-<li><strong>长度</strong>：UDP的数据报的长度（包括首部和数据）其最小值为8（只有首部）</li>
-<li><strong>校验和</strong>：检测UDP数据报在传输中是否有错，有错则丢弃。<ul>
-<li>该字段是<strong>可选</strong>的，当源主机不想计算校验和，则直接令该字段全为0.</li>
-</ul>
-</li>
-</ul>
-<p>当传输层从IP层收到UDP数据报时，就<strong>根据首部中的目的端口，把UDP数据报通过相应的端口</strong>，上交给应用进程。
-如果接收方UDP发现收到的报文中的目的端口号不正确（不存在对应端口号的应用进程0），就丢弃该报文，并由ICMP发送“端口不可达”差错报文给对方。</p>
-<h5 id="UDP的特点"><a href="#UDP的特点" class="headerlink" title="UDP的特点"></a>UDP的特点</h5><blockquote>
-<p>从UDP的报文结构当中，我们可以得出其在网络游戏当中使用的特点：</p>
-<p>1.<strong>不可靠不保序传输（Unsequenced Unreliable Transmission）</strong>，即传输不保序，也不确保可达，某个具体数据包在传输的过程中，是可能丢失的；也可能数据包到达了，但数据出错从而校验失败，也被Socket丢弃掉。</p>
-<p>2.<strong>传输快</strong>，同样是由于不可靠，导致Socket不会浪费时间和带宽，对丢失的数据包进行重传。</p>
-<p>3.<strong>连接快</strong>，因为根本没有发生连接，所以收发双方每次通信都是无状态的，所以通信前不需建立连接。</p>
-<p>4.<strong>简单</strong>，上层应用能按需实现额外的传输特性（QoS），比如<strong>保序不可靠、可靠不保序、可靠保序、最新状态传输（Most Recent State）、快速冗余传输（Quickest Possible Delivery）等</strong>（也就是靠应用层来保证UDP的可靠）</p>
-<p>5.报头小，节省带宽。</p>
-</blockquote>
-<h4 id="（3）TCP报文结构"><a href="#（3）TCP报文结构" class="headerlink" title="（3）TCP报文结构"></a>（3）TCP报文结构</h4><p>可以参考的相关链接如下：</p>
-<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/6441.html">TCP报文格式解析 (biancheng.net)</a></p>
-<p>相对来说，TCP的报文结构就比较复杂一些：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320165407089.png" alt="image-20220320165407089"></p>
-<p>这里具体每个字段的作用，可以查看上面的链接，在这里不再进行过多展开。</p>
-<h5 id="（a）TCP相对UDP额外提供了什么？"><a href="#（a）TCP相对UDP额外提供了什么？" class="headerlink" title="（a）TCP相对UDP额外提供了什么？"></a>（a）TCP相对UDP额外提供了什么？</h5><ul>
-<li><strong>保序可靠传输</strong>（Sequenced Reliable Transmission），通过报头Sequence number、Acknowledgement Number、Window Size等字段来实现；</li>
-<li><strong>流量控制（Flow Control）</strong>，通过报头的Window Size（窗口大小）实现，接受者把自己的期待流量提示给发送者，防止发送方以过快的速度发送数据给接收方；</li>
-<li><strong>拥塞控制（Congestion Control）</strong>，通过报头的Sequence number、Acknowledgement number等字段，以及通过Timer机制实现，据此收发双方可判断数据包丢包，而推断出当前网络是否拥塞，并采取一些措施来减缓数据发送。</li>
-</ul>
-<h5 id="（b）TCP在网络游戏中使用的特点"><a href="#（b）TCP在网络游戏中使用的特点" class="headerlink" title="（b）TCP在网络游戏中使用的特点"></a>（b）TCP在网络游戏中使用的特点</h5><blockquote>
-<p>由于TCP的可靠传输，流量控制和拥塞控制技术，其在网络游戏当中可以有如下特点：</p>
-<p>（1）本身提供保序可靠传输，不需游戏作额外工作，可以适用于回合制游戏、RPG等通信频率不高的游戏类型；</p>
-<p>（2）<strong>传输慢</strong>，正因TCP本身对所有发出的数据包，都考虑保序可靠、流量控制、拥塞控制（包含了慢开始（Slow-Start），而这些功能对于大部分游戏类型，特别是快节奏（Fast Paced）游戏是不适用的，因为这类游戏通信频率高，要求低通信时延，新发的数据包可能比已发送的数据包更重要（比如游戏状态数据包，游戏状态经常改变，与其重传旧状态数据包，倒不如将其抛弃，赶快传输新的状态数据包）。</p>
-<p>（3）连接慢，首次连接需要经过<strong>三次握手</strong>；</p>
-<p>（4）复杂且黑盒，难以进行额外的扩展；</p>
-<p>（5）报头比较大，不适用于数据包的量比较大的情况；</p>
-</blockquote>
-<p>综上所述，<strong>大多网络游戏采用UDP。</strong>
-<strong>TCP更加适用于回合制等慢节奏游戏，如炉石传说等。</strong>
-注：有不少MMORPG也使用TCP，尽管如此，未见得TCP是最好的选择。</p>
-<h3 id="三-网络同步模型"><a href="#三-网络同步模型" class="headerlink" title="三.网络同步模型"></a>三.网络同步模型</h3><h4 id="预知识：什么叫做同步？"><a href="#预知识：什么叫做同步？" class="headerlink" title="预知识：什么叫做同步？"></a>预知识：什么叫做同步？</h4><blockquote>
-<p>比如玩《原神》的时候，要保证组队的人们看到的画面是一样的，以及伤害的数值这些也要是相同的，这就是同步。对于大多数游戏，不仅客户端的表现要一致，而且需要客户端和服务端的数据是一致的。所以，<strong>同步是一个网络游戏概念</strong>，只有网络游戏才需要同步，而单机游戏是不需要同步的。</p>
-</blockquote>
-<p>最主要的网络模型是：<strong>帧同步（Lockstep）</strong>和<strong>状态同步（State Synchronization）</strong>。</p>
-<p>对于帧来说，有以下两种术语定义：</p>
-<ul>
-<li><p><strong>逻辑帧：</strong>在本文会被称为Tick，游戏在逻辑层面是离散的过程，即可以认为是一个逻辑帧一个逻辑帧地进行逻辑运算，逻辑帧号是指游戏逻辑层面当前处于第几帧；</p>
-</li>
-<li><p><strong>渲染帧</strong>：在本文会被称为Frame，游戏在画面呈现层面也是离散的过程，即可以认为是一幅画面一幅画面地呈现给玩家的，渲染帧号是指游戏当前呈现的是第几幅画面；</p>
-</li>
-</ul>
-<p>其中，<strong>游戏的逻辑帧率和渲染帧率是互相独立的</strong>，比如一个游戏可以是20帧每秒的逻辑帧率、60帧每秒的渲染帧率。</p>
-<h4 id="（1）游戏逻辑的进行"><a href="#（1）游戏逻辑的进行" class="headerlink" title="（1）游戏逻辑的进行"></a>（1）游戏逻辑的进行</h4><p>游戏逻辑是一个逻辑帧一个逻辑帧地持续离散进行的，可以抽象为：</p>
-<p><img src="https://www.zhihu.com/equation?tex=S_k+=++%5Cbegin%7Bcases%7D++g(P,+C),+&%5Ctext%7Bif+%7D+k=0+%5C%5C++t(S_%7Bk-1%7D,+C,+I_k),+&%5Ctext%7Bif+%7D+k+%5Cgeq+1++%5Cend%7Bcases%7D+%5C%5C" alt="[公式]"></p>
-<ul>
-<li><p>游戏在第0个逻辑帧时，根据玩家信息$P$和游戏配置$C$，进行初始化运算$g$，得出初始化状态集合$S_0$</p>
-</li>
-<li><p>游戏在第$k$个逻辑帧时，根据前一个状态集合$S_{k-1}$和游戏配置$C$，以及第$k$帧收到的外部变化原因集合$I_k$，进行逻辑$t$运算，得出第$k$个逻辑帧新的游戏状态集合$S_k$</p>
-</li>
-</ul>
-<p>其中，对于$I$和$S$的解释如下：</p>
-<ul>
-<li>$I$:游戏状态变化的根本原因的集合，往往是各个玩家操作；</li>
-<li>$S$:游戏状态的集合，由众多状态子集组成，其中有以下两个重要子集定义：<ul>
-<li>$O$:一些能被玩家所明显观察到的对象的状态集合;</li>
-<li>$M$:一些可用于推导最终状态的中间状态集.</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Baligned%7D+O+&=+%5C%7Bo+%5Cin+S+%5Cmid+o+%5Ctext%7B+is+an+important+state+that+can+be+observed+by+the+player%7D%5C%7D+%5C%5C+M+&=+%5C%7Bm+%5Cin+S+%5Cmid+m+%5Ctext%7B+is+an+intermediate+state+to+infer+the+final+state%7D%5C%7D+%5Cend%7Baligned%7D+%5C%5C" alt="[公式]"></p>
-<h4 id="（2）状态同步和帧同步概括"><a href="#（2）状态同步和帧同步概括" class="headerlink" title="（2）状态同步和帧同步概括"></a>（2）状态同步和帧同步概括</h4><p>在网络同步时，称从客户端发出信息进行网络传输的过程为<strong>上行</strong>，称客户端经过网络传输收到信息的过程为<strong>下行</strong>，则，</p>
-<ul>
-<li><p><strong>一般帧同步的本质是</strong>，<strong>上下行</strong>都仅包含游戏外部变化原因集合$I_k$</p>
-</li>
-<li><p><strong>一般状态同步的本质是</strong>，<strong>下行</strong>仅包含游戏运算得出的结果状态集合$S_k$(确切地说是状态子集$O_k$,也就是能被玩家明显观察到的对象的状态集合)，<strong>上行</strong>则包含$I_k$和&#x2F;或状态子集$M_k$;</p>
-</li>
-</ul>
-<p>注：参考的文章当中的帧同步特指只同步操作的确定性锁步同步（Deterministic Lockstep）。不讨论快照同步（Snapshot Synchronization、Snapshot Interpolation），认为其等同于状态同步。</p>
-<h4 id="（3）帧同步"><a href="#（3）帧同步" class="headerlink" title="（3）帧同步"></a>（3）帧同步</h4><p>由于帧同步只同步游戏外部变化原因集合$I_k$，因此要求<strong>各个客户端的运算逻辑$g，t$是严格确定性的</strong>，这样所有客户端才能得出一致性的游戏状态结果$S_k$。</p>
-<ul>
-<li><p>如果在计算过程中包含了一丝不确定的因素，即会导致各个客户端运算$S_k$时出现一些误差，那么接下来的逻辑帧误差会越来越大，导致蝴蝶效应，从而最终各个客户端看到的结果状态完全不一样了（比如<strong>对浮点数的处理</strong>）。</p>
-</li>
-<li><p>著名帧同步游戏举例：<strong>《王者荣耀》</strong></p>
-</li>
-</ul>
-<blockquote>
-<p>假设玩家本人的客户端和其他正确客户端已经发生不一致，其他玩家在正确客户端作出的合理操作，到达玩家本人的已经状态不一致的客户端做逻辑演算时，却变得不一样的状态结果，这个结果很可能是不合理的，包括数值混乱，操作混乱等。</p>
-</blockquote>
-<h5 id="保证游戏的严格确定性："><a href="#保证游戏的严格确定性：" class="headerlink" title="保证游戏的严格确定性："></a>保证游戏的严格确定性：</h5><p>根据上述介绍，如果想要保证游戏的严格确定性，可以做出如下的规定：</p>
-<ul>
-<li><p><strong>对浮点数的处理</strong>：不使用浮点数而使用定点数，或限定各客户端所运行的硬件及操作系统从而浮点数的运算是一致的。</p>
-</li>
-<li><p><strong>确定性的随机数机制</strong>；</p>
-<ul>
-<li>需要保证每次随机的数字都相同，所以需要自己实现一套随机数，不能用unity自带的那个随机数接口，而且需要服务端发送相同的随机种子；因为非常微小的误差就有可能产生蝴蝶效应，所以所有<code>float</code>型的参数必须变成<code>int</code>型，保证计算结果一致。</li>
-</ul>
-</li>
-<li><p><strong>确定性的容器及算法</strong>（增加、移除、排序等）；</p>
-</li>
-<li><p><strong>隔离和封装逻辑层</strong>，以防止其他不确定性的调用；</p>
-<ul>
-<li>如需，则也须做到确定性的物理机制、导航机制、动画骨骼机制等，</li>
-</ul>
-</li>
-<li><p>排查所有引起异常（exception）的逻辑。</p>
-</li>
-</ul>
-<h5 id="制定检测不同步的管线流程的重要性："><a href="#制定检测不同步的管线流程的重要性：" class="headerlink" title="制定检测不同步的管线流程的重要性："></a>制定检测不同步的管线流程的重要性：</h5><blockquote>
-<p>对锁步同步游戏来说，不同步造成的游戏体验是极差的，偶现的不同步问题是极为头痛的， 因此制定检测不同步的管线流程对锁步同步游戏来说是至关重要的，比如<strong>帧状态哈希对比、静态代码扫描分析、帧级别甚至函数级别的高性能日志、外网不同步率统计，等</strong>。</p>
-</blockquote>
-<h4 id="（4）状态同步"><a href="#（4）状态同步" class="headerlink" title="（4）状态同步"></a>（4）状态同步</h4><p>因为状态同步只同步游戏运算得出的结果状态$S_k$，所以需要有机器来进行<strong>权威（Authoritative）的状态计算</strong>，并传输给其他机器，其他机器都将采纳接收到的状态。<strong>这种机器就是服务器（或者被称为主机（Host）），而其他没有权威的的机器则被称为客户端</strong>。为了简化说明，暂时将服务器集群也抽象为服务器，方便后续的讨论。</p>
-<blockquote>
-<p>状态同步，口头交流中也常不太精确地被称为“CS同步（Client-Server）”。</p>
-</blockquote>
-<ul>
-<li>注：许多著名引擎（如Unreal，Unity）的状态同步的实现都参考了下面这篇文章：<a target="_blank" rel="noopener" href="https://www.gamedevs.org/uploads/tribes-networking-model.pdf">Title (gamedevs.org)</a></li>
-</ul>
-<p>状态同步开发过程中最基础也最重要的是，<strong>不管客户端网络对象当前处于什么状态，它都要做到能正确地完全退出旧状态，退出后不能残留旧状态的逻辑层效果，并正确地进入服务器告知的新权威状态，从而带来新状态的逻辑层效果。</strong>（状态同步的时候<strong>上行</strong>包含$I_k$和&#x2F;或状态子集$M_k$）</p>
-<blockquote>
-<p>要避免以非状态同步的方式同步<strong>权威状态</strong>,比如类似于帧同步，服务器只传输$I_k$给客户端（而不传输$S_k$），让客户端在本地计算出网络对象的新状态$S_k$，<strong>这可能会带来服务器客户端之间状态不一致。</strong></p>
-<p>比如说，某个网络对象在第$k$个逻辑帧发生了$I_k$而进入到了$S_k$，且之后$S$都不再发生改变，那么服务器只会在第$k$帧才会发送$I_k$；之后若客户端因<strong>断线重连或实时死亡重播</strong>等原因导致该网络对象状态在客户端被重置为$S_0$，但当前服务器逻辑帧已大于第$k$帧，服务器不会再传输$I_k$给客户端，那么该网络对象在客户端里就错误地一直停留在$S_0$了。</p>
-</blockquote>
-<p>注：之前在帧同步讨论到的确定性指的是<strong>“严格的”确定性。</strong>在讨论状态同步时，偶尔也会提及“不严格的”确定性（比如最开始作者链接的Q&#x2F;A阶段最后一个问题），<strong>此类确定性只要求客户端服务器之间满足“足够的”确定性</strong>，以便客户端能够比较准确地进行预表现即可，因为客户端最终会采纳服务器的状态，修正累计的误差。</p>
-<h4 id="（5）帧同步和状态同步的对比"><a href="#（5）帧同步和状态同步的对比" class="headerlink" title="（5）帧同步和状态同步的对比"></a>（5）帧同步和状态同步的对比</h4><p><img src="https://pic1.zhimg.com/v2-5a11925f93130d3c315300b9055baac0_r.jpg" alt="preview"></p>
-<h5 id="两者的区别"><a href="#两者的区别" class="headerlink" title="两者的区别"></a>两者的区别</h5><blockquote>
-<ul>
-<li><p>最大的区别就是<strong>战斗核心逻辑写在哪</strong>:</p>
-<ul>
-<li>状态同步的战斗逻辑在服务端;</li>
-<li>帧同步的战斗逻辑在客户端。</li>
-</ul>
-<p><strong>战斗逻辑</strong>是包括技能逻辑、普攻、属性、伤害、移动、AI、检测、碰撞等等的一系列内容，这常常也被视为游戏开发过程中最难的部分。由于<strong>核心逻辑必须知道一个场景中的所有实体情况</strong>，所以MMO游戏（例如魔兽世界）就必须把战斗逻辑写在服务端，<strong>所以MMO游戏必须是状态同步的</strong>，因为MMO游戏的客户端承载有限，并不能把整张地图的实体全部展现出来（例如100米以外的NPC和玩家就不显示了），所以客户端没有足够的信息计算全图的人的所有行为。</p>
-</li>
-<li><p>具体到客户端和服务端的通信上：</p>
-<ul>
-<li><p><strong>在状态同步下，客户端更像是一个服务端数据的表现层</strong>。举个例子，一个英雄的几乎所有属性（例如血量、攻击、防御、攻速、魔法值等等）都是服务端传给客户端的，而且在属性发生改变的时候，服务端需要实时告诉客户端哪些属性改变了，客户端并不能改变这些属性，而是服务端传来什么属性就显示多少属性（虽然可以改变客户端数值达到表现上的效果，例如无限血量，但是服务端那边的血量属性为0时，一样会死）。</p>
-<ul>
-<li>此时举一个具体的例子。一个英雄要释放一个非指向性技能（例如伊泽瑞尔的Q），具体过程如下：<ul>
-<li>客户端通知服务端“我要释放一个技能”——&gt; 服务端通知客户端“在某地以什么方向释放某技能”——&gt;客户端根据这些信息创建一个特效放在某地，然后以某个方向飞行——&gt;服务端根据碰撞检测逻辑判断到某个时刻，这个技能碰到了敌方英雄，通知客户端——&gt;客户端根据服务端信息，删除特效，被打的英雄减血同时播放受击特效。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>在帧同步下，通信就比较简单了，服务端只转发操作，不做任何逻辑处理</strong>:</p>
-<ul>
-<li><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/OldBlogs/NetWork/image-20220320200447666.png" alt="image-20220320200447666"></li>
-<li>现在同一局里有4个玩家，也就是4个客户端，这时客户端A释放了一个技能x，此时将操作传递给服务端，服务端不做任何判断，直接把A的操作全部分发给ABCD，则ABCD同时让客户端A控制的英雄释放技能x。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h6 id="（a）流量对比"><a href="#（a）流量对比" class="headerlink" title="（a）流量对比"></a>（a）流量对比</h6><p><strong>状态同步比帧同步流量消耗大</strong>，例如一个复杂游戏的英雄属性可能有100多条，每次改变都要同步一次属性，这个消耗是巨大的，而帧同步不需要同步属性；例如释放一个技能，状态同步下，服务端需要通知客户端很多条消息（必须是分步的，不然功能做不了），而帧同步就只需要转发一次操作就行了。</p>
-<h6 id="（b）回放-amp-观战"><a href="#（b）回放-amp-观战" class="headerlink" title="（b）回放&amp;观战"></a>（b）回放&amp;观战</h6><p><strong>帧同步的回放&amp;观战比状态同步好做得多</strong>，因为只需要保存每局所有人的操作就好了，<strong>而状态同步的回放&amp;观战，需要有一个回放&amp;观战服务器</strong>，当一局战斗打响，战斗服务器在给客户端发送消息的同时，还需要把这些消息发给回放&amp;观战服务器，回放&amp;观战服务器做储存，如果有其他客户端请求回放或者观战，则回放&amp;观战服务器把储存起来的消息按时间发给客户端。</p>
-<h6 id="（c）安全性"><a href="#（c）安全性" class="headerlink" title="（c）安全性"></a>（c）安全性</h6><p><strong>状态同步的安全性比帧同步高很多，因为状态同步的所有逻辑和数值都是在服务端的</strong>，如果想作弊，就必须攻击服务器，而攻击服务器的难度比更改自己客户端数据的难度高得多，而且更容易被追踪，被追踪到了还会有极高的法律风险。而帧同步因为所有数据全部在客户端，所以解析客户端的数据之后，就可以轻松达到自己想要的效果，例如moba类游戏的全图挂，某些吃鸡游戏的透视挂，都是没办法防止的，不过<strong>更改数据达到胜利的作弊方式（例如更改自己的英雄攻击力）可以通过服务器比对同局其他人的战斗结果来预防。</strong></p>
-<h6 id="（d）服务器压力"><a href="#（d）服务器压力" class="headerlink" title="（d）服务器压力"></a>（d）服务器压力</h6><p>状态同步服务器压力比较大，因为要做更多运算。</p>
-<h6 id="（e）开发效率"><a href="#（e）开发效率" class="headerlink" title="（e）开发效率"></a>（e）开发效率</h6><p>首先要说，<strong>状态同步的游戏占主流，其次就是状态同步开发起来比较难。</strong></p>
-<ul>
-<li>帧同步服务器开发难度低，同一套方案可以给很多不同类型的游戏使用，反正都是转发操作；减少了服务端客户端沟通，老实说，没有扯皮的时间，开发效率最起码提高20%。</li>
-<li>状态同步的方案下，同一个功能至少需要一个客户端和服务端共同完成；PVP和PVE基本用的是同一套代码，做完PVP很容易就可以做单机的PVE。</li>
-</ul>
-<h6 id="（f）断线重连"><a href="#（f）断线重连" class="headerlink" title="（f）断线重连"></a>（f）断线重连</h6><ul>
-<li>状态同步的断线重连很好做，无非就是把整个场景和人物全部重新生成一遍，各种数值根据服务端提供加到人物身上而已。</li>
-<li>帧同步的断线重连就比较麻烦了，例如客户端在战场开始的第10秒短线了，第15秒连回来了，就需要服务端把第10秒到第15秒之间5秒内的所有消息一次性发给客户端，然后客户端加速整个游戏的核心逻辑运行速度（例如加速成10倍），直到追上现有进度。</li>
-</ul>
-<p>其他可以供参考的资料，有时间再继续看：</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8cca5458c45b">游戏帧同步的流程与实现 - 简书 (jianshu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9b7fdf9c9272">帧同步和状态同步 - 简书 (jianshu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/it_wjw/article/details/76578165">(7条消息) 战斗同步策略之状态同步_书影_的博客-CSDN博客_状态同步</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4000a301c32a">多边形碰撞检测 – 分离轴算法 - 简书 (jianshu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tekkaman/p/9337912.html">状态同步 - Tekkaman - 博客园 (cnblogs.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433368860">网络游戏研发，该选帧同步还是状态同步？ - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/372526366_667928">帧同步（LockStep）该如何反外挂 及 优化_游戏 (sohu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151347866">什么是QoS技术 - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hello_world6/article/details/53680298?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_default&spm=1001.2101.3001.4242.1&utm_relevant_index=3">(7条消息) 如何让UDP实现可靠传输_hello_world6的博客-CSDN博客_怎么让udp实现可靠连接</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nieliangcai/p/10362751.html">TCP和UDP的区别（Socket） - 小心走火 - 博客园 (cnblogs.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2755,18 +2783,18 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
