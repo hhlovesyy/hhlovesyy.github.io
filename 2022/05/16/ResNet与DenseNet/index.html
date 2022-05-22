@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ResNet与DenseNet参考文章: 你必须要知道CNN模型：ResNet - 知乎 (zhihu.com) ResNet详解与分析 - shine-lee - 博客园 (cnblogs.com) 一.ResNet 提出者: 何恺明博士 ResNet解决了深度CNN模型难训练的问题.其全名为”深度残差网络（Deep residual network, ResNet)”,它的诞生是CNN图像史上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN基础介绍">
+<meta property="og:url" content="http://example.com/2022/05/16/ResNet%E4%B8%8EDenseNet/index.html">
+<meta property="og:site_name" content="ChrisZhang">
+<meta property="og:description" content="ResNet与DenseNet参考文章: 你必须要知道CNN模型：ResNet - 知乎 (zhihu.com) ResNet详解与分析 - shine-lee - 博客园 (cnblogs.com) 一.ResNet 提出者: 何恺明博士 ResNet解决了深度CNN模型难训练的问题.其全名为”深度残差网络（Deep residual network, ResNet)”,它的诞生是CNN图像史上">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521171510081.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3uUio4.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3K34c8.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3l4cD0.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3u8Wwj.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/33V5OH.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521223107313.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521223157726.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3.gif">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220522100043184.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1*BJM5Ht9D5HcP5CFpu8bn7g.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220522101213546.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1dniz8zK2ClBY96ol7YGnJw-16531856685857.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1BJM5Ht9D5HcP5CFpu8bn7g-165318580897311.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0NTM4OTg=,size_16,color_FFFFFF,t_70.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521213354846.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1dniz8zK2ClBY96ol7YGnJw.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1BJM5Ht9D5HcP5CFpu8bn7g.png">
+<meta property="article:published_time" content="2022-05-16T10:33:17.000Z">
+<meta property="article:modified_time" content="2022-05-22T03:18:16.212Z">
+<meta property="article:author" content="ChrisZhang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="CNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521171510081.png">
+
+<link rel="canonical" href="http://example.com/2022/05/16/ResNet%E4%B8%8EDenseNet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RNN基础介绍 | ChrisZhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChrisZhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/16/ResNet%E4%B8%8EDenseNet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="ChrisZhang">
+      <meta itemprop="description" content="我的技美学习之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChrisZhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RNN基础介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-16 18:33:17" itemprop="dateCreated datePublished" datetime="2022-05-16T18:33:17+08:00">2022-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-22 11:18:16" itemprop="dateModified" datetime="2022-05-22T11:18:16+08:00">2022-05-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/CNN/" itemprop="url" rel="index"><span itemprop="name">CNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="ResNet与DenseNet"><a href="#ResNet与DenseNet" class="headerlink" title="ResNet与DenseNet"></a>ResNet与DenseNet</h2><p>参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31852747">你必须要知道CNN模型：ResNet - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shine-lee/p/12363488.html">ResNet详解与分析 - shine-lee - 博客园 (cnblogs.com)</a></p>
+<h2 id="一-ResNet"><a href="#一-ResNet" class="headerlink" title="一.ResNet"></a>一.ResNet</h2><blockquote>
+<p>提出者: 何恺明博士</p>
+<p>ResNet解决了深度CNN模型难训练的问题.其全名为”深度残差网络（Deep residual network, ResNet)”,它的诞生是CNN图像史上的一个里程碑事件.</p>
+<p>ResNet总共有152层,具有较深的深度,<strong>基于的技巧是残差学习（Residual learning)</strong>,接下来对其进行介绍.</p>
+</blockquote>
+<p><br/></p>
+<h3 id="1-深度网络的退化问题"><a href="#1-深度网络的退化问题" class="headerlink" title="1.深度网络的退化问题"></a>1.深度网络的退化问题</h3><blockquote>
+<p>从经验来看，网络的深度对模型的性能至关重要，当增加网络层数后，网络可以进行更加复杂的特征模式的提取，所以当模型更深时理论上可以取得更好的结果.当然这并不是绝对的,<strong>通过实验可以发现深度网络会出现退化的问题</strong>,如下图:</p>
+</blockquote>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521171510081.png" alt="image-20220521171510081"></p>
+<p>网络深度增加时，网络准确度出现饱和，甚至出现下降。这个现象可以在上图3中直观看出来：56层的网络比20层网络效果还要差。</p>
+<p>这不会是过拟合问题，因为56层网络的训练误差同样高。<strong>我们知道深层网络存在着梯度消失或者爆炸的问题</strong>，这使得深度学习模型很难训练。但是现在已经存在一些技术手段如BatchNorm来缓解这个问题。因此，出现深度网络的退化问题是非常令人诧异的。</p>
+<h4 id="1-解决思路"><a href="#1-解决思路" class="headerlink" title="(1)解决思路"></a>(1)解决思路</h4><p>这里有两种解决思路:</p>
+<ul>
+<li><strong>调整求解方法</strong>,比如更好的初始化,更好的梯度下降算法等</li>
+<li><strong>调整模型结构</strong>,让模型更容易优化<ul>
+<li>改变模型结构实际上是改变了error surface的形态</li>
+</ul>
+</li>
+</ul>
+<p><br/></p>
+<h3 id="2-残差学习"><a href="#2-残差学习" class="headerlink" title="2.残差学习"></a>2.残差学习</h3><p>从上面可以看到,深度网络的退化问题会导致其不好进行训练.但现在存在一个问题,那就是深度网络至少不应该比浅度网络差(因为理论上给网络叠加更多层，浅层网络的解空间是包含在深层网络的解空间中的，深层网络的解空间至少存在不差于浅层网络的解，因为只需将增加的层变成<strong>恒等映射</strong>，其他层的权重原封不动copy浅层网络，就可以获得与浅层网络同样的性能,<strong>这样的结果至少不应该是退化</strong>).</p>
+<p>因此,可以想到的是,<strong>目前的训练方法有问题,才会让深度网络很难找到一个好的参数.</strong></p>
+<p><br/></p>
+<h4 id="1-残差学习的提出"><a href="#1-残差学习的提出" class="headerlink" title="(1)残差学习的提出"></a>(1)残差学习的提出</h4><p>ResNet的作者从后者入手，探求更好的模型结构。将堆叠的几层layer称之为一个block，对于某个block，其可以拟合的函数为$F(x)$，如果期望的潜在映射为$H(x)$，与其让$F(x)$ 直接学习潜在的映射，不如去学习残差$H(x)−x$，即$F(x):=H(x)−x$，这样原本的前向路径上就变成了$F(x)+x$，用$F(x)+x$来拟合$H(x)$。作者认为这样可能更易于优化，因为相比于让$F(x)$学习成恒等映射，让$F(x)$学习成0要更加容易——后者通过L2正则就可以轻松实现。这样，对于冗余的block，只需$F(x)→0$就可以得到恒等映射，性能不减。</p>
+<p>(<strong>通过残差学习,至少不能让网络训练的性能更差</strong>)</p>
+<p>引用一段英文来解释这件事:</p>
+<blockquote>
+<p>Instead of hoping each few stacked layers directly fit a desired underlying mapping, we explicitly let these layers fit a <strong>residual mapping</strong>. </p>
+<p>Formally, denoting the desired underlying mapping as $H(x)$, we let the stacked nonlinear layers fit another mapping of $F(x):=H(x)−x$. The original mapping is recast into $F(x)+x$. We <strong>hypothesize</strong> that it is easier to optimize the residual mapping than to optimize the original, unreferenced mapping. To the extreme, <strong>if an identity mapping were optimal, it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers.</strong></p>
+<p>—— from <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></p>
+</blockquote>
+<p><strong>接下来的问题是:如何设计$F(x)+x$?</strong></p>
+<p><br></p>
+<h3 id="3-ResNet网络的设计"><a href="#3-ResNet网络的设计" class="headerlink" title="3.ResNet网络的设计"></a>3.ResNet网络的设计</h3><h4 id="1-Residual-Block的设计"><a href="#1-Residual-Block的设计" class="headerlink" title="(1)Residual Block的设计"></a>(1)Residual Block的设计</h4><p>$F(x)+x$ 构成的block称之为Residual Block，即残差块，如下图所示，多个相似的Residual Block串联构成ResNet。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3uUio4.png" alt="3uUio4.png"></p>
+<p>可以看到,一个残差块有两条路径:$F(x)$和$x$</p>
+<ul>
+<li>前者路径拟合残差,不妨称之为残差路径</li>
+<li>后者路径为identity mapping,也就是恒等映射,称之为”short cut”</li>
+</ul>
+<p>图中的$⊕$叫做element-wise addition,要求参与运算的$F(x),x$的尺寸要相同.</p>
+<p><br/></p>
+<h5 id="i-残差路径如何设计"><a href="#i-残差路径如何设计" class="headerlink" title="(i)残差路径如何设计?"></a>(i)残差路径如何设计?</h5><p>原论文当中,残差路径大概分为两种,一种有bottleneck结构,一种没有(称之为basic block).</p>
+<ul>
+<li>basic block 由两个3×3的卷积层构成</li>
+<li>bottleneck则具有1×1的卷积层,<strong>这样做的好处主要是为了先降维再升维,从而降低计算的复杂度</strong>.</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3K34c8.png" alt="3K34c8.png"></p>
+<p><br/></p>
+<h5 id="ii-shortcut-路径如何设计"><a href="#ii-shortcut-路径如何设计" class="headerlink" title="(ii)shortcut 路径如何设计?"></a>(ii)shortcut 路径如何设计?</h5><p>shortcut路径大概也可以分为两种,这取决于残差路径是否改变了feature map的数量和尺寸:</p>
+<ul>
+<li>一种是将输入$x$原封不动地输出</li>
+<li>另一种则需要通过1×1卷积来升维,和/或降采样,主要是为了将输出与$F(x)$路径的输出保持shape的一致,这并不会对网络性能的提升有特别明显的提升,两种结构如下:</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3l4cD0.png" alt="https://d2l.ai/chapter_convolutional-modern/resnet.html"></p>
+<p><br/></p>
+<h5 id="iii-Residual-Block之间的衔接"><a href="#iii-Residual-Block之间的衔接" class="headerlink" title="(iii)Residual Block之间的衔接"></a>(iii)Residual Block之间的衔接</h5><blockquote>
+<p>在原论文当中,$F(x)+x$经过ReLU之后直接作为下一个block的输入x.</p>
+<p>关于这几者之间的衔接,可以参考下面的文章:</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1603.05027">[1603.05027] Identity Mappings in Deep Residual Networks (arxiv.org)</a></p>
+<p><br/></p>
+<h4 id="2-ResNet网络结构"><a href="#2-ResNet网络结构" class="headerlink" title="(2)ResNet网络结构"></a>(2)ResNet网络结构</h4><p>ResNet是多个Residual Block的串联,接下来直观看一下ResNet-34与34-layer plain net和VGG的对比，以及堆叠不同数量Residual Block得到的不同ResNet。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3u8Wwj.png" alt="https://arxiv.org/abs/1512.03385"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/33V5OH.png" alt="https://arxiv.org/abs/1512.03385"></p>
+<p>ResNet的设计有如下特点：</p>
+<ul>
+<li>与plain net相比，ResNet多了很多“旁路”，即shortcut路径，其首尾圈出的layers构成一个Residual Block；</li>
+<li>ResNet中，所有的Residual Block都没有pooling层，<strong>降采样是通过conv的stride实现的</strong>；</li>
+<li>分别在conv3_1、conv4_1和conv5_1 Residual Block，降采样1倍，同时feature map数量增加1倍，如图中虚线划定的block；</li>
+<li><strong>通过Average Pooling得到最终的特征</strong>，而不是通过全连接层；</li>
+<li>每个卷积层之后都紧接着BatchNorm layer，为了简化，图中并没有标出；</li>
+</ul>
+<p>补充:BN layer:</p>
+<blockquote>
+<p><strong>Batch-Normalization (BN)</strong> is an algorithmic method which makes the training of Deep Neural Networks (DNN) <strong>faster</strong> and <strong>more stable</strong>.</p>
+</blockquote>
+<p><strong>ResNet结构非常容易修改和扩展，通过调整block内的channel数量以及堆叠的block数量，就可以很容易地调整网络的宽度和深度，来得到不同表达能力的网络，而不用过多地担心网络的“退化”问题，只要训练数据足够，逐步加深网络，就可以获得更好的性能表现。</strong></p>
+<p>剩下的有时间再参考</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shine-lee/p/12363488.html">ResNet详解与分析 - shine-lee - 博客园 (cnblogs.com)</a></p>
+<p>继续补充.</p>
+<p><br/></p>
+<h2 id="二-DenseNet"><a href="#二-DenseNet" class="headerlink" title="二.DenseNet"></a>二.DenseNet</h2><p>参考论文:</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1608.06993.pdf">https://arxiv.org/pdf/1608.06993.pdf</a></p>
+<p>参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37189203">DenseNet：比ResNet更优的CNN模型 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803">Review: DenseNet — Dense Convolutional Network (Image Classification) | by Sik-Ho Tsang | Towards Data Science</a></p>
+<blockquote>
+<p>它的基本思路与ResNet一致，但是它建立的是前面所有层与后面层的密集连接（dense connection），它的名称也是由此而来。DenseNet的另一大特色是通过特征在channel上的连接来实现特征重用（feature reuse）。这些特点让DenseNet在参数和计算成本更少的情形下实现比ResNet更优的性能，DenseNet也因此斩获CVPR 2017的最佳论文奖。接下来首先介绍DenseNet的原理以及网路架构，然后讲解DenseNet在Pytorch上的实现。</p>
+</blockquote>
+<h3 id="1-DenseNet结构"><a href="#1-DenseNet结构" class="headerlink" title="1.DenseNet结构"></a>1.DenseNet结构</h3><p>对比DenseNet,ResNet,与普通神经网络,对比如下:</p>
+<p>以下是我们所熟悉的普通卷积神经网络以及上文所提及的ResNet:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521223107313.png" alt="image-20220521223107313"></p>
+<p>而DenseNet的结构如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521223157726.png" alt="image-20220521223157726"></p>
+<p>相对于ResNet来说,DenseNet提出了一个更激进的<strong>密集连接机制</strong>,即互相连接所有的层,<strong>也就是说每层都会接收其前面所有层作为其额外的输入.</strong></p>
+<blockquote>
+<p>ResNet是每个层与前面的某层（一般是2~3层）短路连接在一起，连接方式是通过元素级相加。而在DenseNet中，每个层都会与前面所有层在channel维度上连接（concat）在一起（这里各个层的特征图大小是相同的，后面会有说明），并作为下一层的输入。</p>
+</blockquote>
+<p>对于一个L层的网络,DenseNet共包含$L(L+1)/2$个连接,这相比于ResNet来说,是一种比较密集的连接.<strong>而且DenseNet是直接concat来自不同层的特征图,这一点实际上可以实现特征重用,从而提升效率,这一点是DenseNet与ResNet最主要的区别.</strong></p>
+<p><br/></p>
+<h4 id="1-用公式来表示"><a href="#1-用公式来表示" class="headerlink" title="(1)用公式来表示"></a>(1)用公式来表示</h4><ul>
+<li>传统的网络在l层的输出为:<ul>
+<li>$x_l=H_l(x_{l-1})$</li>
+</ul>
+</li>
+<li><p>对于ResNet来说,其增加了来自上一层的identity函数(也就是ResNet中提到的short cut路径)</p>
+<ul>
+<li>$x_l=H_l(x_{l-1})+x_{l-1}$</li>
+</ul>
+</li>
+<li><p>而在DenseNet当中,会连接前面所有的层来作为输入:</p>
+<ul>
+<li>$x_l=H_l([x_0,x_1,…x_{l-1}])$</li>
+</ul>
+</li>
+</ul>
+<p>请注意,上面的$H_l(·)$代表非线性转化函数(non-liear transformation），它是一个组合操作，其可能包括一系列的BN(Batch Normalization)，ReLU，Pooling及Conv操作。注意这里$l$层与$l-1$层之间可能实际上包含多个卷积层).</p>
+<p><br/></p>
+<h3 id="2-DenseNet的前向过程"><a href="#2-DenseNet的前向过程" class="headerlink" title="2.DenseNet的前向过程"></a>2.DenseNet的前向过程</h3><p>可以参考下图,这种密集连接方式是<strong>在channel的维度上连接在一起</strong>.比如$h_3$的输入不仅包括来自$h_2$的$x_2$,还包括前两层的$x_1,x_2$,它们在channel的维度上连接在一起.</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/3.gif" alt="3"></p>
+<p>对于CNN网络来说,一般通过池化或者步幅stride&gt;1的卷积来降低特征图的大小,而对于连接密集的DenseNet来说其每个模块中的特征图大小要保持相同,因此其采用的方式是DenseBlock+Transition的结构,其中<strong>DenseBlock是包含很多层的模块，每个层的特征图大小相同，层与层之间采用密集连接方式。</strong>而<strong>Transition模块是连接两个相邻的DenseBlock，并且通过Pooling使特征图大小降低</strong>。</p>
+<p>如下图所示:<br><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220522100043184.png" alt="image-20220522100043184"></p>
+<p>可以看到,该网络包含4个DenseBlock,各个DenseBlock之间通过Transition连接在一起.</p>
+<p><br/></p>
+<h3 id="3-具体网络结构"><a href="#3-具体网络结构" class="headerlink" title="3.具体网络结构"></a>3.具体网络结构</h3><ul>
+<li>DenseBlock</li>
+<li>Transition</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1*BJM5Ht9D5HcP5CFpu8bn7g.png" alt=""></p>
+<h4 id="1-DenseBlock"><a href="#1-DenseBlock" class="headerlink" title="(1)DenseBlock"></a>(1)DenseBlock</h4><p>在每个DenseBlock中,各个层的特征图大小一致,在Channel维度上进行连接.内部的非线性组合函数$H(·)$采用<strong>BN+ReLU+3×3 Conv的结构</strong>.</p>
+<p>与ResNet不同,所有DenseBlock中各个层卷积后均输出k个特征图,所以得到的特征图的channel数为k(或者说产生k个卷积核).<strong>这里的k称为growth rate,是一个超参数(一般情况下较小的k,比如k=12),就可以获得不错的性能.</strong></p>
+<p>假设输入层的特征图的channel数为$k_0$,则$l$层输入的channel数为$k_0+k(l-1)$(因为相当于是叠上去的,见上面的动图),随着层数的增加,DenseBlock的输入会变得非常多,<strong>不过不用担心,这是由于特征重用所造成的,每个层仅有k个特征是自己独有的.</strong></p>
+<p><br/></p>
+<h4 id="2-技巧-BottleNeck"><a href="#2-技巧-BottleNeck" class="headerlink" title="(2)技巧:BottleNeck"></a>(2)技巧:BottleNeck</h4><p>如果我们不使用BottleNeck,则效果图如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220522101213546.png" alt="image-20220522101213546"></p>
+<p>如果这样,后面层的输入会非常大,<strong>因此可以在DenseBlock内部使用bottleneck层来减少计算量</strong></p>
+<blockquote>
+<p>这可以通过增加1×1卷积核来实现,即<strong>BN+ReLU+1x1 Conv+BN+ReLU+3x3 Conv</strong>，称为<strong>DenseNet-B</strong>结构.</p>
+</blockquote>
+<p>该结构如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1dniz8zK2ClBY96ol7YGnJw-16531856685857.png" alt=""></p>
+<p>其中1×1卷积核的作用是得到4k个特征图,从而降低特征数量,提升计算效率.</p>
+<p><br/></p>
+<h4 id="3-Transition层"><a href="#3-Transition层" class="headerlink" title="(3)Transition层"></a>(3)Transition层</h4><p>我们再回顾一下这个层的位置:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1BJM5Ht9D5HcP5CFpu8bn7g-165318580897311.png" alt=""></p>
+<p>可以看到,Transition层包括<strong>1×1 Conv+2×2 average pooling</strong>.(可以是BN+ReLU+1×1 Conv+2×2 average pooling).</p>
+<p>Transition层可以起到<strong>压缩模型的作用</strong>.假定Transition的上接DenseBlock得到的特征图channels数为$m$,则Transition层可以产生$θm,\theta \in (0,1]$,被称为<strong>压缩系数</strong>.</p>
+<ul>
+<li>当$\theta=1$时,特征个数经过Transition层后不会发生变化,即无压缩.</li>
+<li>当$\theta&lt;1$时,这种结构称为<strong>DenseNet-C</strong>,在文中使用$\theta=0.5$</li>
+<li>如果$\theta&lt;1$并且使用了BottleNeck结构,则这种组合被称为<strong>DenseNet-BC</strong></li>
+</ul>
+<p><br/></p>
+<h4 id="4-网络的结尾"><a href="#4-网络的结尾" class="headerlink" title="(4)网络的结尾"></a>(4)网络的结尾</h4><p>从上面的图可以看到,在最后一个DenseBlock的结尾,会使用一个全局的averge pooling,然后是一个softmax分类器,来进行分类.</p>
+<p><br/></p>
+<h4 id="5-DenseNet-121的结构"><a href="#5-DenseNet-121的结构" class="headerlink" title="(5)DenseNet-121的结构"></a>(5)DenseNet-121的结构</h4><p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0NTM4OTg=,size_16,color_FFFFFF,t_70.png" alt="img"></p>
+<p><br/></p>
+<h3 id="4-Pytorch-DenseNet"><a href="#4-Pytorch-DenseNet" class="headerlink" title="4.Pytorch-DenseNet"></a>4.Pytorch-DenseNet</h3><p>如果相对源代码进行分析的话,可以参考如下链接:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/pytorch/vision/blob/main/torchvision/models/densenet.py">vision/densenet.py at main · pytorch/vision (github.com)</a></p>
+<p>相关代码的使用可以参考上面提到的知乎文章(在博客中的其他文章(比如手写体数字识别)中也有提到DenseNet的使用):</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37189203">DenseNet：比ResNet更优的CNN模型 - 知乎 (zhihu.com)</a></p>
+<h4 id="1-pytorch提供的网络参数URL"><a href="#1-pytorch提供的网络参数URL" class="headerlink" title="(1).pytorch提供的网络参数URL"></a>(1).pytorch提供的网络参数URL</h4><p>在这个工程当中,我们使用到了DenseNet作为网络结构,在如下的URL当中可以下载到对应的pytorch提供的DenseNet的模型网络参数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model_urls = &#123;  <span class="comment"># pytorch 提供的模型url地址</span></span><br><span class="line">    <span class="string">&#x27;densenet121&#x27;</span>: <span class="string">&#x27;https://download.pytorch.org/models/densenet121-a639ec97.pth&#x27;</span>,  <span class="comment"># 对应的网络数据</span></span><br><span class="line">    <span class="string">&#x27;densenet169&#x27;</span>: <span class="string">&#x27;https://download.pytorch.org/models/densenet169-b2777c0a.pth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;densenet201&#x27;</span>: <span class="string">&#x27;https://download.pytorch.org/models/densenet201-c1103571.pth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;densenet161&#x27;</span>: <span class="string">&#x27;https://download.pytorch.org/models/densenet161-8d451a50.pth&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到,所提供的模型数据是.pth文件,接下来会对这种文件进行叙述.</p>
+<p><br/></p>
+<h4 id="2-pth文件"><a href="#2-pth文件" class="headerlink" title="(2).pth文件"></a>(2).pth文件</h4><p>这个文件会保存一些模型的权重,而我们通过一些加载模型的方法就可以利用pytorch将pth文件加载进来.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">pth = <span class="string">r&#x27;densenet121-a639ec97.pth&#x27;</span></span><br><span class="line">sta_dic = torch.load(pth)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;.pth type:&#x27;</span>, <span class="built_in">type</span>(sta_dic))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;.pth len:&#x27;</span>, <span class="built_in">len</span>(sta_dic))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;--------------------------&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> sta_dic.keys():</span><br><span class="line">    <span class="built_in">print</span>(k, <span class="built_in">type</span>(sta_dic[k]), sta_dic[k].shape)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>比如我们加载刚才的网络模型,用上述代码运行的结果如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220521213354846.png" alt="image-20220521213354846"></p>
+<p>在这里可以看到一些DenseNet的网络模型尺寸,比如卷积层的大小,BN层(Batch Normalization)的大小等.</p>
+<p><br/></p>
+<h4 id="3-实现DenseBlock中的内部结构-模板"><a href="#3-实现DenseBlock中的内部结构-模板" class="headerlink" title="(3).实现DenseBlock中的内部结构(模板)"></a>(3).实现DenseBlock中的内部结构(模板)</h4><blockquote>
+<p>没有进行特殊处理,这里采用比较常见的DenseBlock实现方式,<strong>采用BN+ReLU+1x1 Conv+BN+ReLU+3x3 Conv</strong>结构，最后也加入<strong>dropout</strong>层以用于训练过程。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">_DenseLayer</span>(nn.Sequential):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_input_features, growth_rate, bn_size, drop_rate</span>):</span><br><span class="line">        <span class="built_in">super</span>(_DenseLayer, self).__init__()</span><br><span class="line">        <span class="comment"># self.add_module(&#x27;norm1_G&#x27;, nn.GroupNorm(GroupNorm_num,num_input_features)),</span></span><br><span class="line">        self.add_module(<span class="string">&#x27;norm1&#x27;</span>, nn.BatchNorm2d(num_input_features)),</span><br><span class="line">        self.add_module(<span class="string">&#x27;relu1&#x27;</span>, nn.ReLU(inplace=<span class="literal">True</span>)),</span><br><span class="line">        self.add_module(<span class="string">&#x27;conv1&#x27;</span>, nn.Conv2d(num_input_features, bn_size *</span><br><span class="line">                                           growth_rate, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>, bias=<span class="literal">False</span>)),</span><br><span class="line">        <span class="comment"># self.add_module(&#x27;norm2_G&#x27;, nn.GroupNorm(GroupNorm_num,bn_size * growth_rate)),</span></span><br><span class="line">        self.add_module(<span class="string">&#x27;norm2&#x27;</span>, nn.BatchNorm2d(bn_size * growth_rate)),</span><br><span class="line">        self.add_module(<span class="string">&#x27;relu2&#x27;</span>, nn.ReLU(inplace=<span class="literal">True</span>)),</span><br><span class="line">        self.add_module(<span class="string">&#x27;conv2&#x27;</span>, nn.Conv2d(bn_size * growth_rate, growth_rate,</span><br><span class="line">                                           kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>, bias=<span class="literal">False</span>)),</span><br><span class="line">        self.drop_rate = drop_rate  <span class="comment"># dropout机制会在训练过程当中随机停止一些神经元,从而增强模型稳定性和鲁棒性,具体可以参考下面的链接:</span></span><br><span class="line">        <span class="comment"># https: // zhuanlan.zhihu.com / p / 77609689</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        new_features = <span class="built_in">super</span>(_DenseLayer, self).forward(x)</span><br><span class="line">        <span class="keyword">if</span> self.drop_rate &gt; <span class="number">0</span>:</span><br><span class="line">            new_features = F.dropout(new_features, p=self.drop_rate, training=self.training)</span><br><span class="line">        <span class="keyword">return</span> torch.cat([x, new_features], <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>网络结构如下:</p>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1dniz8zK2ClBY96ol7YGnJw.png" alt="img"></p>
+<p><br/></p>
+<h4 id="4-DenseBlock模块"><a href="#4-DenseBlock模块" class="headerlink" title="(4).DenseBlock模块"></a>(4).DenseBlock模块</h4><p>据此，实现DenseBlock模块，内部是密集连接方式（输入特征数线性增长）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意，L层dense layer的输出都是不变的，而每层的输入channel数是增加的，因为如上所述，每层的输入是前面所有层的拼接。</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_DenseBlock</span>(nn.Sequential):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_layers, num_input_features, bn_size, growth_rate, drop_rate</span>):</span><br><span class="line">        <span class="built_in">super</span>(_DenseBlock, self).__init__()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_layers):  <span class="comment"># num_layers层重复次数</span></span><br><span class="line">            <span class="comment">#  num_input_features + i * growth_rate,for一次层数增加growth_rate</span></span><br><span class="line">            layer = _DenseLayer(num_input_features + i * growth_rate, growth_rate, bn_size, drop_rate)</span><br><span class="line">            self.add_module(<span class="string">&#x27;denselayer%d&#x27;</span> % (i + <span class="number">1</span>), layer)  <span class="comment"># 追加dense_layer层到字典里面</span></span><br></pre></td></tr></table></figure>
+<p><br/></p>
+<h4 id="5-实现Transition层"><a href="#5-实现Transition层" class="headerlink" title="(5).实现Transition层"></a>(5).实现Transition层</h4><blockquote>
+<p>Transition层主要是由一个卷积层和一个池化层组成的,结构如下图所示:</p>
+</blockquote>
+<p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1BJM5Ht9D5HcP5CFpu8bn7g.png" alt="img"></p>
+<p>相关的pytorch代码如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">_Transition</span>(nn.Sequential):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num_input_features, num_output_features</span>):</span><br><span class="line">        <span class="built_in">super</span>(_Transition, self).__init__()</span><br><span class="line">        <span class="comment"># self.add_module(&#x27;norm_G&#x27;, nn.GroupNorm(GroupNorm_num,num_input_features))</span></span><br><span class="line">        self.add_module(<span class="string">&#x27;norm&#x27;</span>, nn.BatchNorm2d(num_input_features))</span><br><span class="line">        self.add_module(<span class="string">&#x27;relu&#x27;</span>, nn.ReLU(inplace=<span class="literal">True</span>))</span><br><span class="line">        self.add_module(<span class="string">&#x27;conv&#x27;</span>, nn.Conv2d(num_input_features, num_output_features,</span><br><span class="line">                                          kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>, bias=<span class="literal">False</span>))</span><br><span class="line">        self.add_module(<span class="string">&#x27;pool&#x27;</span>, nn.AvgPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<p><br/></p>
+<h4 id="6-实现DenseNet网络"><a href="#6-实现DenseNet网络" class="headerlink" title="(6).实现DenseNet网络"></a>(6).实现DenseNet网络</h4><p>最后,我们只需要实现DenseNet网络就可以了:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DenseNet</span>(nn.Module):</span><br><span class="line">    <span class="string">r&quot;&quot;&quot;Densenet-BC model class, based on</span></span><br><span class="line"><span class="string">    `&quot;Densely Connected Convolutional Networks&quot; &lt;https://arxiv.org/pdf/1608.06993.pdf&gt;`_</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        growth_rate (int) - how many filters to add each layer (`k` in paper)</span></span><br><span class="line"><span class="string">        block_config (list of 4 ints) - how many layers in each pooling block</span></span><br><span class="line"><span class="string">        num_init_features (int) - the number of filters to learn in the first convolution layer</span></span><br><span class="line"><span class="string">        bn_size (int) - multiplicative factor for number of bottle neck layers</span></span><br><span class="line"><span class="string">          (i.e. bn_size * k features in the bottleneck layer)</span></span><br><span class="line"><span class="string">        drop_rate (float) - dropout rate after each dense layer</span></span><br><span class="line"><span class="string">        num_classes (int) - number of classification classes</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, growth_rate=<span class="number">32</span>, block_config=(<span class="params"><span class="number">6</span>, <span class="number">12</span>, <span class="number">24</span></span>),</span></span><br><span class="line"><span class="params">                 num_init_features=<span class="number">64</span>, bn_size=<span class="number">4</span>, drop_rate=<span class="number">0</span>, num_classes=<span class="number">1000</span></span>):</span><br><span class="line"></span><br><span class="line">        <span class="built_in">super</span>(DenseNet, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># First convolution</span></span><br><span class="line">        self.features = nn.Sequential(OrderedDict([</span><br><span class="line">            (<span class="string">&#x27;conv0_m&#x27;</span>, nn.Conv2d(<span class="number">2</span>, num_init_features, kernel_size=<span class="number">7</span>, stride=<span class="number">2</span>, padding=<span class="number">3</span>, bias=<span class="literal">False</span>)),</span><br><span class="line">            <span class="comment"># (&#x27;norm0_G&#x27;, nn.GroupNorm(GroupNorm_num,num_init_features)),</span></span><br><span class="line">            (<span class="string">&#x27;norm0&#x27;</span>, nn.BatchNorm2d(num_init_features)),</span><br><span class="line">            (<span class="string">&#x27;relu0&#x27;</span>, nn.ReLU(inplace=<span class="literal">True</span>)),</span><br><span class="line">            (<span class="string">&#x27;pool0&#x27;</span>, nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)),</span><br><span class="line">        ]))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Each denseblock</span></span><br><span class="line">        num_features = num_init_features</span><br><span class="line">        <span class="keyword">for</span> i, num_layers <span class="keyword">in</span> <span class="built_in">enumerate</span>(block_config):</span><br><span class="line">            <span class="comment"># num_layers是层数重复次数,num_input_features是特征层数</span></span><br><span class="line">            block = _DenseBlock(num_layers=num_layers, num_input_features=num_features,</span><br><span class="line">                                bn_size=bn_size, growth_rate=growth_rate, drop_rate=drop_rate)</span><br><span class="line">            self.features.add_module(<span class="string">&#x27;denseblock%d&#x27;</span> % (i + <span class="number">1</span>), block)  <span class="comment"># 追加dense_block</span></span><br><span class="line">            num_features = num_features + num_layers * growth_rate  <span class="comment"># 更新num_features:因为是channel concat,所以特征图数量会增加</span></span><br><span class="line">            <span class="keyword">if</span> i != <span class="built_in">len</span>(block_config) - <span class="number">1</span>:</span><br><span class="line">                trans = _Transition(num_input_features=num_features, num_output_features=num_features // <span class="number">2</span>)  <span class="comment"># 输出通道减半</span></span><br><span class="line">                self.features.add_module(<span class="string">&#x27;transition%d&#x27;</span> % (i + <span class="number">1</span>), trans)</span><br><span class="line">                num_features = num_features // <span class="number">2</span>  <span class="comment"># 更新num_features= num_features//2 取整数部分</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Final batch norm</span></span><br><span class="line">        <span class="comment"># self.features.add_module(&#x27;norm5_G&#x27;, nn.GroupNorm(GroupNorm_num,num_features))</span></span><br><span class="line">        self.features.add_module(<span class="string">&#x27;norm5&#x27;</span>, nn.BatchNorm2d(num_features))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Linear layer</span></span><br><span class="line">        self.classifier = nn.Linear(num_features, num_classes)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Official init from torch repo.1</span></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> self.modules():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, nn.Conv2d):</span><br><span class="line">                nn.init.kaiming_normal_(m.weight)</span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, nn.BatchNorm2d):</span><br><span class="line">                nn.init.constant_(m.weight, <span class="number">1</span>)</span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, nn.Linear):</span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        features = self.features(x)  <span class="comment"># 提取特征层</span></span><br><span class="line">        out = F.relu(features, inplace=<span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># out = F.avg_pool2d(out, kernel_size=2)</span></span><br><span class="line">        <span class="comment"># out = self.classifier(out)  # 分类器</span></span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+<p><br/></p>
+<h4 id="7-利用pytorch提供的预训练网络参数"><a href="#7-利用pytorch提供的预训练网络参数" class="headerlink" title="(7).利用pytorch提供的预训练网络参数"></a>(7).利用pytorch提供的预训练网络参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">densenet121</span>(<span class="params">pretrained=<span class="literal">False</span>, **kwargs</span>):</span><br><span class="line">    <span class="string">r&quot;&quot;&quot;Densenet-121 model from</span></span><br><span class="line"><span class="string">    `&quot;Densely Connected Convolutional Networks&quot; &lt;https://arxiv.org/pdf/1608.06993.pdf&gt;`_</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        pretrained (bool): If True, returns a model pre-trained on ImageNet</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    model = DenseNet(num_init_features=<span class="number">64</span>, growth_rate=<span class="number">32</span>, block_config=(<span class="number">6</span>, <span class="number">12</span>, <span class="number">24</span>),</span><br><span class="line">                     **kwargs)</span><br><span class="line">    <span class="keyword">if</span> pretrained:</span><br><span class="line">        <span class="comment"># &#x27;.&#x27;s are no longer allowed in module names, but pervious _DenseLayer</span></span><br><span class="line">        <span class="comment"># has keys &#x27;norm.1&#x27;, &#x27;relu.1&#x27;, &#x27;conv.1&#x27;, &#x27;norm.2&#x27;, &#x27;relu.2&#x27;, &#x27;conv.2&#x27;.</span></span><br><span class="line">        <span class="comment"># They are also in the checkpoints in model_urls. This pattern is used</span></span><br><span class="line">        <span class="comment"># to find such keys.</span></span><br><span class="line">        pattern = re.<span class="built_in">compile</span>(</span><br><span class="line">            <span class="string">r&#x27;^(.*denselayer\d+\.(?:norm|relu|conv))\.((?:[12])\.(?:weight|bias|running_mean|running_var))$&#x27;</span>)</span><br><span class="line">        state_dict = model_zoo.load_url(model_urls[<span class="string">&#x27;densenet121&#x27;</span>])</span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> <span class="built_in">list</span>(state_dict.keys()):</span><br><span class="line">            res = pattern.match(key)</span><br><span class="line">            <span class="keyword">if</span> res:</span><br><span class="line">                new_key = res.group(<span class="number">1</span>) + res.group(<span class="number">2</span>)</span><br><span class="line">                state_dict[new_key] = state_dict[key]</span><br><span class="line">                <span class="keyword">del</span> state_dict[key]</span><br><span class="line">        model.load_state_dict(state_dict)</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ChrisZhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/05/16/ResNet%E4%B8%8EDenseNet/" title="RNN基础介绍">http://example.com/2022/05/16/ResNet与DenseNet/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/CNN/" rel="tag"># CNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/13/Git%E5%92%8CGithub-2-Github%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Git和Github-2-Github的使用">
+      <i class="fa fa-chevron-left"></i> Git和Github-2-Github的使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/16/RNN%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" rel="next" title="RNN基础介绍">
+      RNN基础介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNet%E4%B8%8EDenseNet"><span class="nav-number">1.</span> <span class="nav-text">ResNet与DenseNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-ResNet"><span class="nav-number">2.</span> <span class="nav-text">一.ResNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%B1%E5%BA%A6%E7%BD%91%E7%BB%9C%E7%9A%84%E9%80%80%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">1.深度网络的退化问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">(1)解决思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%AE%8B%E5%B7%AE%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.2.</span> <span class="nav-text">2.残差学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%AE%8B%E5%B7%AE%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8F%90%E5%87%BA"><span class="nav-number">2.2.1.</span> <span class="nav-text">(1)残差学习的提出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ResNet%E7%BD%91%E7%BB%9C%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.</span> <span class="nav-text">3.ResNet网络的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Residual-Block%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.1.</span> <span class="nav-text">(1)Residual Block的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#i-%E6%AE%8B%E5%B7%AE%E8%B7%AF%E5%BE%84%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">(i)残差路径如何设计?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ii-shortcut-%E8%B7%AF%E5%BE%84%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">(ii)shortcut 路径如何设计?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#iii-Residual-Block%E4%B9%8B%E9%97%B4%E7%9A%84%E8%A1%94%E6%8E%A5"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">(iii)Residual Block之间的衔接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-ResNet%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">2.3.2.</span> <span class="nav-text">(2)ResNet网络结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-DenseNet"><span class="nav-number">3.</span> <span class="nav-text">二.DenseNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-DenseNet%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">1.DenseNet结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%A8%E5%85%AC%E5%BC%8F%E6%9D%A5%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.1.</span> <span class="nav-text">(1)用公式来表示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-DenseNet%E7%9A%84%E5%89%8D%E5%90%91%E8%BF%87%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">2.DenseNet的前向过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B7%E4%BD%93%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">3.具体网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-DenseBlock"><span class="nav-number">3.3.1.</span> <span class="nav-text">(1)DenseBlock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%8A%80%E5%B7%A7-BottleNeck"><span class="nav-number">3.3.2.</span> <span class="nav-text">(2)技巧:BottleNeck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Transition%E5%B1%82"><span class="nav-number">3.3.3.</span> <span class="nav-text">(3)Transition层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%93%E5%B0%BE"><span class="nav-number">3.3.4.</span> <span class="nav-text">(4)网络的结尾</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-DenseNet-121%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.5.</span> <span class="nav-text">(5)DenseNet-121的结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Pytorch-DenseNet"><span class="nav-number">3.4.</span> <span class="nav-text">4.Pytorch-DenseNet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-pytorch%E6%8F%90%E4%BE%9B%E7%9A%84%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0URL"><span class="nav-number">3.4.1.</span> <span class="nav-text">(1).pytorch提供的网络参数URL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-pth%E6%96%87%E4%BB%B6"><span class="nav-number">3.4.2.</span> <span class="nav-text">(2).pth文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AE%9E%E7%8E%B0DenseBlock%E4%B8%AD%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84-%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.4.3.</span> <span class="nav-text">(3).实现DenseBlock中的内部结构(模板)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-DenseBlock%E6%A8%A1%E5%9D%97"><span class="nav-number">3.4.4.</span> <span class="nav-text">(4).DenseBlock模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%AE%9E%E7%8E%B0Transition%E5%B1%82"><span class="nav-number">3.4.5.</span> <span class="nav-text">(5).实现Transition层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%AE%9E%E7%8E%B0DenseNet%E7%BD%91%E7%BB%9C"><span class="nav-number">3.4.6.</span> <span class="nav-text">(6).实现DenseNet网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E5%88%A9%E7%94%A8pytorch%E6%8F%90%E4%BE%9B%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0"><span class="nav-number">3.4.7.</span> <span class="nav-text">(7).利用pytorch提供的预训练网络参数</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChrisZhang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">ChrisZhang</p>
+  <div class="site-description" itemprop="description">我的技美学习之路</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hhlovesyy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hhlovesyy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1596944152@qq.com" title="E-Mail → mailto:1596944152@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/liang-dao-men" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank"><i class="fa fa-quora fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/people/liang-dao-men" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;liang-dao-men" rel="noopener" target="_blank">个人知乎</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://space.bilibili.com/24361666" title="https:&#x2F;&#x2F;space.bilibili.com&#x2F;24361666" rel="noopener" target="_blank">个人bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Sat Apr 30 2022 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChrisZhang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
