@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="FCN介绍参考文章： 全卷积神经网络(FCN)详解 - 知乎 (zhihu.com)  对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等. 而FCN的好处就在于其可以让一个已经设计好的网络输入任意大小的图片.   1.CNN 和 FCN网络结构对比(1)CNN加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话">
+  <meta name="description" content="FCN介绍参考文章： 全卷积神经网络(FCN)详解 - 知乎 (zhihu.com)  对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等. 而FCN的好处就在于其可以让一个已经设计好的网络输入任意大小的图片.    1.CNN 和 FCN网络结构对比(1)CNN加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FCN介绍">
 <meta property="og:url" content="http://example.com/2022/05/21/FCN%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="ChrisZhang">
-<meta property="og:description" content="FCN介绍参考文章： 全卷积神经网络(FCN)详解 - 知乎 (zhihu.com)  对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等. 而FCN的好处就在于其可以让一个已经设计好的网络输入任意大小的图片.   1.CNN 和 FCN网络结构对比(1)CNN加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话">
+<meta property="og:description" content="FCN介绍参考文章： 全卷积神经网络(FCN)详解 - 知乎 (zhihu.com)  对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等. 而FCN的好处就在于其可以让一个已经设计好的网络输入任意大小的图片.    1.CNN 和 FCN网络结构对比(1)CNN加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-d6573d143ccd7eac976605f6519f255b_r.jpg">
 <meta property="og:image" content="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9c01766a9e070839ac10ff7bfdc083b1_r.jpg">
@@ -232,29 +232,35 @@
 <p>对于一个各层参数结构都设计好的CNN来说,往往要求固定输入的图片大小,比如AlexNet，VGGNet, GoogleNet等.</p>
 <p>而FCN的好处就在于<strong>其可以让一个已经设计好的网络输入任意大小的图片</strong>.</p>
 </blockquote>
-<p><br/></p>
-<h2 id="1-CNN-和-FCN网络结构对比"><a href="#1-CNN-和-FCN网络结构对比" class="headerlink" title="1.CNN 和 FCN网络结构对比"></a>1.CNN 和 FCN网络结构对比</h2><h3 id="1-CNN"><a href="#1-CNN" class="headerlink" title="(1)CNN"></a>(1)CNN</h3><p>加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话架构应该如下:<br><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-d6573d143ccd7eac976605f6519f255b_r.jpg" alt="preview"></p>
+<br/>
+
+<h2 id="1-CNN-和-FCN网络结构对比"><a href="#1-CNN-和-FCN网络结构对比" class="headerlink" title="1.CNN 和 FCN网络结构对比"></a>1.CNN 和 FCN网络结构对比</h2><h3 id="1-CNN"><a href="#1-CNN" class="headerlink" title="(1)CNN"></a>(1)CNN</h3><p>加入我们现在要设计一个区分猫狗和背景的网络,如果使用CNN的话架构应该如下:
+<img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-d6573d143ccd7eac976605f6519f255b_r.jpg" alt="preview"></p>
 <blockquote>
 <p>假如输入的图像是14×14×3的彩色图像,则首先会经过5×5的卷积层,卷积层的输出通道数为16,于是可以得到10×10×16的一组特征图,接下来经过2×2的池化层,<strong>得到5×5×16的特征图</strong>,进行flatten展平操作后进入到两个50个神经元的全连接层,最后输出分类结果.</p>
 <p><strong>因为全连接层中输入层神经元数量固定,因此反推后卷积层的输入大小也要固定,这就不利于对不同尺寸的图片进行训练.</strong></p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="2-FCN"><a href="#2-FCN" class="headerlink" title="(2)FCN"></a>(2)FCN</h3><p>全卷积神经网络,<strong>也就是说该网络中全是卷积层连接,如下图:</strong></p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9c01766a9e070839ac10ff7bfdc083b1_r.jpg" alt="preview"></p>
 <p>前面的卷积,池化步骤与之前的CNN是相同的,但是FNN在flatten的时候,FCN将其换成了一个卷积核大小为5×5,输出通道为50的卷积层,之后的全连接层都换成了1×1的卷积层(<strong>1×1的卷积其实相当于全连接操作</strong>)</p>
-<p><br/></p>
+<br/>
+
 <h4 id="为什么1×1的卷积相当于全连接"><a href="#为什么1×1的卷积相当于全连接" class="headerlink" title="为什么1×1的卷积相当于全连接?"></a>为什么1×1的卷积相当于全连接?</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DKR6gyXmL6qAtRL9IQRlvg">CNN中神奇的1x1卷积 (qq.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/renhaofan/article/details/82721868">(12条消息) 1×1卷积_霜桥月馆的博客-CSDN博客_1×1卷积</a></p>
 <blockquote>
 <p>可以看到,FCN与CNN的区别在于FCN将CNN中的全连接层换成了卷积操作.换成全卷积操作后,由于没有了全连接层神经元数的限制,因此卷积层的输入可以接收不同尺寸的图像.</p>
 <p><strong>接下来的问题是,既然输入尺寸不一样,那么输出尺寸也不一样,如何理解?</strong></p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="2-FCN如何理解网络的输出"><a href="#2-FCN如何理解网络的输出" class="headerlink" title="2.FCN如何理解网络的输出?"></a>2.FCN如何理解网络的输出?</h2><h3 id="1-特征图尺寸变化"><a href="#1-特征图尺寸变化" class="headerlink" title="(1)特征图尺寸变化"></a>(1)特征图尺寸变化</h3><p>现在我们不考虑通道数,仅考虑上面网络中的特征图尺寸的变化,如下图(绿色为卷积核,橙色为特征图)</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9cc2766e812d23a24d58a7bbf84b277a_r.jpg" alt="preview"></p>
 <p>可以看到,输入是一张14×14大小的图片,经过5×5的卷积后(不做padding操作),得到10×10的特征图,然后进行2×2的池化后,尺寸缩小一半变为5×5的特征图,再经过5×5的卷积,特征图变为1×1,接下来就是进行两次1×1的卷积(<strong>也就是类似全连接操作</strong>),最终会得到一个1×1的输出结果.</p>
 <p>这个1×1的输出结果,就代表最前面14×14的图像区域的分类情况.如果对应到最开始的猫狗和背景的分类任务,则最后输出的结果应该是<strong>1×3的矩阵</strong>,其中每个值表示14×14的输入图片中对应类别的分类得分.</p>
-<p><br/></p>
+<br/>
+
 <h3 id="2-不同尺寸的输入图片"><a href="#2-不同尺寸的输入图片" class="headerlink" title="(2)不同尺寸的输入图片"></a>(2)不同尺寸的输入图片</h3><p>现在假设我们输入了一张比较大的图片,则效果如下:</p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9b31bf337601c58e4e26d213dc40fc69_r.jpg" alt="preview"></p>
 <p>可以看到,现在的输入尺寸是16×16,此时经过5×5卷积(不做padding操作),得到12×12的特征图,然后进入2×2池化,尺寸缩小为6×6的特征图,再通过5×5的卷积层,特征图大小变为2×2,接下来进行两次1×1的卷积(类似于全连接操作)后,最终得到2×2的输出结果.</p>
@@ -266,7 +272,8 @@
 <blockquote>
 <p>上图中最后输出2x2中左上角的橙色输出就代表了16x16中的橙色区域（红色框），依次类推，输出2x2中右上角的蓝色输出就代表了16x16中的黄色框区域，输出2x2中左下角的蓝色输出就代表了16x16中的黑色框区域，输出2x2中右下角的蓝色输出就代表了16x16中的紫色框区域，其中每个框的大小都是14x14.也就是说输出的每个值代表了输入图像中的一个区域的分类情况。</p>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="3-FCN如何对目标检测进行加速"><a href="#3-FCN如何对目标检测进行加速" class="headerlink" title="3.FCN如何对目标检测进行加速?"></a>3.FCN如何对目标检测进行加速?</h2><p>根据上面的图,我们可以看到FCN输出的每个值都对应输入图像的一个检测区域,也就是说FCN的输出直接反映出了对应输入图像检测区域的分类情况.</p>
 <p><strong>在之前的讨论中,我们没有讨论通道情况,如果将网络放到正常包含通道的28×28×3的图像上,考虑特征图的通道数,此时输出值的对应情况如下:</strong></p>
 <p><img src="https://fastly.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-9286164a9e70f3f9b2474676b78e2208_r.jpg" alt="preview"></p>
@@ -274,7 +281,8 @@
 <p>上图中绿色区域表现了依次通过网络后的特征图尺寸变化情况。跟2(2)的图类似，因为这是一个猫狗和背景的三分类任务，所以最后输出的图像大小为8x8x3，以输出图像左上角绿色点为例，该点深度为3，对应输入图像的绿色区域，该点的3个值反应了输入图的绿色区域是分类为猫狗还是背景的得分情况。(<strong>可以看到,最后的1×1卷积操作可以很好地控制通道数,简化运算</strong>)</p>
 </blockquote>
 <p>总的来说，FCN利用了输出结果和输入图像的对应关系，直接给出了输入图像相应区域的分类情况，取消了传统目标检测中的滑动窗口选取候选框。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="4-FCN的优缺点"><a href="#4-FCN的优缺点" class="headerlink" title="4.FCN的优缺点"></a>4.FCN的优缺点</h2><blockquote>
 <p>由于输出结果的每个值映射到输入图像上的感受野的窗口是固定的，也就是检测窗口是固定的，导致检测效果没那么好，但是速度却得到了很大的提升，而且可以输入任意尺寸的图片，为目标检测提供了一种新思路。</p>
 </blockquote>

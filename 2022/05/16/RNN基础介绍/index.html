@@ -46,7 +46,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180115451.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180739285.png">
 <meta property="article:published_time" content="2022-05-16T10:33:17.000Z">
-<meta property="article:modified_time" content="2022-05-17T09:16:38.464Z">
+<meta property="article:modified_time" content="2022-05-22T03:20:05.906Z">
 <meta property="article:author" content="ChrisZhang">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="RNN">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-17 17:16:38" itemprop="dateModified" datetime="2022-05-17T17:16:38+08:00">2022-05-17</time>
+                <time title="修改时间：2022-05-22 11:20:05" itemprop="dateModified" datetime="2022-05-22T11:20:05+08:00">2022-05-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +257,8 @@
 <p>当我们提到Apple的时候,有的时候是说苹果这种水果,有的时候则是指苹果公司;具体如何识别<strong>要结合具体的语义</strong>。</p>
 </blockquote>
 <p><strong>这种需要处理「序列数据 – 一串相互依赖的数据流」的场景就需要使用 RNN 来解决了。</strong>类似的还有比如音频处理，语言翻译，股票市场中的价格走势等领域。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="二、RNN的基本原理"><a href="#二、RNN的基本原理" class="headerlink" title="二、RNN的基本原理"></a>二、RNN的基本原理</h2><p>首先，以我们所熟悉的全连接神经网络为例：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515210543488.png" alt="image-20220515210543488"></p>
 <p>这个全连接网络由输入层-隐藏层-输出层所组成，如上图所示；</p>
@@ -267,34 +268,40 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1280px-Recurrent_neural_network_unfold.svg.png" alt="img"></p>
 <p>在上面的图当中，<strong>V指的是每个时间点之间的权重矩阵，可以看到，隐藏层h的值同时由上一时刻的隐藏层所决定。</strong></p>
 <p><strong>值得注意的是，在整个神经网络的训练过程中，每一时刻的V是一样的。</strong></p>
-<p><br/></p>
+<br/>
+
 <p>再以一个有一定历史的Elman network为例：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/Elman_srnn.png" alt="img"></p>
-<p>用公式表示类似如下（以下为Elman network的相关公式，仅为了方便说明）：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}h_t=\sigma_h(W_hx_t+U_hh_{t-1}+b_h) \\\\
-y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解方式，下图就可以体现出RNN的特点（图源在文章末尾链接中）</p>
+<p>用公式表示类似如下（以下为Elman network的相关公式，仅为了方便说明）：
+$$
+\begin{aligned}h_t&#x3D;\sigma_h(W_hx_t+U_hh_{t-1}+b_h) \\
+y_t&#x3D;\sigma_y(W_yh_t+b_y)\end{aligned}
+$$</p>
+<p>引用知乎上的一个理解方式，下图就可以体现出RNN的特点（图源在文章末尾链接中）</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/v2-b45f69904d546edde41d9539e4c5548c_r.jpg" alt="preview"></p>
 <h3 id="（1）激活函数"><a href="#（1）激活函数" class="headerlink" title="（1）激活函数"></a>（1）激活函数</h3><p>采用tanh作为激活函数，这种函数的特点如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516161027871-165269730228219.png" alt="image-20220516161027871"></p>
 <p>使用tanh作为激活函数可以有效避免某些参数呈现爆炸式的增长（因为再大的数经过激活函数之后都会被限制在-1到1之间）。</p>
-<p><br/></p>
+<br/>
+
 <h2 id="三、一个直观理解的实例"><a href="#三、一个直观理解的实例" class="headerlink" title="三、一个直观理解的实例"></a>三、一个直观理解的实例</h2><p>假如现在我们想要判断用户的想法，则首先获取用户的输入并将其进行分词处理：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-fenci.gif" alt="对输入进行分词"></p>
 <p>接下来，按照序列顺序输入到RNN网络当中，可以看到前面的输出确实会对后面的输入有所影响：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/2019-07-02-input-time.gif" alt="img"></p>
 <p>此时我们可以看到，当判断到最后一个序列的时候，前面的序列均对其产生了影响。</p>
-<p><br/></p>
+<br/>
+
 <h3 id="（1）RNN的问题"><a href="#（1）RNN的问题" class="headerlink" title="（1）RNN的问题"></a>（1）RNN的问题</h3><p>如果我们观察最后一个节点的颜色，会发现RNN存在短期记忆问题：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220515212701880.png" alt="image-20220515212701880"></p>
 <p>不难发现，短期记忆的影响比较大，而随着输入序列的增长，前面处理的数据所占据的比例越来越小，可能会造成关键信息的缺失（比如这个案例当中的time可能就无法很好识别）</p>
 <p><strong>这就是在反向传播的过程当中梯度消失和梯度爆炸的情况(此时这部分权重就很少得到训练)，具体地推导过程可以参考如下博客：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
-<p><br/></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN&#x2F;LSTM&#x2F;GRU） - 知乎 (zhihu.com)</a></p>
+<br/>
+
 <h2 id="四、LSTM（长短期记忆）"><a href="#四、LSTM（长短期记忆）" class="headerlink" title="四、LSTM（长短期记忆）"></a>四、LSTM（长短期记忆）</h2><p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation | by Michael Phi | Towards Data Science</a></p>
-<p><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks — colah’s blog</a></p>
+<p><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks – colah’s blog</a></p>
 <p>在普通的RNN当中，越晚的输入影响越大，而越早地输入影响则越小，并且无法更改这个逻辑。</p>
 <p>而相对的，<strong>LSTM改变了这个逻辑，使用一套灵活的方案——只保留重要的信息。</strong></p>
 <p>首先来看一下LSTM的结构：</p>
@@ -314,7 +321,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li><p>门控系统是不同的神经网络，作用是决定哪些信息可以呈现在cell state当中。门控系统可以学习哪些知识是相关知识，从而学习如何保持或遗忘。</p>
 </li>
 </ul>
-<p><br/></p>
+<br/>
+
 <h3 id="（2）Sigmoid"><a href="#（2）Sigmoid" class="headerlink" title="（2）Sigmoid"></a>（2）Sigmoid</h3><p>门控系统以sigmoid作为激活函数。sigmoid函数类似于tanh，但其会限制输出范围为0到1。</p>
 <p>这样做的好处在于，<strong>可以很好地更新或者遗忘数据</strong>，这是因为：</p>
 <ul>
@@ -332,12 +340,14 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>output gate</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h3 id="（3）forget-gate"><a href="#（3）forget-gate" class="headerlink" title="（3）forget gate"></a>（3）forget gate</h3><blockquote>
 <p>这扇门决定了哪些信息应该丢弃，哪些信息应该保留。来自前一个隐藏状态(hidden state)的信息和来自当前输入的信息通过sigmoid函数传递。值在0和1之间。越接近0表示忘记，越接近1表示保留。</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163413093.png" alt="image-20220516163413093"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（4）input-gate"><a href="#（4）input-gate" class="headerlink" title="（4）input gate"></a>（4）input gate</h3><blockquote>
 <p>以下图为例，进行说明：</p>
 <ul>
@@ -347,12 +357,14 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 </ul>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516163708653.png" alt="image-20220516163708653"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（5）cell-state"><a href="#（5）cell-state" class="headerlink" title="（5）cell state"></a>（5）cell state</h3><blockquote>
 <p>到目前为止，已经有足够的信息去计算cell state了。首先，cell state会与forget vector逐点相乘。如果相乘的值接近于0则会被遗忘。接下来会把input gate出来的值与刚才的值进行一个相加处理，<strong>从而更新cell state到新的值</strong>。</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/1.gif" alt="1"></p>
-<p><br/></p>
+<br/>
+
 <h3 id="（6）output-gate"><a href="#（6）output-gate" class="headerlink" title="（6）output gate"></a>（6）output gate</h3><blockquote>
 <p>这个output gate会决定下一个hidden state是什么样的。首先，我们把之前的hidden state和现在的输入放入一个sigmoid激活函数，然后会把新的cell state放入一个tanh函数（<strong>当然这里是复制一份，见下面的动图</strong>）。接下来我们会把tanh的输出结果与sigmoid的输出结果相乘，<strong>来决定hidden state应该保存什么内容</strong>。此时的输出就是hidden state的状态，走下面的那条管道，用来对下个步骤做出贡献。</p>
 </blockquote>
@@ -367,8 +379,10 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <li>The output gate determines what the next hidden state should be.</li>
 </ul>
 </blockquote>
-<p><br/></p>
+<br/>
+
 <h2 id="五、LSTM的伪代码"><a href="#五、LSTM的伪代码" class="headerlink" title="五、LSTM的伪代码"></a>五、LSTM的伪代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSTMCELL</span>(<span class="params">prev_ct, prev_ht, <span class="built_in">input</span></span>):</span><br><span class="line">    combine = prev_ht + <span class="built_in">input</span></span><br><span class="line">    ft = forget_layer(combine)</span><br><span class="line">    candidate = candidate_layer(combine)</span><br><span class="line">    it = input_layer(combine)</span><br><span class="line">    Ct = prev_ht * ft + candidate * it</span><br><span class="line">    ot = output_layer(combine)</span><br><span class="line">    ht = ot * tanh(Ct)</span><br><span class="line">    <span class="keyword">return</span> ht, Ct</span><br><span class="line"></span><br><span class="line">ct = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">ht = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">input</span> <span class="keyword">in</span> inputs:</span><br><span class="line">    ct, ht = LSTMCELL(ct, ht, <span class="built_in">input</span>)</span><br></pre></td></tr></table></figure>
+
 <p>总的过程如下：</p>
 <blockquote>
 <p>1.首先，之前的hidden state会与现在的输入串联在一起，将其命名为combine；</p>
@@ -380,10 +394,12 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>7.output和新的cell state逐点相乘，可以给出最新的hidden state的状态。</p>
 </blockquote>
 <p>综上，LSTM可以使用隐藏状态进行预测。结合所有这些机制，LSTM可以在序列处理过程中选择要记住或忘记的相关信息。</p>
-<p><br/></p>
+<br/>
+
 <p>可以结合下图，对上图的过程进行理解和复习：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hhlovesyy/ImgHosting/AI/MathAI/image-20220516180115451.png" alt="image-20220516180115451"></p>
-<p><br/></p>
+<br/>
+
 <h2 id="六、GRU"><a href="#六、GRU" class="headerlink" title="六、GRU"></a>六、GRU</h2><p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">https://en.wikipedia.org/wiki/Gated_recurrent_unit</a></p>
 <blockquote>
@@ -403,13 +419,15 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
 <p>这个门用来决定有多少过去的信息要被遗忘掉。</p>
 </blockquote>
 <p>首先，reset gate起作用，它将过去时间步的相关信息存储到新的记忆模块（memory content）中。 然后将输入向量和hidden state与它们的权值相乘。 接下来，它计算reset gate与先前hidden state倍数之间的元素级乘法。 总结以上步骤后，应用非线性激活函数，生成下一个序列。  </p>
-<p><br/></p>
+<br/>
+
 <h2 id="七、GRU和LSTM"><a href="#七、GRU和LSTM" class="headerlink" title="七、GRU和LSTM"></a>七、GRU和LSTM</h2><p>GRU的张量运算较少;因此，他比LSTM训练得更快。不过对于两者来说，<strong>目前还没有明确的赢家</strong>。研究人员和工程师通常会同时尝试两种方法，以确定哪种方法更适合他们的用例。</p>
 <p>关于两者的更详细介绍，可以参考下面的博客：</p>
 <p><a target="_blank" rel="noopener" href="https://analyticsindiamag.com/lstm-vs-gru-in-recurrent-neural-network-a-comparative-study/">LSTM Vs GRU in Recurrent Neural Network: A Comparative Study (analyticsindiamag.com)</a></p>
-<p><br/></p>
-<h2 id="八、其他参考文章"><a href="#八、其他参考文章" class="headerlink" title="八、其他参考文章"></a>八、其他参考文章</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN/LSTM/GRU） - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/68552209/answer/329359882">(5 封私信 / 30 条消息) (新手向)能否简单易懂的介绍一下RNN(循环神经网络)？ - 知乎 (zhihu.com)</a></p>
+<br/>
+
+<h2 id="八、其他参考文章"><a href="#八、其他参考文章" class="headerlink" title="八、其他参考文章"></a>八、其他参考文章</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/123211148">史上最详细循环神经网络讲解（RNN&#x2F;LSTM&#x2F;GRU） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/68552209/answer/329359882">(5 封私信 &#x2F; 30 条消息) (新手向)能否简单易懂的介绍一下RNN(循环神经网络)？ - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/45289691">如何深度理解RNN？——看图就好！ - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76772734">从反向传播推导到梯度消失and爆炸的原因及解决方案（从DNN到RNN，内附详细反向传播公式推导） - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30844905">一文搞懂RNN（循环神经网络）基础篇 - 知乎 (zhihu.com)</a></p>
@@ -450,8 +468,8 @@ y_t=\sigma_y(W_yh_t+b_y)\end{aligned}</script><p>引用知乎上的一个理解�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/05/16/ResNet%E4%B8%8EDenseNet/" rel="prev" title="RNN基础介绍">
-      <i class="fa fa-chevron-left"></i> RNN基础介绍
+    <a href="/2022/05/16/ResNet%E4%B8%8EDenseNet/" rel="prev" title="ResNet与DenseNet">
+      <i class="fa fa-chevron-left"></i> ResNet与DenseNet
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/05/21/FCN%E4%BB%8B%E7%BB%8D/" rel="next" title="FCN介绍">
